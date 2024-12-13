@@ -1,0 +1,11 @@
+.idea/
+cmake-build-debug/
+.vscode/
+output/
+*.exe
+build/
+*.layout
+*.depend
+bin/
+obj/
+*.txt
