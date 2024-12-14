@@ -7,6 +7,6 @@
 
 int main(void)
 {
-    printf("Hello, World!\n");
+    LogIn();
     return 0;
 }

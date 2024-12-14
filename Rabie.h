@@ -6,4 +6,14 @@
 #include <ctype.h>
 #include <conio.h>
 
+typedef struct
+{
+    char username[20];
+    char password[30];
+}user;
+
+void LogIn();
+void MainMenu(user userData);
+
+
 #endif
