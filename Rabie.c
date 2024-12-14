@@ -72,5 +72,5 @@ void LogIn()
     while (!isValid);
     i--;
     
-    //MainMenu(users[i]);
+    MainMenu(users[i]);
 }
