@@ -71,13 +71,6 @@ void LogIn()
     }
     while (!isValid);
     i--;
-    MainMenu(users[i]);
     
-}
-
-void MainMenu(user userData)
-{
-    system("cls");
-    printf("%s", userData.username);
-    getch();
+    //MainMenu(users[i]);
 }

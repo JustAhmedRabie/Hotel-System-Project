@@ -13,7 +13,7 @@ typedef struct
 }user;
 
 void LogIn();
-void MainMenu(user userData);
+
 
 
 #endif
