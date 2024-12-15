@@ -11,9 +11,9 @@ void RoomReservation()
     printf("Reservation..\n");
     Reservation customer[2];
     // form room.txt
-    int seaViewAvilable = 0; // room.txt
-    int lakeViewAvilable = 3;
-    int gardenViewAvilable = 1;
+    int seaViewAvailable = 0; // room.txt
+    int lakeViewAvailable = 3;
+    int gardenViewAvailable = 1;
 
     /*// load data from file and check validity of them.
 
@@ -36,7 +36,7 @@ void RoomReservation()
             {
             case '1':
             {
-                if (seaViewAvilable == 0)
+                if (seaViewAvailable == 0)
                 {
                     system("cls");
                     roomCategoryChoice = UserRoomChoice(1);
@@ -47,7 +47,7 @@ void RoomReservation()
                     system("cls");
                     printf("Done.\n");
                     available = 1;
-                    seaViewAvilable--;
+                    seaViewAvailable--;
                     customer[i].reservationId = rand();
                     customer[i].roomNumber = rand() % 1000 + 1; // random room exicit in room.txt
                 }
@@ -55,7 +55,7 @@ void RoomReservation()
             }
             case '2':
             {
-                if (lakeViewAvilable == 0)
+                if (lakeViewAvailable == 0)
                 {
                     system("cls");
                     roomCategoryChoice = UserRoomChoice(1);
@@ -67,7 +67,7 @@ void RoomReservation()
                     system("cls");
                     printf("Done.\n");
                     available = 1;
-                    lakeViewAvilable--;
+                    lakeViewAvailable--;
                     customer[i].reservationId = rand();
                     customer[i].roomNumber = rand() % 1000 + 1;
                 }
@@ -75,7 +75,7 @@ void RoomReservation()
             }
             case '3':
             {
-                if (gardenViewAvilable == 0)
+                if (gardenViewAvailable == 0)
                 {
                     system("cls");
                     roomCategoryChoice = UserRoomChoice(1);
@@ -86,7 +86,7 @@ void RoomReservation()
                     system("cls");
                     printf("Done.\n");
                     available = 1;
-                    gardenViewAvilable--;
+                    gardenViewAvailable--;
                     customer[i].reservationId = rand();
                     customer[i].roomNumber = rand() % 1000 + 1;
                 }
