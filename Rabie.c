@@ -23,7 +23,28 @@ void LogIn()
     
     int i = 0;
     int isValid = 0;
-    
+    char choice;
+    do
+    {
+        system("cls");
+        if (i)
+            puts("ERROR, Invalid Input!\n");
+
+        printf("1. Log In\n");
+        printf("2. Exit \n");
+        
+        choice = getch();
+
+        if (choice == '1')
+            break;
+        else if (choice == '2')
+            exit(0);
+
+        i++;
+    } while (1);
+
+    i = 0;
+
     do
     {
         system("cls");
