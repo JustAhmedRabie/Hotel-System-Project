@@ -93,7 +93,7 @@ void LogIn()
     while (!isValid);
     i--;
     
-    MainMenu(users[i]);
+    MainMenu();
 }
 
 int GenerateRand(int min, int max, int nonDuplicates[], int n)

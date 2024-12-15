@@ -92,6 +92,12 @@ void RoomReservation()
                 }
                 break;
             }
+            case '4':
+                MainMenu();
+                break;
+            case '5':
+                exit(0);
+                break;
             default:
                 system("cls");
                 printf("Please enter valid category.\n");
@@ -113,10 +119,13 @@ char UserRoomChoice(int error)
     if (error)
         printf("Sorry this category is not available now , Please enter other.\n\n");
 
-    printf("Please enter number from 1 to 3\n");
-    printf("1 for Sea view \n");
-    printf("2 for Lake view \n");
-    printf("3 for Garden view \n");
+    printf("1. for Sea view \n");
+    printf("2. for Lake view \n");
+    printf("3. for Garden view \n");
+    printf("4. back to main menu \n");
+    printf("5. Exit \n");
+    printf("Please enter number from 1 to 5\n");
+
     char roomCategoryChoice = getch();
     return roomCategoryChoice;
 }

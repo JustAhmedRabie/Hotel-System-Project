@@ -2,6 +2,6 @@
 #define HANY_H
 
 void MenuChoiceProcess(char choice);
-void MainMenu(user userData);
+void MainMenu();
 
 #endif
