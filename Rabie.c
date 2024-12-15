@@ -74,3 +74,32 @@ void LogIn()
     
     MainMenu(users[i]);
 }
+
+int GenerateRand(int min, int max, int nonDuplicates[], int n)
+{
+    if (n >= max)
+    {
+        printf("Error: All possible numbers have been generated!\n");
+        return -1; // Return an error if all unique numbers have been generated
+    }
+    int newNumber;
+    int isUnique;
+
+    do
+    {
+        newNumber = (rand() % (max - min + 1)) + min;
+        isUnique = 1;
+
+        // Check if the number has already been generated
+        for (int i = 0; i < n; i++)
+        {
+            if (nonDuplicates[i] == newNumber)
+            {
+                isUnique = 0;
+                break;
+            }
+        }
+    } while (!isUnique);
+
+    return newNumber;
+}
