@@ -1,7 +1,7 @@
 ﻿#ifndef AMLE_H
 #define AMLE_H
-#include  <time.h>
-#include  "Rabie.h"
+#include <time.h>
+#include "Rabie.h"
 
 typedef struct
 {
@@ -25,7 +25,6 @@ typedef struct
 } Reservation;
 
 void RoomReservation();
-
-
+char UserRoomChoice(int error);
 
 #endif

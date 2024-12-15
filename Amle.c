@@ -29,11 +29,7 @@ void RoomReservation()
     srand(time(NULL));
     for (i = 0; i < 2; i++) // till end of file
     {
-        printf("Please enter number from 1 to 3\n");
-        printf("1 for Sea view \n");
-        printf("2 for Lake view \n");
-        printf("3 for Garden view \n");
-        char roomCategoryChoice = getch();
+        char roomCategoryChoice = UserRoomChoice(0); // you have to specify if there is an error or no in the argument, 1 for an error, 0 for no error
         do
         {
             switch (roomCategoryChoice)
@@ -42,12 +38,13 @@ void RoomReservation()
             {
                 if (seaViewAvilable == 0)
                 {
-                    printf("Sorry this category not available now , Please enter other.\n");
-                    roomCategoryChoice = getch();
+                    system("cls");
+                    roomCategoryChoice = UserRoomChoice(1);
                     available = 0;
                 }
                 else
                 {
+                    system("cls");
                     printf("Done.\n");
                     available = 1;
                     seaViewAvilable--;
@@ -60,13 +57,14 @@ void RoomReservation()
             {
                 if (lakeViewAvilable == 0)
                 {
-                    printf("Sorry this category not available now , Please enter other.\n");
-                    roomCategoryChoice = getch();
+                    system("cls");
+                    roomCategoryChoice = UserRoomChoice(1);
 
                     available = 0;
                 }
                 else
                 {
+                    system("cls");
                     printf("Done.\n");
                     available = 1;
                     lakeViewAvilable--;
@@ -79,12 +77,13 @@ void RoomReservation()
             {
                 if (gardenViewAvilable == 0)
                 {
-                    printf("Sorry this category not available now , Please enter other.\n");
-                    roomCategoryChoice = getch();
+                    system("cls");
+                    roomCategoryChoice = UserRoomChoice(1);
                     available = 0;
                 }
                 else
                 {
+                    system("cls");
                     printf("Done.\n");
                     available = 1;
                     gardenViewAvilable--;
@@ -94,16 +93,30 @@ void RoomReservation()
                 break;
             }
             default:
+                system("cls");
                 printf("Please enter valid category.\n");
-                roomCategoryChoice = getch();
+                roomCategoryChoice = UserRoomChoice(0); // Already displayed a unique error message so I called the function with 0 argument
                 available = 0;
                 break;
             }
         } while (!available);
+        system("cls");
         strcpy(customer[i].roomStatus, "unconfirmed");
         printf("This is customer %d reservation Id : %d\n", i + 1, customer[i].reservationId);
         printf("This is customer %d room number : %d\n", i + 1, customer[i].roomNumber);
         printf("This is the room status of customer %d : %s\n", i + 1, customer[i].roomStatus);
-
     }
+}
+
+char UserRoomChoice(int error)
+{
+    if (error)
+        printf("Sorry this category is not available now , Please enter other.\n\n");
+
+    printf("Please enter number from 1 to 3\n");
+    printf("1 for Sea view \n");
+    printf("2 for Lake view \n");
+    printf("3 for Garden view \n");
+    char roomCategoryChoice = getch();
+    return roomCategoryChoice;
 }
