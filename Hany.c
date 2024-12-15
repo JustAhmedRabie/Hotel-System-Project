@@ -50,6 +50,7 @@ void MenuChoiceProcess(char choice)
     case '1':
         system("cls");
         //Amle will call Reservation function
+        RoomReservation();
         break;
     case '2':
         system("cls");
