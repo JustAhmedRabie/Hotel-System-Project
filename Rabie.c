@@ -98,7 +98,7 @@ void LogIn()
 
 int GenerateRand(int min, int max, int nonDuplicates[], int n)
 {
-    if (n >= max)
+    if (n >= max - min +1)
     {
         printf("Error: All possible numbers have been generated!\n");
         return -1; // Return an error if all unique numbers have been generated
