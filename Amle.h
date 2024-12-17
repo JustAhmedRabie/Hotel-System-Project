@@ -15,7 +15,7 @@ typedef struct
     int days;
     int months;
     int years;
-} Date;
+} date;
 
 typedef struct
 {
@@ -28,11 +28,13 @@ typedef struct
 typedef struct
 {
     int reservationId;
-    room room;
+    int roomNumber;
+    char reservationStatus[20];
+    char category[20];
     char customerName[20];
     long customerNational_Id;
     int numOfNights;
-    Date date;
+    date date;
     char customerEmail[20];
     char mobileNumber[12];
 } reservation;
