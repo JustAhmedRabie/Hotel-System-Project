@@ -49,7 +49,7 @@ void RoomReservation()
                     available = 1;
                     seaViewAvailable--;
                     customer[i].reservationId = rand();
-                    customer[i].roomNumber = rand() % 1000 + 1; // random room exicit in room.txt
+                    customer[i].room.roomNumber = rand() % 1000 + 1; // random room exicit in room.txt
                 }
                 break;
             }
@@ -69,7 +69,7 @@ void RoomReservation()
                     available = 1;
                     lakeViewAvailable--;
                     customer[i].reservationId = rand();
-                    customer[i].roomNumber = rand() % 1000 + 1;
+                    customer[i].room.roomNumber = rand() % 1000 + 1;
                 }
                 break;
             }
@@ -88,7 +88,7 @@ void RoomReservation()
                     available = 1;
                     gardenViewAvailable--;
                     customer[i].reservationId = rand();
-                    customer[i].roomNumber = rand() % 1000 + 1;
+                    customer[i].room.roomNumber = rand() % 1000 + 1;
                 }
                 break;
             }
@@ -107,10 +107,10 @@ void RoomReservation()
             }
         } while (!available);
         system("cls");
-        strcpy(customer[i].roomStatus, "unconfirmed");
+        strcpy(customer[i].room.status, "unconfirmed");
         printf("This is customer %d reservation Id : %d\n", i + 1, customer[i].reservationId);
-        printf("This is customer %d room number : %d\n", i + 1, customer[i].roomNumber);
-        printf("This is the room status of customer %d : %s\n", i + 1, customer[i].roomStatus);
+        printf("This is customer %d room number : %d\n", i + 1, customer[i].room.roomNumber);
+        printf("This is the room status of customer %d : %s\n", i + 1, customer[i].room.status);
     }
 }
 

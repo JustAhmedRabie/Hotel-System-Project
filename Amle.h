@@ -5,24 +5,30 @@
 
 typedef struct
 {
+    char username[20];
+    char password[30];
+}user;
+
+
+typedef struct
+{
     int days;
     int months;
     int years;
 } Date;
 
-typedef enum
+typedef struct
 {
-    SeaView,
-    LakeView,
-    GardenView,
-}roomCategory;
+    int roomNumber;
+    char status[20];
+    char category[20];
+    int price;
+}room;
 
 typedef struct
 {
     int reservationId;
-    int roomNumber;
-    char roomStatus[15];
-    roomCategory category;
+    room room;
     char customerName[20];
     long customerNational_Id;
     int numOfNights;

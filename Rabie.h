@@ -7,25 +7,7 @@
 #include <conio.h>
 #include "Amle.h"
 
-typedef struct
-{
-    char username[20];
-    char password[30];
-}user;
 
-typedef enum
-{
-    Available,
-    Reserved
-}roomStatus;
-
-typedef struct
-{
-    int roomNumber;
-    roomStatus status;
-    roomCategory category;
-    int price;
-}room;
 
 void LogIn();
 
