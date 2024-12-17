@@ -10,18 +10,25 @@ typedef struct
     int years;
 } Date;
 
+typedef enum
+{
+    SeaView,
+    LakeView,
+    GardenView,
+}roomCategory;
+
 typedef struct
 {
     int reservationId;
     int roomNumber;
     char roomStatus[15];
-    int roomCategory;
+    roomCategory roomCategory;
     char customerName[20];
     long customerNational_Id;
     int numOfNights;
     Date date;
     char customerEmail[20];
-    long mobileNumber;
+    char mobileNumber[12];
 } Reservation;
 
 void RoomReservation();
