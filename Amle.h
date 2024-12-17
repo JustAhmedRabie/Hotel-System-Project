@@ -22,14 +22,14 @@ typedef struct
     int reservationId;
     int roomNumber;
     char roomStatus[15];
-    roomCategory roomCategory;
+    roomCategory category;
     char customerName[20];
     long customerNational_Id;
     int numOfNights;
     Date date;
     char customerEmail[20];
     char mobileNumber[12];
-} Reservation;
+} reservation;
 
 void RoomReservation();
 char UserRoomChoice(int error);

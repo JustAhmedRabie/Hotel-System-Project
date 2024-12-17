@@ -9,7 +9,7 @@ void RoomReservation()
 {
     system("cls");
     printf("Reservation..\n");
-    Reservation customer[2];
+    reservation customer[2];
     // form room.txt
     int seaViewAvailable = 0; // room.txt
     int lakeViewAvailable = 3;
