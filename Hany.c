@@ -85,3 +85,21 @@ void MenuChoiceProcess(char choice)
         puts("Invalid choice!\n");
     }
 }
+void reservationLoad(reservation reservDAta[100]) {
+    system("cls");
+    FILE *reservationFile=fopen("reservation,txt","r");
+    for (int i=0;i<100;i++){
+        fscanf(reservationFile,"%d",&reservDAta[i].reservationId);
+        fscanf(reservationFile,"%d",&reservDAta[i].roomNumber);
+        fscanf(reservationFile,"%s",reservDAta[i].reservationStatus);
+        fscanf(reservationFile,"%s",reservDAta[i].category);
+        fscanf(reservationFile,"%s",reservDAta[i].customerName);
+        fscanf(reservationFile,"%ld",&reservDAta[i].customerNational_Id);
+        fscanf(reservationFile,"%d",&reservDAta[i].numOfNights);
+        fscanf(reservationFile,"%d",&reservDAta[i].date.days);
+        fscanf(reservationFile,"%d",&reservDAta[i].date.months);
+        fscanf(reservationFile,"%d",&reservDAta[i].date.years);
+        fscanf(reservationFile,"%s",reservDAta[i].customerEmail);
+        fscanf(reservationFile,"%s",reservDAta[i].mobileNumber);
+    }
+}
