@@ -132,7 +132,7 @@ void LoadUsers(user usersData[])
     while (x != EOF)
     {
 
-        fscanf(reservationFile, "%[^,],%[^\n]", usersData[i].username, usersData[i].password);
+        fscanf(reservationFile, "%s %s", usersData[i].username, usersData[i].password);
         x = fgetc(reservationFile);
         i++;
     }
