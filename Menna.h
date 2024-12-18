@@ -3,3 +3,4 @@
 
 
 #endif
+void LoadRooms(room roomsData[]);
