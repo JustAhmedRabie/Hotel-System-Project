@@ -1,7 +1,6 @@
 ﻿#ifndef AMLE_H
 #define AMLE_H
 #include <time.h>
-#include "Rabie.h"
 
 typedef struct
 {

@@ -1,7 +1,7 @@
-﻿#include "Rabie.h"
-#include "Hany.h"
+﻿#include "Hany.h"
 #include "Akram.h"
 #include "Amle.h"
+#include "Rabie.h"
 #include "Menna.h"
 
 void LogIn()
@@ -10,17 +10,8 @@ void LogIn()
     char username[20];
     user users[3];
 
-    { //just some placeholder data, TODO: will replace with text files later
-        strcpy(users[0].username, "ahmed.x");
-        strcpy(users[1].username, "mohamed.y");
-        strcpy(users[2].username, "mahmoud.z");
+    LoadUsers(users);
 
-        strcpy(users[0].password, "ahmed123");
-        strcpy(users[1].password, "mohamed123");
-        strcpy(users[2].password, "mahmoud123");
-    }
-
-    
     int i = 0;
     int isValid = 0;
     char choice;
@@ -32,7 +23,7 @@ void LogIn()
 
         printf("1. Log In\n");
         printf("2. Exit \n");
-        
+
         choice = getch();
 
         if (choice == '1')
@@ -48,28 +39,29 @@ void LogIn()
     do
     {
         system("cls");
-        if (i) puts("ERROR, Invalid Input!\n");
+        if (i)
+            puts("ERROR, Invalid Input!\n");
         puts("Please enter your username:");
         gets(username);
         puts("Please enter your password:");
         i = 0;
-        
+
         do
         {
             char ch = getch();
-            if (ch == 13) //ASCII enter code
+            if (ch == 13) // ASCII enter code
             {
                 password[i] = '\0';
                 break;
-            } 
+            }
 
             // If Backspace is pressed, remove last character
             if (ch == 8) // ASCII value for Backspace key
-            {  
+            {
                 if (i > 0)
                 {
                     i--;
-                    printf("\b \b");  // Erase previous character and move cursor back
+                    printf("\b \b"); // Erase previous character and move cursor back
                 }
             }
             else
@@ -78,27 +70,26 @@ void LogIn()
                 printf("*");
                 i++;
             }
-        }while (1);    
-            
-        
+        } while (1);
+
         for (i = 0; i < 3; i++)
         {
             if (!strcmp(users[i].username, username) && !strcmp(users[i].password, password))
             {
-                isValid = 1; break;
+                isValid = 1;
+                break;
             }
         }
-        i++; //Just to know if it's not the first time the user enters his information
-    }
-    while (!isValid);
+        i++; // Just to know if it's not the first time the user enters his information
+    } while (!isValid);
     i--;
-    
+
     MainMenu();
 }
 
 int GenerateRand(int min, int max, int nonDuplicates[], int n)
 {
-    if (n >= max - min +1)
+    if (n >= max - min + 1)
     {
         printf("Error: All possible numbers have been generated!\n");
         return -1; // Return an error if all unique numbers have been generated
@@ -123,4 +114,26 @@ int GenerateRand(int min, int max, int nonDuplicates[], int n)
     } while (!isUnique);
 
     return newNumber;
+}
+
+void LoadUsers(user usersData[])
+{
+    FILE *reservationFile = fopen("users.txt", "r");
+    if (reservationFile == NULL)
+    {
+        printf("Error!");
+        getche();
+        return;
+    }
+
+    char x = 'a';
+    int i = 0;
+
+    while (x != EOF)
+    {
+
+        fscanf(reservationFile, "%[^,],%[^\n]", usersData[i].username, usersData[i].password);
+        x = fgetc(reservationFile);
+        i++;
+    }
 }

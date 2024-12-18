@@ -10,6 +10,7 @@
 
 
 void LogIn();
+void LoadUsers(user userData[]);
 
 /// @brief returns a unique random int, USE SRAND(TIME(0)) BEFORE USING THE FUNCTION
 /// @param min minimum number in range
