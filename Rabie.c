@@ -118,8 +118,8 @@ int GenerateRand(int min, int max, int nonDuplicates[], int n)
 
 void LoadUsers(user usersData[])
 {
-    FILE *reservationFile = fopen("users.txt", "r");
-    if (reservationFile == NULL)
+    FILE *userFile = fopen("users.txt", "r");
+    if (userFile == NULL)
     {
         printf("Error!");
         getche();
@@ -132,7 +132,43 @@ void LoadUsers(user usersData[])
     while (x != EOF)
     {
 
-        fscanf(reservationFile, "%s %s", usersData[i].username, usersData[i].password);
+        fscanf(userFile, "%s %s", usersData[i].username, usersData[i].password);
+        x = fgetc(userFile);
+        i++;
+    }
+    fclose(userFile);
+}
+
+void reservationLoad(reservation reservData[100])
+{
+    FILE *reservationFile=fopen("reservations.txt","r");
+    
+    if (reservationFile==NULL)
+    {
+        puts("Error");
+        getch();
+        return;
+    }
+    
+    int i=0;
+    char x = 'a';
+    
+    while (x!=EOF)
+    {
+        fscanf(reservationFile,
+        "%d,%d,%[^,],%[^,],%[^,],%d,%d-%d-%d,%[^,],%s", //The format for the reservations text file
+        &reservData[i].reservationId,
+        &reservData[i].roomNumber,
+        reservData[i].reservationStatus,
+        reservData[i].customerName,
+        reservData[i].customerNational_Id,
+        &reservData[i].numOfNights,
+        &reservData[i].date.days,
+        &reservData[i].date.months,
+        &reservData[i].date.years,
+        reservData[i].customerEmail,
+        reservData[i].mobileNumber);
+
         x = fgetc(reservationFile);
         i++;
     }

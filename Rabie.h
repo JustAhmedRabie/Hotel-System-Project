@@ -19,5 +19,6 @@ void LoadUsers(user usersData[]);
 /// @param n number of the values mustn't be repeated (length of the array)
 /// @return
 int GenerateRand(int min, int max, int nonDuplicates[], int n);
+void reservationLoad(reservation reservData[100]);
 
 #endif
