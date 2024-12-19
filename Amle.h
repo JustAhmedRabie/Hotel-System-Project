@@ -30,6 +30,7 @@ typedef struct
     int roomNumber;
     char reservationStatus[20];
     char customerName[20];
+    char category[20];
     char customerNational_Id[15];
     int numOfNights;
     date date;
