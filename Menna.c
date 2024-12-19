@@ -7,13 +7,21 @@ void LoadRooms(room roomsData[])
 {
     FILE *roomsfile=fopen("rooms.txt","r");
     
-        if(roomsfile==NULL){
+    if(roomsfile==NULL)
+    {
         printf("Error!");
         getche();
-        return;}
-        int i=0;char x='a';
-        while(!feof(roomsfile))
-        {
-        fscanf(roomsfile,"%d %s %d %s",roomsData[i].roomNumber,roomsData[i].category,roomsData[i].price,roomsData[i].status);
+        return;
+    }
+    int i = 0;
+    char x ='a';
+    
+    while(x!= EOF)
+    {
+        fscanf(roomsfile,"%d %s %s %d",&roomsData[i].roomNumber,roomsData[i].status,roomsData[i].category,&roomsData[i].price);
         x = fgetc(roomsfile);
-        i++;}}
+        i++;
+    }
+
+    fclose(roomsfile);
+}

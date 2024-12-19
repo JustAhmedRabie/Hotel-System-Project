@@ -7,6 +7,8 @@
 
 int main(void)
 {
+    room rooms[10];
+    LoadRooms(rooms);
     LogIn();
     return 0;
 }

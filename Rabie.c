@@ -136,4 +136,5 @@ void LoadUsers(user usersData[])
         x = fgetc(reservationFile);
         i++;
     }
+    fclose(reservationFile);
 }
