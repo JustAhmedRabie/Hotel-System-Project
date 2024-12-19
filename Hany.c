@@ -118,5 +118,7 @@ void reservationLoad(reservation reservData[100])
         x = fgetc(reservationFile);
         i++;
     }
+    reservData[i].terminator = -1;
+
     fclose(reservationFile);
 }

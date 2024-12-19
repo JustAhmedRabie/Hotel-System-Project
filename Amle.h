@@ -6,6 +6,7 @@ typedef struct
 {
     char username[20];
     char password[30];
+    int terminator;
 }user;
 
 
@@ -22,6 +23,7 @@ typedef struct
     char status[20];
     char category[20];
     int price;
+    int terminator;
 }room;
 
 typedef struct
@@ -35,6 +37,7 @@ typedef struct
     date date;
     char customerEmail[30];
     char mobileNumber[12];
+    int terminator;
 } reservation;
 
 void RoomReservation();

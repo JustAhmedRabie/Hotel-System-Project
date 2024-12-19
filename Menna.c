@@ -22,6 +22,7 @@ void LoadRooms(room roomsData[])
         x = fgetc(roomsfile);
         i++;
     }
+    roomsData[i].terminator = -1;
 
     fclose(roomsfile);
 }

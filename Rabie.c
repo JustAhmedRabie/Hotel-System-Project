@@ -136,6 +136,9 @@ void LoadUsers(user usersData[])
         x = fgetc(userFile);
         i++;
     }
+    usersData[i].terminator = -1;
+
+
     fclose(userFile);
 }
 
