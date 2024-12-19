@@ -104,7 +104,7 @@ void reservationLoad(reservation reservData[100])
         fscanf(reservationFile,
         "%d,%d,%[^,],%[^,],%[^,],%d,%d-%d-%d,%[^,],%s", //The format for the reservations text file
         &reservData[i].reservationId,
-        &reservData[i].roomNumber,
+        &reservData[i].room.roomNumber,
         reservData[i].reservationStatus,
         reservData[i].customerName,
         reservData[i].customerNational_Id,
