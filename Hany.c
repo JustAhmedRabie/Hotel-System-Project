@@ -85,21 +85,38 @@ void MenuChoiceProcess(char choice)
         puts("Invalid choice!\n");
     }
 }
-/*void reservationLoad(reservation reservData[100]) {
-    system("cls");
-    FILE *reservationFile=fopen("reservation,txt","r");
-    for (int i=0;i<100;i++){
-        fscanf(reservationFile,"%d",&reservData[i].reservationId);
-        fscanf(reservationFile,"%d",&reservData[i].roomNumber);
-        fscanf(reservationFile,"%s",reservData[i].reservationStatus);
-        fscanf(reservationFile,"%s",reservData[i].category);
-        fscanf(reservationFile,"%s",reservData[i].customerName);
-        fscanf(reservationFile,"%ld",&reservData[i].customerNational_Id);
-        fscanf(reservationFile,"%d",&reservData[i].numOfNights);
-        fscanf(reservationFile,"%d",&reservData[i].date.days);
-        fscanf(reservationFile,"%d",&reservData[i].date.months);
-        fscanf(reservationFile,"%d",&reservData[i].date.years);
-        fscanf(reservationFile,"%s",reservData[i].customerEmail);
-        fscanf(reservationFile,"%s",reservData[i].mobileNumber);
+void reservationLoad(reservation reservData[100])
+{
+    FILE *reservationFile=fopen("reservations.txt","r");
+    
+    if (reservationFile==NULL)
+    {
+        puts("Error");
+        getch();
+        return;
     }
-}*/
+    
+    int i=0;
+    char x = 'a';
+    
+    while (x!=EOF)
+    {
+        fscanf(reservationFile,
+        "%d,%d,%[^,],%[^,],%[^,],%d,%d-%d-%d,%[^,],%s", //The format for the reservations text file
+        &reservData[i].reservationId,
+        &reservData[i].roomNumber,
+        reservData[i].reservationStatus,
+        reservData[i].customerName,
+        reservData[i].customerNational_Id,
+        &reservData[i].numOfNights,
+        &reservData[i].date.days,
+        &reservData[i].date.months,
+        &reservData[i].date.years,
+        reservData[i].customerEmail,
+        reservData[i].mobileNumber);
+
+        x = fgetc(reservationFile);
+        i++;
+    }
+    fclose(reservationFile);
+}

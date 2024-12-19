@@ -3,5 +3,5 @@
 #include "Amle.h"
 void MenuChoiceProcess(char choice);
 void MainMenu();
-void reservationLoad(reservation reserDAta[20]);
+void reservationLoad(reservation reservData[100]);
 #endif
