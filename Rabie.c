@@ -224,7 +224,8 @@ void CancelReservation(int error)
     {
         CancelReservation(1);
     }
-    if ("unconfirmed" != StrToLower(resData[i].reservationStatus))
+    puts(StrToLower(resData[i].reservationStatus));
+    if (strcmp("unconfirmed",StrToLower(resData[i].reservationStatus)))
     {
         puts("Error! Either the reservation is checked in or checked out!");
         getch();
