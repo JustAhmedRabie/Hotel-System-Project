@@ -71,6 +71,7 @@ void MenuChoiceProcess(char choice)
     case '6':
         system("cls");
         puts("Querying...");
+        Query();
         break;
     case '7':
         system("cls");
