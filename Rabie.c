@@ -151,25 +151,45 @@ int Save(int error)
 
     puts("Do you want to save the changes you did?");
     puts("type: Y/N");
+    puts("type: E to exit, M to navigate to main menu");
+
     char x = getch();
-    if (x == 'y' || x == 'Y')
+    if (tolower(x) == 'y')
     {
-        puts("Your changes was saved successfuly!, press any key to continue...");
+        puts("Your changes was saved successfully!, press any key to continue...");
         getch();
         system("cls");
         return 1;
     }
-    else if (x == 'n' || x == 'N')
+    else if (tolower(x) == 'n')
     {
         puts("Your changes wasn't saved, press any key to continue...");
         getch();
         system("cls");
         return 0;
     }
+    else if (tolower(x) == 'm') MainMenu();
+    else if (tolower(x) == 'e') exit(0); 
     else
         x = Save(1);
 
     return x;
+}
+
+void DeleteReservationEntry(Reservation resData[100], int i)
+{
+    while (resData[i].terminator != -1)
+    {
+        resData[i] = resData[i + 1];
+        i++;
+    }
+    resData[i].terminator = 10; // Assign the terminator value to anything but -1, because there will be two consecutive -1
+
+    int confirmation = Save(0);
+    if (confirmation)
+    {
+        OverwriteRes(resData);
+    }
 }
 
 void CancelReservation(int error)
@@ -184,9 +204,12 @@ void CancelReservation(int error)
         puts("ERROR, please enter a valid input!");
     }
     puts("Please enter the reservation ID or the Room number you want to cancel:");
+    puts("enter 0 to get to main menu, -1 to exit");
     int input;
     int i = 0;
     scanf("%d", &input);
+    if (input == 0) MainMenu();
+    else if (input == -1) exit(0); 
 
     while (resData[i].terminator != -1)
     {
@@ -201,18 +224,14 @@ void CancelReservation(int error)
     {
         CancelReservation(1);
     }
-    while (resData[i].terminator != -1)
+    puts(StrToLower(resData[i].reservationStatus));
+    if (strcmp("unconfirmed",StrToLower(resData[i].reservationStatus)))
     {
-        resData[i] = resData[i + 1];
-        i++;
+        puts("Error! Either the reservation is checked in or checked out!");
+        getch();
+        CancelReservation(0);
     }
-    resData[i].terminator = 10; // Assign the terminator value to anything but -1, because there will be two consecutive -1
-
-    int confirmation = Save(0);
-    if (confirmation)
-    {
-        OverwriteRes(resData);
-    }
+    DeleteReservationEntry(resData, i);
 }
 
 void OverwriteRes(Reservation resData[])

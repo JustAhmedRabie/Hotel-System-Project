@@ -20,4 +20,6 @@ int GenerateRand(int min, int max, int nonDuplicates[], int n);
 int Save(int error);
 void CancelReservation(int error);
 void OverwriteRes(Reservation resData[]);
+void DeleteReservationEntry(Reservation resData[100], int i);
+
 #endif
