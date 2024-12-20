@@ -124,7 +124,7 @@ void reservationLoad(reservation reservData[100])
 
     fclose(reservationFile);
 }
-char * changeUppertoLowerCase(char * str) {
+char * StrToLower(char * str) {
         char *p =malloc(strlen(str) + 1);
         char* result = p;
         while (*str) {
