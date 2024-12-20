@@ -39,8 +39,12 @@ typedef struct
     char mobileNumber[12];
     int terminator;
 } reservation;
-
-void RoomReservation();
-char UserRoomChoice(int error);
+void GetReservationID();
+char UserRoomChoice();
+int GetCategorie();
+int GetAvailableRoom(char *category);
+void ChangeRoomStatus(int roomNumber,char *status);
+void WriteEditedDataRoom(room NewRoomData[100]);
+int GetNonDuplicatesId(int nonDuplicates[]);
 
 #endif
