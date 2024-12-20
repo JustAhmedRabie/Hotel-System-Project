@@ -58,7 +58,7 @@ void MenuChoiceProcess(char choice)
         break;
     case '3':
         system("cls");
-        puts("Canceling reservation...");
+        CancelReservation(0);
         break;
     case '4':
         system("cls");
@@ -84,6 +84,8 @@ void MenuChoiceProcess(char choice)
     default:
         puts("Invalid choice!\n");
     }
+
+    MainMenu();
 }
 void reservationLoad(reservation reservData[100])
 {

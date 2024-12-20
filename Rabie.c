@@ -138,7 +138,119 @@ void LoadUsers(user usersData[])
     }
     usersData[i].terminator = -1;
 
-
     fclose(userFile);
 }
 
+int Save(int error)
+{
+    if (error)
+    {
+        system("cls");
+        puts("ERROR, please enter a valid input!");
+    }
+
+    puts("Do you want to save the changes you did?");
+    puts("type: Y/N");
+    char x = getch();
+    if (x == 'y' || x == 'Y')
+    {
+        puts("Your changes was saved successfuly!, press any key to continue...");
+        getch();
+        system("cls");
+        return 1;
+    }
+    else if (x == 'n' || x == 'N')
+    {
+        puts("Your changes wasn't saved, press any key to continue...");
+        getch();
+        system("cls");
+        return 0;
+    }
+    else
+        x = Save(1);
+
+    return x;
+}
+
+void CancelReservation(int error)
+{
+
+    reservation resData[100];
+    reservationLoad(resData);
+
+    system("cls");
+    if (error)
+    {
+        puts("ERROR, please enter a valid input!");
+    }
+    puts("Please enter the reservation ID or the Room number you want to cancel:");
+    int input;
+    int i = 0;
+    scanf("%d", &input);
+
+    while (resData[i].terminator != -1)
+    {
+        if (input == resData[i].reservationId || input == resData[i].room.roomNumber)
+        {
+            break;
+        }
+
+        i++;
+    }
+    if (resData[i].terminator == -1)
+    {
+        CancelReservation(1);
+    }
+    while (resData[i].terminator != -1)
+    {
+        resData[i] = resData[i + 1];
+        i++;
+    }
+    resData[i].terminator = 10; // Assign the terminator value to anything but -1, because there will be two consecutive -1
+
+    int confirmation = Save(0);
+    if (confirmation)
+    {
+        OverwriteRes(resData);
+    }
+}
+
+void OverwriteRes(reservation resData[])
+{
+    FILE *reservationFile = fopen("reservations.txt", "w");
+
+    if (reservationFile == NULL)
+    {
+        puts("Error");
+        getch();
+        return;
+    }
+
+    int i = 0;
+
+    while (resData[i].terminator != -1)
+    {
+        fprintf(reservationFile,
+                "%d,%d,%s,%s,%s,%d,%d-%d-%d,%s,%s", // The format for the reservations text file
+                resData[i].reservationId,
+                resData[i].room.roomNumber,
+                resData[i].reservationStatus,
+                resData[i].customerName,
+                resData[i].customerNational_Id,
+                resData[i].numOfNights,
+                resData[i].date.days,
+                resData[i].date.months,
+                resData[i].date.years,
+                resData[i].customerEmail,
+                resData[i].mobileNumber);
+
+        if (resData[i + 1].terminator == -1)
+        {
+            break;
+        }
+
+        fprintf(reservationFile, "%c", '\n');
+        i++;
+    }
+    fclose(reservationFile);
+}

@@ -7,8 +7,6 @@
 #include <conio.h>
 #include "Amle.h"
 
-
-
 void LogIn();
 void LoadUsers(user usersData[]);
 
@@ -19,5 +17,7 @@ void LoadUsers(user usersData[]);
 /// @param n number of the values mustn't be repeated (length of the array)
 /// @return
 int GenerateRand(int min, int max, int nonDuplicates[], int n);
-
+int Save(int error);
+void CancelReservation(int error);
+void OverwriteRes(reservation resData[]);
 #endif
