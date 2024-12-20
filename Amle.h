@@ -15,36 +15,38 @@ typedef struct
     int days;
     int months;
     int years;
-} date;
+} Date;
 
 typedef struct
 {
-    int roomNumber;
+    int number;
     char status[20];
     char category[20];
     int price;
     int terminator;
-}room;
+}Room;
 
 typedef struct
 {
     int reservationId;
-    room room;
+    Room room;
     char reservationStatus[20];
     char customerName[20];
     char customerNational_Id[15];
     int numOfNights;
-    date date;
+    Date date;
     char customerEmail[30];
     char mobileNumber[12];
     int terminator;
-} reservation;
-void GetReservationID();
+} Reservation;
+
+
 char UserRoomChoice();
-int GetCategorie();
-int GetAvailableRoom(char *category);
-void ChangeRoomStatus(int roomNumber,char *status);
-void WriteEditedDataRoom(room NewRoomData[100]);
+void GetAvailableRoom(const char *category, Room *room);
 int GetNonDuplicatesId(int nonDuplicates[]);
+void ChangeRoomStatus(int roomNumber,char *status);
+void WriteEditedDataRoom(Room NewRoomData[100]);
+void GetReservationID();
+void MakeReservation();
 
 #endif

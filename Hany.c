@@ -50,7 +50,7 @@ void MenuChoiceProcess(char choice)
     case '1':
         system("cls");
         // Amle will call Reservation function
-        RoomReservation();
+        MakeReservation();
         break;
     case '2':
         system("cls");
@@ -87,7 +87,7 @@ void MenuChoiceProcess(char choice)
 
     MainMenu();
 }
-void reservationLoad(reservation reservData[100])
+void reservationLoad(Reservation reservData[100])
 {
     FILE *reservationFile=fopen("reservations.txt","r");
     
@@ -106,7 +106,7 @@ void reservationLoad(reservation reservData[100])
         fscanf(reservationFile,
         "%d,%d,%[^,],%[^,],%[^,],%d,%d-%d-%d,%[^,],%s", //The format for the reservations text file
         &reservData[i].reservationId,
-        &reservData[i].room.roomNumber,
+        &reservData[i].room.number,
         reservData[i].reservationStatus,
         reservData[i].customerName,
         reservData[i].customerNational_Id,

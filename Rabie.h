@@ -19,5 +19,5 @@ void LoadUsers(user usersData[]);
 int GenerateRand(int min, int max, int nonDuplicates[], int n);
 int Save(int error);
 void CancelReservation(int error);
-void OverwriteRes(reservation resData[]);
+void OverwriteRes(Reservation resData[]);
 #endif

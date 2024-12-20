@@ -175,7 +175,7 @@ int Save(int error)
 void CancelReservation(int error)
 {
 
-    reservation resData[100];
+    Reservation resData[100];
     reservationLoad(resData);
 
     system("cls");
@@ -190,7 +190,7 @@ void CancelReservation(int error)
 
     while (resData[i].terminator != -1)
     {
-        if (input == resData[i].reservationId || input == resData[i].room.roomNumber)
+        if (input == resData[i].reservationId || input == resData[i].room.number)
         {
             break;
         }
@@ -215,7 +215,7 @@ void CancelReservation(int error)
     }
 }
 
-void OverwriteRes(reservation resData[])
+void OverwriteRes(Reservation resData[])
 {
     FILE *reservationFile = fopen("reservations.txt", "w");
 
@@ -227,13 +227,12 @@ void OverwriteRes(reservation resData[])
     }
 
     int i = 0;
-
     while (resData[i].terminator != -1)
     {
         fprintf(reservationFile,
                 "%d,%d,%s,%s,%s,%d,%d-%d-%d,%s,%s", // The format for the reservations text file
                 resData[i].reservationId,
-                resData[i].room.roomNumber,
+                resData[i].room.number,
                 resData[i].reservationStatus,
                 resData[i].customerName,
                 resData[i].customerNational_Id,

@@ -3,7 +3,7 @@
 #include "Akram.h"
 #include "Amle.h"
 #include "Menna.h"
-void LoadRooms(room roomsData[])
+void LoadRooms(Room roomsData[])
 {
     FILE *roomsfile = fopen("rooms.txt", "r");
 
@@ -18,7 +18,7 @@ void LoadRooms(room roomsData[])
 
     while (x != EOF)
     {
-        fscanf(roomsfile, "%d %s %s %d", &roomsData[i].roomNumber, roomsData[i].status, roomsData[i].category, &roomsData[i].price);
+        fscanf(roomsfile, "%d %s %s %d", &roomsData[i].number, roomsData[i].status, roomsData[i].category, &roomsData[i].price);
         x = fgetc(roomsfile);
         i++;
     }
@@ -55,7 +55,7 @@ int is_vaild_mobil(const char *mobil)
     return 1;
 }
 
-int is_vaild_Date(date date)
+int is_vaild_Date(Date date)
 {
     if (date.years != 2024 && date.years != 2025)
     {
@@ -100,8 +100,9 @@ int is_vaild_Email(const char *email)
         {
             dot_found = 1;
         }
-        return dot_found && at_found;
+
     }
+    return dot_found && at_found;
 }
 
 int is_valid_nationalid(const char *nationalid)
