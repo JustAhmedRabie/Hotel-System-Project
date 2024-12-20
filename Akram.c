@@ -3,3 +3,446 @@
 #include "Akram.h"
 #include "Amle.h"
 #include "Menna.h"
+#include <stdio.h>
+#include <stdlib.h>
+/*void LoadRoams( room *rooms) {
+    int i=0 ;
+    FILE *rooms_file = fopen("Rooms.txt", "r"); //getting the Rooms.txt
+    if (rooms_file == NULL) {
+        printf("Error opening file...might be lost!!");
+        return ; } // handling if the file not found
+    // Read rooms data
+    while (fscanf(rooms_file, "%d %s %s %d", &rooms[i].roomNumber, rooms[i].status, rooms[i].category, &rooms[i].price) != EOF) {
+        i++;
+        if (i == 100) break; // stop after 100 rooms TODO: will replace with text files later and will be determine the threshold
+    } // checking in every line , if
+
+    fclose(rooms_file);
+}*/ // an old loadrooms function , keep it in case of redundancy TODO: might delete it !
+
+
+// Function to convert the name to lowercase and remove extra spaces
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
+
+#define MAX_NAME_LEN 20 //just a threshold , TODO we will determine it later !!
+#define MAX_RESERVATION_COUNT 100
+
+
+
+// Function to convert the name to lowercase and remove extra spaces
+void normalizeName(char *str) { //ok
+        char *src = str;  // Pointer to traverse the input string
+        char *dest = str; // Pointer to write the processed string
+        int inSpace = 0;  // To ensure that repeated spaces are not included
+
+        // Skip leading spaces
+        while (isspace(*src)) {
+            src++;
+        }
+    /* just handling the first and last excessive spaces , the inside spaces is the the
+       user responsibility , only the excessive will be handled !!
+     */
+        // Traverse through the string
+        while (*src) {
+            if (isspace(*src)) {
+                // If it's a space and we're not already in a space sequence
+                if (dest > str && !inSpace) {
+                    *dest++ = ' '; // Add a single space
+                    inSpace = 1;   // Mark that we're in a space sequence , to skip the rest spaces !!
+                }
+            } else {
+                // If it's a regular character, convert to lowercase
+                *dest++ = tolower(*src);
+                inSpace = 0; // Reset space marker
+            }
+            src++;
+        }
+
+        // Null-terminate the modified string
+        *dest = '\0';
+
+        // Remove trailing spaces
+        while (dest > str && isspace(*(dest - 1))) {
+            *(--dest) = '\0';
+        }
+}
+
+// Function to query customer name from reservation list
+int  QueryCustomerbyName(reservation* reserved, char* name, int* indices) {
+    int i = 0;
+    int count = 0;  // To count the number of reservations for the customer
+    normalizeName(name);
+
+    // Check all reserved entries for matching name
+    while (reserved[i].terminator != -1) {
+        if (strcmp(reserved[i].customerName, name) == 0) {
+            indices[count++] = i;  // Store index in indices array
+        }
+        i++;
+    }
+
+    return count; // Return the number of matching reservations
+}
+
+
+void QueryCustomer() {
+    reservation reserved[MAX_RESERVATION_COUNT];
+    reservationLoad(reserved); // Load reservations data
+
+    system("cls");
+
+    int indices[MAX_RESERVATION_COUNT];  // Array to store indices of matching reservations
+    int numOfReservations = 0;  // To store the number of reservations found
+
+    // Loop to allow retrying the search if customer is not found
+    while (numOfReservations == 0) {
+        char Name[MAX_NAME_LEN] = ""; // to reset the name
+
+        // Prompt user for customer name
+        printf("Enter the Customer Name, after filling the name press [Enter]: ");
+        fgets(Name, MAX_NAME_LEN, stdin);
+
+        // Manually remove the newline character if present
+        if (Name[strlen(Name) - 1] == '\n') {
+            Name[strlen(Name) - 1] = '\0'; // Remove the newline character
+        }
+
+        // Querying the customer information
+        printf("Querying The Customer Information...\n");
+
+        numOfReservations = QueryCustomerbyName(reserved, Name, indices);  // Get the number of reservations and store indices
+
+        if (numOfReservations > 0) {
+            printf("-> Personal Information :\n");
+            // Display personal information here
+            printf("===================================================================================================================\n");
+            printf("%-20s%-15s%-30s%s\n", "Name", "Id", "Email", "Phone Number");
+            printf("===================================================================================================================\n");
+            printf("%-20s%-15s%-30s%s\n", reserved[indices[0]].customerName,
+                                          reserved[indices[0]].customerNational_Id,
+                                          reserved[indices[0]].customerEmail,
+                                          reserved[indices[0]].mobileNumber);
+            // Barrier
+            printf("********************************************************************************************************************\n") ;
+            puts("To Proceed To Reservation : Press any button") ;
+            getch(); // a place holder to keep the screen open, will be removed
+            printf("********************************************************************************************************************\n") ;
+            printf("-> Reservation Information :\n");
+            // Display reservation information here
+            // Print table header with proper spacing
+            printf("===================================================================================================================\n");
+            printf("%-20s%-15s%-25s%-25s%s\n",
+                   "Reservation ID",
+                   "Room",
+                   "Number of Nights",
+                   "Date of Reservation",
+                   "Reservation Status");
+            printf("===================================================================================================================\n");
+
+            // Loop through all reservations for this customer
+            for (int j = 0; j < numOfReservations; j++) {
+                int index = indices[j];  // Get the index of each reservation
+                printf("%-20d%-15d%-25d%02d-%02d-%04d%26s\n",
+                       reserved[index].reservationId,
+                       reserved[index].room.roomNumber,
+                       reserved[index].numOfNights,
+                       reserved[index].date.days,
+                       reserved[index].date.months,
+                       reserved[index].date.years,
+                       reserved[index].reservationStatus);
+            }
+            // Barrier
+            printf("********************************************************************************************************************\n") ;
+            puts("To Proceed ,  Press any button") ;
+            getch(); // a place holder to keep the screen open, will be removed
+            printf("********************************************************************************************************************\n") ;
+
+        } else {
+            printf("Customer not found \n");
+            printf("-> Try Again? Press any button\n");
+            printf("-> Quit to Query menu? Press 0\n");
+            printf("-> Your choice ?");
+
+            char option = getch();
+            if (option == '0') {
+                return;  // Exit the function if the user chooses to quit
+            }
+        }
+    }
+}
+// ROOMS SECTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+int  QueryStatusbyGet(room * roomsData, char* Option, int* indices) {
+    int i = 0;
+    int count = 0;  // To count the number of reservations for the customer
+
+    // Check all entries for matching Availability/Reservation
+    while (roomsData[i].terminator != -1) {
+        if (strcmp(roomsData[i].status, Option) == 0) {
+            indices[count++] = i;  // Store index in indices array
+        }
+        i++;
+    }
+
+    return count; // Return the number of matching reservations
+}
+void QueryRoomStatus_A() {
+    room roomsData[MAX_RESERVATION_COUNT] ;
+    LoadRooms(roomsData) ;
+    int indices_A[MAX_RESERVATION_COUNT];  // Array to store indices of matching reservations
+    //char Option [MAX_NAME_LEN] ="Available" ;
+    // Querying the customer information
+    printf("Querying The Customer Information...\n");
+    // Get the number of reservations and store indices
+    int num_Ava = QueryStatusbyGet(roomsData,"Available", indices_A); //getting the number of available
+    if (num_Ava > 0) {                                                         // and the index of each available !!
+        printf("-> Available Rooms:\n");
+        // Just the format
+        printf("+==========+======================+===========\n");
+        printf("| %-8s | %-20s | %-8s |\n", "Room ID", "Category", "Price");
+        printf("+==========+======================+===========\n");
+        for (int i = 0; i < num_Ava; i++) { //Loop to print
+            int index = indices_A[i];
+            printf("| %-8d | %-20s | %-8d |\n",roomsData[index].roomNumber,
+                                                             roomsData[index].category,
+                                                             roomsData[index].price);
+        }
+        printf("********************************************************************************************************************\n") ;
+        puts("To Proceed ,  Press any button") ;
+        getch(); // a place holder to keep the screen open, will be removed
+        printf("********************************************************************************************************************\n") ;
+    }
+    else {
+        printf("No Rooms available !\n");
+        puts("To Proceed ,  Press any button") ;
+        getch();
+    }
+}
+void QueryRoomStatus_R() {
+    room roomsData[MAX_RESERVATION_COUNT] ;
+    LoadRooms(roomsData) ;
+    int indices_R[MAX_RESERVATION_COUNT];  // Array to store indices of matching reservations
+    //char Option [MAX_NAME_LEN] ="Available" ;
+    // Querying the customer information
+    printf("Querying The Customer Information...\n");
+    // Get the number of reservations and store indices
+    int num_Res = QueryStatusbyGet(roomsData,"Reserved", indices_R); //getting the number of available
+    if (num_Res > 0) {                                                         // and the index of each available !!
+        printf("-> Reserved Rooms:\n");
+        // Just the format
+        printf("+==========+======================+===========\n");
+        printf("| %-8s | %-20s | %-8s |\n", "Room ID", "Category", "Price");
+        printf("+==========+======================+===========\n");
+        for (int i = 0; i < num_Res; i++) { //Loop to print
+            int index = indices_R[i];
+            printf("| %-8d | %-20s | %-8d |\n",roomsData[index].roomNumber,
+                                                     roomsData[index].category,
+                                                     roomsData[index].price);
+        }
+        printf("********************************************************************************************************************\n") ;
+        puts("To Proceed ,  Press any button") ;
+        getch(); // a place holder to keep the screen open, will be removed
+        printf("********************************************************************************************************************\n") ;
+    }
+    else {
+        printf("No Rooms available !\n");
+        puts("To Proceed ,  Press any button") ;
+        getch();
+    }
+}
+
+int QueryRoom_Status_ChoiceProcess(char choice) {
+    switch (choice) {
+        case '1':
+            QueryRoomStatus_A();
+        return 1 ;
+        case '2':
+            QueryRoomStatus_R() ;
+        return 2 ;
+        case '3':
+            return 3 ;
+        default:
+            return 0 ;
+    }
+}
+
+void QueryRoomStatus() { // handling status query menu
+    system("cls");
+    int i= 0 ;
+    do
+    {
+        system("cls");
+        if (i)
+            puts("Invalid Input!\n");
+
+        { // Query Rooms Status Menu Prompts
+            printf("*******************************\n") ;
+            printf("Which Category you want to work on  ? ?\n");
+            printf("1. Available\n");
+            printf("2. Reserved\n");
+            printf("3. Exit Room Status Query\n");
+            printf("*******************************\n") ;
+            printf("Please enter your choice (1 - 3) : ");
+        }
+        char choice = getch();
+        if (choice >= '1' && choice <= '3')
+            if (QueryRoom_Status_ChoiceProcess(choice) == 3) { // if 3 then exit to the caller of query
+                system("cls");
+                puts("Exiting...");
+                break;
+            }
+            else continue; /* if 1 or 2 which resemble Number or Status querying ...
+                              return to the query menu if user needs more querying assistance !!*/
+
+        i++; // originally 0 , if there is wrong in inputs , will display error message !!
+    } while (1) ;
+}
+
+/*BY NUMBER section*/
+
+int QueryRoomNumber_get(room* roomsData, int inputNumber ) {
+    int i = 0 ; // index for the while statement search
+
+    // Check all reserved entries for matching number :
+    while (roomsData[i].terminator != -1) {
+        if (roomsData[i].roomNumber == inputNumber ) {
+            return i;
+        }
+        i++;
+    }
+    return -1; // Return -1 if customer not found
+}
+void QueryRoomNumber () {
+    room roomsdata[MAX_NAME_LEN] ;
+    LoadRooms(roomsdata);
+    int inputNumber ;
+    system("cls");
+    printf("Enter the Room Number : ");
+    scanf("%i", &inputNumber); // base detection , not useful here
+    printf("Querying The Room Information...\n");
+    int index = QueryRoomNumber_get(roomsdata, inputNumber);
+    if (index != -1) {
+        printf("+==========+======================+==========+===================+\n");
+        printf("| %-8s | %-20s | %-8s | %-17s |\n", "Room ID", "Category", "Price", "Status");
+        printf("+==========+======================+==========+===================+\n");
+        printf("| %-8d | %-20s | %-8d | %-17s |\n",roomsdata[index].roomNumber
+                                                        ,roomsdata[index].category
+                                                        ,roomsdata[index].price
+                                                        ,roomsdata[index].status) ;
+        printf("+==========+======================+==========+===================+\n");
+        puts("To Proceed , Press any button") ;
+        getch();
+    }
+    else {
+        printf("Room not found \n");
+        printf("-> Try Again? Press any button\n");
+        printf("-> Quit to Query menu? Press 0\n");
+        printf("-> Your choice ?");
+
+        char option = getch();
+        if (option == '0') {
+            return;  // Exit the function if the user chooses to quit
+        }
+    }
+}
+/*Room Menu Seection*/
+int QueryRoom_ChoiceProcess(char choice) {
+
+    switch (choice) {
+        case '1':
+            QueryRoomNumber();
+        return 1 ;
+        case '2':
+            QueryRoomStatus() ;
+        return 2 ;
+        case '3':
+            return 3 ;
+        default:
+            return 0 ;
+    }
+}
+
+void QueryRoom() {
+    /*room roomsData[MAX_RESERVATION_COUNT] ;
+    LoadRooms(roomsData) ; */
+    system("cls");
+    int i= 0 ;
+    do
+    {
+        system("cls");
+        if (i)
+            puts("Invalid Input!\n");
+
+        { // Query Rooms Menu Prompts
+            printf("*******************************\n") ;
+            printf("By what you want to use to query on Rooms ?\n");
+            printf("1. Using Number\n");
+            printf("2. Using Status\n");
+            printf("3. Exit Room Query\n");
+            printf("*******************************\n") ;
+            printf("Please enter your choice (1 - 3) : ");
+        }
+        char choice = getch();
+        if (choice >= '1' && choice <= '3')
+            if (QueryRoom_ChoiceProcess(choice) == 3) { // if 3 then exit to the caller of query
+                system("cls");
+                puts("Exiting...");
+                break;
+            }
+            else continue; /* if 1 or 2 which resemble Number or Status querying ...
+                              return to the query menu if user needs more querying assistance !!*/
+
+        i++; // originally 0 , if there is wrong in inputs , will display error message !!
+    } while (1) ;
+}
+
+
+// MENU SECTION !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+int QueryChoiceProcess(char choice) { //ok
+    switch (choice) {
+        case '1':
+            QueryCustomer();
+            return 1 ;
+        case '2':
+            QueryRoom();
+            return 2 ;
+        case '3':
+            return 3 ;
+        default:
+            return 0 ;
+    }
+}
+
+void Query() { // ok
+    int i= 0 ;
+    do
+    {
+        system("cls");
+        if (i)
+            puts("Invalid Input!\n");
+
+        { // Query Menu Prompts
+            printf("*******************************\n") ;
+            printf("What do you want to query about ?\n");
+            printf("1. Customer\n");
+            printf("2. Room \n");
+            printf("3. Exit\n");
+            printf("*******************************\n") ;
+            printf("Please enter your choice (1 - 3) : ");
+        }
+        char choice = getch();
+        if (choice >= '1' && choice <= '3')
+            if (QueryChoiceProcess(choice) == 3) { // if 3 then exit to the caller of query
+                system("cls");
+                puts("Exiting...");
+                break;
+            }
+            else continue; /* if 1 or 2 which resemble customer or room querying ...
+                              return to the query menu if user needs more querying assistance !!*/
+
+        i++; // originally 0 , if there is wrong in inputs , will display error message !!
+    } while (1) ;
+}
+
+
