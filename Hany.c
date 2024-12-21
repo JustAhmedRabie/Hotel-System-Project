@@ -118,6 +118,8 @@ void reservationLoad(Reservation reservData[100])
         reservData[i].customerEmail,
         reservData[i].mobileNumber);
 
+        reservData[i].room.status== "reserved";
+
         x = fgetc(reservationFile);
         i++;
     }

@@ -21,5 +21,6 @@ int Save(int error);
 void CancelReservation(int error);
 void OverwriteRes(Reservation resData[]);
 void DeleteReservationEntry(Reservation resData[100], int i);
-
+void OverwriteRoom(Room roomData[]);
+void Update(Reservation resData[]);
 #endif

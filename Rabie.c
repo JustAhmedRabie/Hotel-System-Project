@@ -188,8 +188,16 @@ void DeleteReservationEntry(Reservation resData[100], int i)
     int confirmation = Save(0);
     if (confirmation)
     {
-        OverwriteRes(resData);
+        Update(resData);
     }
+}
+
+void Update(Reservation resData[])
+{
+    Room roomData[100];
+    OverwriteRes(resData);
+    LoadRooms(roomData);
+    OverwriteRoom(roomData);
 }
 
 void CancelReservation(int error)
@@ -224,7 +232,6 @@ void CancelReservation(int error)
     {
         CancelReservation(1);
     }
-    puts(StrToLower(resData[i].reservationStatus));
     if (strcmp("unconfirmed",StrToLower(resData[i].reservationStatus)))
     {
         puts("Error! Either the reservation is checked in or checked out!");
@@ -271,4 +278,62 @@ void OverwriteRes(Reservation resData[])
         i++;
     }
     fclose(reservationFile);
+}
+
+void OverwriteRoom(Room roomData[])
+{
+
+    FILE *roomFile = fopen("rooms.txt", "w");
+
+    if (roomFile == NULL)
+    {
+        puts("Error");
+        getch();
+        return;
+    }
+
+    Reservation resData[100];
+    reservationLoad(resData);
+
+    int i = 0;
+    int j = 0;
+    while (roomData[i].terminator != -1)
+    {
+        strcpy(roomData[i].status, "available"); 
+        i++;
+    }
+
+    i = 0;
+    while (resData[i].terminator != -1)
+    {
+        j = 0;
+        while (roomData[j].terminator != -1)
+        {
+            if (roomData[j].number == resData[i].room.number)
+            {
+                strcpy(roomData[j].status,"reserved");
+            }
+            j++;
+        }
+        i++;
+    }
+    i = 0;
+    while (roomData[i].terminator != -1)
+    {
+        fprintf(roomFile,
+                "%d %s %s %d", // The format for the reservations text file
+                roomData[i].number,
+                roomData[i].status,
+                roomData[i].category,
+                roomData[i].price);
+
+        if (roomData[i + 1].terminator == -1)
+        {
+            break;
+        }
+
+        fprintf(roomFile, "%c", '\n');
+        i++;
+    }
+    fclose(roomFile);
 }

@@ -77,7 +77,7 @@ int  QueryCustomerbyName(Reservation* reserved, char* name, int* indices) {
 
     // Check all reserved entries for matching name
     while (reserved[i].terminator != -1) {
-        if (strcmp(reserved[i].customerName, name) == 0) {
+        if ( strcmp(StrToLower(reserved[i].customerName), name) == 0) {
             indices[count++] = i;  // Store index in indices array
         }
         i++;
@@ -179,7 +179,7 @@ int  QueryStatusbyGet(Room * roomsData, char* Option, int* indices) {
 
     // Check all entries for matching Availability/Reservation
     while (roomsData[i].terminator != -1) {
-        if (strcmp(roomsData[i].status, Option) == 0) {
+        if (strcmp(StrToLower(roomsData[i].status), Option) == 0) {
             indices[count++] = i;  // Store index in indices array
         }
         i++;
@@ -195,7 +195,7 @@ void QueryRoomStatus_A() {
     // Querying the customer information
     printf("Querying The Customer Information...\n");
     // Get the number of reservations and store indices
-    int num_Ava = QueryStatusbyGet(roomsData,"Available", indices_A); //getting the number of available
+    int num_Ava = QueryStatusbyGet(roomsData,"available", indices_A); //getting the number of available
     if (num_Ava > 0) {                                                         // and the index of each available !!
         printf("-> Available Rooms:\n");
         // Just the format
@@ -227,7 +227,7 @@ void QueryRoomStatus_R() {
     // Querying the customer information
     printf("Querying The Customer Information...\n");
     // Get the number of reservations and store indices
-    int num_Res = QueryStatusbyGet(roomsData,"Reserved", indices_R); //getting the number of available
+    int num_Res = QueryStatusbyGet(roomsData,"reserved", indices_R); //getting the number of available
     if (num_Res > 0) {                                                         // and the index of each available !!
         printf("-> Reserved Rooms:\n");
         // Just the format
