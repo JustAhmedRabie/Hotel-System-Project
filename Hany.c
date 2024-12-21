@@ -92,7 +92,7 @@ void reservationLoad(Reservation reservData[100])
     
     if (reservationFile==NULL)
     {
-        puts("Error");
+        puts("Error");  //please ... make it more meaningfull :)
         getch();
         return;
     }

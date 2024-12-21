@@ -1,9 +1,9 @@
 ﻿#ifndef AKRAM_H
 #define AKRAM_H
-//void LoadRoams(room *rooms);
-void normalizeName(char *str) ;
-int  QueryCustomerbyName(Reservation* reserved, char* name, int* indices) ;
-void QueryCustomer() ;
+//void LoadRoams(room *rooms); //a redundant function ... use it if you want
+void normalizeName(char *str) ; //standard input
+int QueryCustomerbyName(Reservation* reserved, char* name, int* indices) ; //getting the name
+void QueryCustomer() ; // handle the output
 //ROOMS SECTION
 void QueryRoom() ;
 int QueryRoom_ChoiceProcess(char choice) ;

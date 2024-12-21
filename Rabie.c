@@ -416,14 +416,16 @@ void TrackRoom()
     LoadRooms(roomData);
 
     int i = 0;
-   
+    printf("+==========+======================+==========+===================+\n");
+    printf("| %-8s | %-20s | %-8s | %-17s |\n", "Room ID", "Category", "Price", "Status");
+    printf("+==========+======================+==========+===================+\n");
     while (roomData[i].terminator != -1)
     {
-        printf("%d %s %s %d\n", // The format for the room text file
-                roomData[i].number,
-                roomData[i].status,
-                roomData[i].category,
-                roomData[i].price);
+        printf("| %-8d | %-20s | %-8d | %-17s |\n",roomData[i].number
+                                                        ,roomData[i].category
+                                                        ,roomData[i].price
+                                                        ,roomData[i].status) ;
+        printf("+==========+======================+==========+===================+\n");
 
         i++;
     }
