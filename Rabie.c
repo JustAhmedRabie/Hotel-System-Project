@@ -252,7 +252,7 @@ void OverwriteRes(Reservation resData[])
         return;
     }
     
-    sortRes(resData);
+    SortRes(resData);
     
     int i = 0;
     while (resData[i].terminator != -1)
@@ -357,7 +357,7 @@ int CmpRes(Reservation res1, Reservation res2)
     return 0;
 }
 
-void sortRes(Reservation resData[])
+void SortRes(Reservation resData[])
 {
     int i = 0;
     
