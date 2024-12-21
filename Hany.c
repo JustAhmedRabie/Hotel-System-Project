@@ -49,7 +49,6 @@ void MenuChoiceProcess(char choice)
     {
     case '1':
         system("cls");
-        // Amle will call Reservation function
         MakeReservation();
         break;
     case '2':
@@ -62,7 +61,7 @@ void MenuChoiceProcess(char choice)
         break;
     case '4':
         system("cls");
-        puts("Checking room availability...");
+        TrackRoom();
         break;
     case '5':
         system("cls");
@@ -70,7 +69,6 @@ void MenuChoiceProcess(char choice)
         break;
     case '6':
         system("cls");
-        puts("Querying...");
         Query();
         break;
     case '7':
@@ -127,14 +125,17 @@ void reservationLoad(Reservation reservData[100])
 
     fclose(reservationFile);
 }
-char * StrToLower(char * str) {
-        char *p =malloc(strlen(str) + 1);
-        char* result = p;
-        while (*str) {
-            *p = tolower(*str);
-            p++;
-            str++;
-        }
-        *p='\0';
-        return result;
+
+char* StrToLower(char* str)
+{
+    char* p = malloc(strlen(str) + 1);
+    char* result = p;
+    while (*str)
+    {
+        *p = tolower(*str);
+        p++;
+        str++;
+    }
+    *p = '\0';
+    return result;
 }

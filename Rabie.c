@@ -324,7 +324,7 @@ void OverwriteRoom(Room roomData[])
     while (roomData[i].terminator != -1)
     {
         fprintf(roomFile,
-                "%d %s %s %d", // The format for the reservations text file
+                "%d %s %s %d", // The format for the room text file
                 roomData[i].number,
                 roomData[i].status,
                 roomData[i].category,
@@ -408,4 +408,26 @@ void NormAndCapital(char *str)
 {
     normalizeName(str);
     NameToUpper(str);
+}
+
+void TrackRoom()
+{
+    Room roomData[100];
+    LoadRooms(roomData);
+
+    int i = 0;
+   
+    while (roomData[i].terminator != -1)
+    {
+        printf("%d %s %s %d\n", // The format for the room text file
+                roomData[i].number,
+                roomData[i].status,
+                roomData[i].category,
+                roomData[i].price);
+
+        i++;
+    }
+
+    puts("Press any key to continue:");
+    getch();
 }

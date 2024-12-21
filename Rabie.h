@@ -27,4 +27,5 @@ int CmpRes(Reservation res1, Reservation res2);
 void SortRes(Reservation resData[]);
 void NameToUpper(char *str);
 void NormAndCapital(char *str);
+void TrackRoom();
 #endif
