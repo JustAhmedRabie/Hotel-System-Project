@@ -285,18 +285,8 @@ void OverwriteRes(Reservation resData[])
     fclose(reservationFile);
 }
 
-void OverwriteRoom(Room roomData[])
+void ReservationRoom(Room* roomData) //this function
 {
-
-    FILE *roomFile = fopen("rooms.txt", "w");
-
-    if (roomFile == NULL)
-    {
-        puts("Error");
-        getch();
-        return;
-    }
-
     Reservation resData[100];
     reservationLoad(resData);
 
@@ -325,7 +315,22 @@ void OverwriteRoom(Room roomData[])
         }
         i++;
     }
-    i = 0;
+}
+
+void OverwriteRoom(Room roomData[])
+{
+
+    FILE *roomFile = fopen("rooms.txt", "w");
+
+    if (roomFile == NULL)
+    {
+        puts("Error");
+        getch();
+        return;
+    }
+
+    ReservationRoom(roomData);
+    int i = 0;
     while (roomData[i].terminator != -1)
     {
         fprintf(roomFile,
@@ -437,4 +442,26 @@ void TrackRoom()
 
     puts("Press any key to continue:");
     getch();
+}
+
+void RoomReservation(Reservation resData[])
+{
+    Room roomData[100];
+    LoadRooms(roomData);
+    int i = 0;
+    int j = 0;
+    while (resData[i].terminator != -1)
+    {
+        j = 0;
+        while (roomData[j].terminator != -1)
+        {
+            if (roomData[j].number == resData[i].room.number)
+            {
+                resData[i].room.price = roomData[j].price;
+                strcpy(resData[i].room.category, roomData[j].category);
+            }
+            j++;
+        }
+        i++;
+    }
 }
