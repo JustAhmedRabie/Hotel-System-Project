@@ -257,6 +257,7 @@ void OverwriteRes(Reservation resData[])
     int i = 0;
     while (resData[i].terminator != -1)
     {
+        NormAndCapital(resData[i].customerName);
         fprintf(reservationFile,
                 "%d,%d,%s,%s,%s,%d,%d-%d-%d,%s,%s", // The format for the reservations text file
                 resData[i].reservationId,
@@ -379,4 +380,32 @@ void SortRes(Reservation resData[])
         if (!swap) break;
         i++;
     }
+}
+
+void NameToUpper(char *str) {
+    int flag = 1;
+
+    while (*str)
+    {
+        if (isspace(*str))
+        {
+            flag = 1;
+        }
+        else if (flag && isalpha(*str))
+        {
+            *str = toupper(*str);
+            flag = 0;
+        }
+        else
+        {
+            *str = tolower(*str);
+        }
+        str++;
+    }
+}
+
+void NormAndCapital(char *str)
+{
+    normalizeName(str);
+    NameToUpper(str);
 }

@@ -341,6 +341,7 @@ void QueryRoomNumber () {
         printf("-> Your choice ?");
 
         char option = getch();
+        printf("%c", '\n');
         if (option == '0') {
             return;  // Exit the function if the user chooses to quit
         }
