@@ -23,4 +23,6 @@ void OverwriteRes(Reservation resData[]);
 void DeleteReservationEntry(Reservation resData[100], int i);
 void OverwriteRoom(Room roomData[]);
 void Update(Reservation resData[]);
+int CmpRes(Reservation res1, Reservation res2);
+void sortRes(Reservation resData[]);
 #endif

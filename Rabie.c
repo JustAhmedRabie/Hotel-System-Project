@@ -251,7 +251,9 @@ void OverwriteRes(Reservation resData[])
         getch();
         return;
     }
-
+    
+    sortRes(resData);
+    
     int i = 0;
     while (resData[i].terminator != -1)
     {
@@ -336,4 +338,45 @@ void OverwriteRoom(Room roomData[])
         i++;
     }
     fclose(roomFile);
+}
+
+int CmpRes(Reservation res1, Reservation res2)
+{
+    if (res1.date.years > res2.date.years)
+    {
+        return -1;
+    }else if (res1.date.years < res2.date.years)
+    {
+        return 1;
+    }
+    if (res1.date.months > res2.date.months) return -1;
+    else if (res1.date.months < res2.date.months) return 1;
+    if (res1.date.days > res2.date.days) return -1;
+    else if (res1.date.days < res2.date.days) return 1;
+
+    return 0;
+}
+
+void sortRes(Reservation resData[])
+{
+    int i = 0;
+    
+    while (resData[i-1].terminator != -1)
+    {
+        int swap = 0;
+        int j = 0;
+        while (resData[j-1].terminator != -1)
+        {
+            if (CmpRes(resData[j],resData[j+1]) == 1)
+            {
+                Reservation resTemp = resData[j];
+                resData[j] = resData[j+1];
+                resData[j+1] = resTemp;
+                swap = 1;
+            }
+            j++;
+        }
+        if (!swap) break;
+        i++;
+    }
 }
