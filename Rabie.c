@@ -231,12 +231,14 @@ void CancelReservation(int error)
     if (resData[i].terminator == -1)
     {
         CancelReservation(1);
+        return;
     }
     if (strcmp("unconfirmed",StrToLower(resData[i].reservationStatus)))
     {
         puts("Error! Either the reservation is checked in or checked out!");
         getch();
         CancelReservation(0);
+        return;
     }
     DeleteReservationEntry(resData, i);
 }
@@ -316,6 +318,9 @@ void OverwriteRoom(Room roomData[])
             {
                 strcpy(roomData[j].status,"reserved");
             }
+            if (strcmp(StrToLower(roomData[j].category),"seaview") == 0) roomData[j].price = 1600;
+            if (strcmp(StrToLower(roomData[j].category),"lakeview") == 0) roomData[j].price = 1800;
+            if (strcmp(StrToLower(roomData[j].category),"gardenview") == 0) roomData[j].price = 2000;
             j++;
         }
         i++;
