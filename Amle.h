@@ -40,13 +40,13 @@ typedef struct
     int terminator;
 } Reservation;
 
-
+void MakeReservation();
 char UserRoomChoice();
 void GetAvailableRoom(const char *category, Room *room);
+void GenerateReservationID(Reservation ReservationInfo);
 int GetNonDuplicatesId(int nonDuplicates[]);
 void ChangeRoomStatus(int roomNumber,char *status);
-void WriteEditedDataRoom(Room NewRoomData[100]);
-void GetReservationID();
-void MakeReservation();
+void WriteEditedDataRoom(Room NewRoomData[]);
+void AddReservation(Reservation ReservationInfo);
 
 #endif
