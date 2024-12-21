@@ -361,11 +361,11 @@ void SortRes(Reservation resData[])
 {
     int i = 0;
     
-    while (resData[i-1].terminator != -1)
+    while (resData[i+1].terminator != -1)
     {
         int swap = 0;
         int j = 0;
-        while (resData[j-1].terminator != -1)
+        while (resData[j+1].terminator != -1)
         {
             if (CmpRes(resData[j],resData[j+1]) == 1)
             {
