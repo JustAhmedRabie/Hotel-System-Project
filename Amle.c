@@ -32,12 +32,10 @@ void GetAvailableRoom(const char *category, Room *room)
     room->number = 0;
     int i = 0;
     while (roomData[i].terminator != -1) {
-        //printf("DEBUG - Room: %d, %s, %s, %d\n", roomData[i].number, roomData[i].status, roomData[i].category, roomData[i].price);
-
         if (strcmp(category, roomData[i].category) == 0 && strcmp("available", StrToLower(roomData[i].status)) == 0) {
             //printf("DEBUG - Found available room\n");
             *room = roomData[i];
-            return;;
+            return;
         }
         i++;
     }
@@ -110,7 +108,6 @@ void GenerateReservationID(Reservation ReservationInfo)   //take the other data 
 
     ReservationInfo.reservationId = resId;
     strcpy(ReservationInfo.reservationStatus, "unconfirmed");
-    system("cls");
 
     puts("This is Your information");
     printf("Name: %s\n", ReservationInfo.customerName);
@@ -122,29 +119,18 @@ void GenerateReservationID(Reservation ReservationInfo)   //take the other data 
     printf("reservationStatus: %s\n", ReservationInfo.reservationStatus);
     printf("ReservationID: %d\n", ReservationInfo.reservationId);
     printf("Room: %d\n", ReservationInfo.room.number);
-    getch();
     AddReservation(ReservationInfo);
 }
 
 void MakeReservation() {  //take data & add it to res file
     puts("Reservation...");
-
     Reservation ReservationInfo;
-    /*/////////////////  DEBUG  /////////////////
-    strcpy(ReservationInfo.customerName, "amle");
-    strcpy(ReservationInfo.customerEmail, "amle@gmail.com");
-    strcpy(ReservationInfo.customerNational_Id, "12345678901234");
-    strcpy(ReservationInfo.mobileNumber, "12345678901");
-    ReservationInfo.numOfNights = 3;
-    ReservationInfo.date.days = 1;
-    ReservationInfo.date.months = 2;
-    ReservationInfo.date.years = 2025;
-    //////////////////  DEBUG  /////////////////*/
 
-    int valid;
+    int valid = 0;
     //take name
     do {
         puts("Please enter your Name.");
+        fflush(stdin);
         gets(ReservationInfo.customerName);
         valid = is_vaild_name(ReservationInfo.customerName);
     }while (valid == 0);
@@ -200,8 +186,8 @@ void MakeReservation() {  //take data & add it to res file
     do {
         if (first_time_flag == 0)
             puts("Sorry this Category not available");
-
-        puts("Please enter the Room category.");
+        //system("cls");
+        puts("Room category..");
         char choice_Category = UserRoomChoice();
         switch (choice_Category) {
             case '1':
@@ -223,17 +209,6 @@ void MakeReservation() {  //take data & add it to res file
     }while (ReservationInfo.room.number == 0);
     strcpy(ReservationInfo.room.status, "Reserved");
 
-    /*printf("Reservation Information ready\n");
-    //printf("***************** DEBUG MakeReservation *****************\n");
-    printf("Room: %d, %s, %s, %d\n", ReservationInfo.room.number, ReservationInfo.room.status, ReservationInfo.room.category, ReservationInfo.room.price);
-    printf("customerName: %s\n", ReservationInfo.customerName);
-    printf("customerNationalId: %s\n", ReservationInfo.customerNational_Id);
-    printf("customerEmail: %s\n", ReservationInfo.customerEmail);
-    printf("mobileNumber: %s\n", ReservationInfo.mobileNumber);
-    printf("numOfNights: %d\n", ReservationInfo.numOfNights);
-    printf("Date: %d %d %d\n", ReservationInfo.date.days, ReservationInfo.date.months, ReservationInfo.date.years);
-    //printf("***************** DEBUG MakeReservation *****************\n");
-    getch();*/
     GenerateReservationID(ReservationInfo);
     printf("Reservation Done\n");
     getch();
