@@ -16,8 +16,12 @@ int QueryRoom_Status_ChoiceProcess(char choice) ;
 /*By NUMBER section*/
 void QueryRoomNumber() ;
 int  QueryRoomNumber_get(Room* roomsData, int inputNumber ) ;
-int QueryRoomNumber_guest_get(Reservation *res, int roomnum, int* indices) ;
 //MENU SECTION
 int QueryChoiceProcess(char choice) ;
 void Query() ; // just call it , the others are auxiliary
+// VIEW Details
+void ViewCustomerDetails() ;
+int V_DetailsChoiceProcess(char choice) ;
+void V_Details_Res_ID() ;
+int V_Details_Res_ID_get (Reservation * reservationId , int Res_ID) ;
 #endif

@@ -335,7 +335,7 @@ void QueryRoomNumber () {
     int res_indices[MAX_RESERVATION_COUNT] ;
     system("cls");
     printf("Enter the Room Number : ");
-    scanf("%i", &inputNumber); // base detection , not useful here
+    scanf("%d", &inputNumber);
     printf("Querying The Room Information...\n");
     int index = QueryRoomNumber_get(roomsdata, inputNumber);
     // now to print the results ...
@@ -412,7 +412,6 @@ void QueryRoomNumber () {
         }
     }
 }
-
 
 /*Room Menu Seection*/
 int QueryRoom_ChoiceProcess(char choice) {
@@ -513,4 +512,110 @@ void Query() { // ok
     } while (1) ;
 }
 
+// end of query function
+int V_Details_Res_ID_get (Reservation * reservationId , int Res_ID) { // SEARCH AnD GET THE UNIQUE RESERVATION ID
+    int i = 0 ; // index for the while statement search
 
+    // Check all reserved entries for matching number :
+    while (reservationId[i].terminator != -1) {
+        if (reservationId[i].reservationId == Res_ID ) {
+            return i;
+        }
+        i++;
+    }
+    return -1; // Return -1 if customer not found
+}
+
+void V_Details_Res_ID() {
+    // handling the menu of reservation id retails
+    Reservation res[MAX_RESERVATION_COUNT] ;
+    reservationLoad(res); // Load reservations data
+    int inputID = 0 ;
+    int index = 0 ;
+    system("cls");
+    printf("Reservation ID : \n");
+    index= scanf("%s",&inputID) ;
+    V_Details_Res_ID_get(res, inputID);
+    printf("Querying The Reservations Information...\n");
+    if (index != -1) {
+        printf("===================================================================================================================================================================\n");
+        printf("%-20s%-15s%-15s%-30s%-15s%-25s%-25s%s\n",
+               "Reservation ID",
+               "Guest",
+               "National ID",
+               "Email",
+               "PhoneNumber",
+               "Number of Nights",
+               "Date of Reservation",
+               "Reservation Status");
+        printf("===================================================================================================================================================================\n");
+        printf("%-20d%-15s%-15s%-30s%-15s%-25d%02d-%02d-%04d%26s\n",
+                          res[index].reservationId,
+                          res[index].customerName,
+                          res[index].customerNational_Id,
+                          res[index].customerEmail,
+                          res[index].mobileNumber,
+                          res[index].numOfNights,
+                          res[index].date.days,
+                          res[index].date.months,
+                          res[index].date.years,
+                          res[index].reservationStatus) ;
+    // Barrier
+    printf("********************************************************************************************************************************************************************\n") ;
+    printf("To Proceed , Press any button \n");
+    getch() ;
+    }
+
+    else {
+        printf("No Reservation with that ID! Might be Error in data or just a missing entry\n");
+        printf("To Proceed , Press any button \n");
+        getch() ;
+    }
+    //the end , will return to the caller
+}
+
+int V_DetailsChoiceProcess(char choice) {
+    switch (choice) {
+        case '1':
+            V_Details_Res_ID() ;
+            return 1 ;
+        case '2':
+            QueryRoomNumber();
+            return 2 ;
+        case '3':
+            return 3 ;
+        default:
+            return 0 ;
+    }
+}
+void ViewCustomerDetails(){
+    system("cls");
+    int i= 0 ;
+    do
+    {
+        system("cls");
+        if (i)
+            puts("Invalid Input!\n");
+
+        { // Query Menu Prompts
+            printf("*******************************\n") ;
+            printf("By What you want to view Details ?\n");
+            printf("1. Reservation ID\n");
+            printf("2. Room Number \n");
+            printf("3. Exit\n");
+            printf("*******************************\n") ;
+            printf("Please enter your choice (1 - 3) : ");
+        }
+        char choice = getch();
+        if (choice >= '1' && choice <= '3')
+            if (V_DetailsChoiceProcess(choice) == 3) { // if 3 then exit to the caller of query
+                system("cls");
+                puts("Exiting...");
+                break;
+            }
+            else continue; /* if 1 or 2 which resemble customer or room querying ...
+                              return to the query menu if user needs more querying assistance !!*/
+
+        i++; // originally 0 , if there is wrong in inputs , will display error message !!
+    } while (1) ;
+}
