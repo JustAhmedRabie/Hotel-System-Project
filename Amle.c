@@ -110,6 +110,7 @@ void GenerateReservationID(Reservation ReservationInfo)   //take the other data 
 
     ReservationInfo.reservationId = resId;
     strcpy(ReservationInfo.reservationStatus, "unconfirmed");
+    system("cls");
 
     puts("This is Your information");
     printf("Name: %s\n", ReservationInfo.customerName);
@@ -187,12 +188,12 @@ void MakeReservation() {  //take data & add it to res file
     valid = 0;
     system("cls");
     //take num of nights
-    do {
+    /*do {
         puts("Please enter the Number of Nights.");
         scanf("%d",ReservationInfo.numOfNights);
         valid = valid_room_nights(ReservationInfo.numOfNights);
-    }while (valid == 0);
-    //ReservationInfo.numOfNights = 3;
+    }while (valid == 0);*/
+    ReservationInfo.numOfNights = 3;
 
     int first_time_flag = 1;
     do {
