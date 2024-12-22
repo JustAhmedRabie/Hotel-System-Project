@@ -334,6 +334,7 @@ void QueryRoomNumber () {
     int inputNumber ;
     int res_indices[MAX_RESERVATION_COUNT] ;
     system("cls");
+    fflush(stdin);
     printf("Enter the Room Number : ");
     scanf("%d", &inputNumber);
     printf("Querying The Room Information...\n");
@@ -527,8 +528,9 @@ int V_Details_Res_ID_get (Reservation * reservationId , int Res_ID) { // SEARCH 
 }
 
 void V_Details_Res_ID() {
+    fflush(stdin);
     // handling the menu of reservation id retails
-    Reservation res[MAX_RESERVATION_COUNT] ;
+    Reservation res[MAX_RESERVATION_COUNT];
     reservationLoad(res); // Load reservations data
     int inputID = 0 ;
     system("cls");
