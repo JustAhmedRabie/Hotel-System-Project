@@ -142,10 +142,23 @@ void display_reservations_for_date(Reservation reservations[])
 
     // temporary reservation
 
-   Reservation tempRervation;
-   tempRervation.date.days=21;
-   tempRervation.date.months=12;
-   tempRervation.date.years=2024;
+   Reservation tempReservation;
+   tempReservation.date.days;
+   tempReservation.date.months;
+   tempReservation.date.years;
+   printf("Enter the date (DD MM YYYY):");
+   scanf(" %d %d %d",tempReservation.date.days,tempReservation.date.months,tempReservation.date.years);
+
+   // to check date valid or not
+   if(! is_vaild_Date(tempReservation.date))
+
+   {
+    return;
+   }
+
+   // HEADLINES
+   printf("\n %-15s %-20s %-15s %-30s %-12s\n","Reservation ID","Custumer Name","National ID","Mobile Number","Email","Rservation Date");
+   printf("------------------------------------------------------------------------------------------------------------------------------------\n");
 
 
     
@@ -153,26 +166,33 @@ void display_reservations_for_date(Reservation reservations[])
     
     int i=0;
     // terminator =-1 indicat to end of array
+    int count=0;
 while (reservations[i].terminator!=-1)
 
     {
         Reservation current=reservations[i];
         //c0mpare dates of reservations
-        if(CmpRes(current,tempRervation)==0)
+        if(CmpRes(current,tempReservation)==0)
         {
-            printf("Reservation ID:%s\n",current.reservationId);
-            printf("Custumer Name:%s\n",current.customerName);
-            printf("Reservation Data:%d%d%d\n\n",current.date.days,current.date.months,current.date.years);
+            printf("Reservation ID:%-15s\n",current.reservationId);
+            printf("Custumer Name:%-20s\n",current.customerName);
+            printf("National ID: %-20s \n",reservations[i].customerNational_Id);
+            printf("Mobile Number: %-15s \n",reservations[i].mobileNumber);
+            printf("Email :%-30s \n",reservations[i].customerEmail);
+            printf("Reservation Data:%02d-%02d-%04d\n\n",current.date.days,current.date.months,current.date.years);
             found=1;
+            count++;
         }
         i++; 
         //to check another reservation;
     
     }
-    if(!found)
-    { 
-        printf("No reservation found for the date 21-12-2024\n");
-
+    if(found)
+    {
+        printf(" \n Total Reservations found:%d \n",count);
+    }
+    else{
+        printf("\n No reservation found for this date");
     }
     
 
