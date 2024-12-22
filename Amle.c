@@ -58,13 +58,13 @@ int GetNonDuplicatesId(int nonDuplicates[])
     return length;
 }
 
-void ChangeRoomStatus(int roomNumber,char *status) {
+void ChangeRoomStatus(int roomNumber,char *newStatus) {
     Room buffer[100];
     LoadRooms(buffer);
     int i = 0;
     while (buffer[i].terminator != -1) {
         if (buffer[i].number == roomNumber) {
-            strcpy(buffer[i].status,status);
+            strcpy(buffer[i].status,newStatus);
             break;
         }
         i++;
@@ -241,7 +241,8 @@ void MakeReservation() {  //take data & add it to res file
 }
 
 void CheckOut() {
-    puts("Check Out.");
+    system("cls");
+    puts("Check Out...");
     puts("Please enter your room number or Reservation Id.");
     int input;
     scanf("%d",&input);
@@ -253,7 +254,7 @@ void CheckOut() {
 
     while (reservationData[index].terminator != -1) {
         if (reservationData[index].room.number == input || reservationData[index].reservationId == input) {
-            if (strcmp(StrToLower(reservationData[index].reservationStatus),"unconfirmed") == 0) {
+            if (strcmp(StrToLower(reservationData[index].reservationStatus),"confirmed") == 0) {
                 flag = 1;
                 break;
             }
@@ -264,8 +265,8 @@ void CheckOut() {
     if (flag == 0) {
         fflush(stdin);
         puts("Sorry Your input is Wrong or The reservations is Unconfirmed.");
-        puts("For try again press 1."
-             "For Exit press any character.");
+        puts("Try again press 1.\n"
+             "Exit press any character.");
         char choice = getch();
         if (choice == '1')
             CheckOut();
@@ -291,8 +292,8 @@ void CheckOut() {
 
     //check out done
     puts("The Check Out is Done.");
-    printf("This is your Bill %d.",bill);
-    ChangeRoomStatus(input,"Available"); //edit room status
+    printf("This is your Bill %d.\n",bill);
+    ChangeRoomStatus(roomNumber,"Available"); //edit room status
     DeleteReservationEntry(reservationData,index);
 }
 
