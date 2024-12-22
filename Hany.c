@@ -124,6 +124,7 @@ void reservationLoad(Reservation reservData[100])
     reservData[i].terminator = -1;
 
     fclose(reservationFile);
+    RoomReservation(reservData);
 }
 
 char* StrToLower(char* str)

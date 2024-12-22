@@ -231,12 +231,14 @@ void CancelReservation(int error)
     if (resData[i].terminator == -1)
     {
         CancelReservation(1);
+        return;
     }
     if (strcmp("unconfirmed",StrToLower(resData[i].reservationStatus)))
     {
         puts("Error! Either the reservation is checked in or checked out!");
         getch();
         CancelReservation(0);
+        return;
     }
     DeleteReservationEntry(resData, i);
 }
@@ -283,18 +285,8 @@ void OverwriteRes(Reservation resData[])
     fclose(reservationFile);
 }
 
-void OverwriteRoom(Room roomData[])
+void ReservationRoom(Room* roomData) //this function
 {
-
-    FILE *roomFile = fopen("rooms.txt", "w");
-
-    if (roomFile == NULL)
-    {
-        puts("Error");
-        getch();
-        return;
-    }
-
     Reservation resData[100];
     reservationLoad(resData);
 
@@ -316,11 +308,29 @@ void OverwriteRoom(Room roomData[])
             {
                 strcpy(roomData[j].status,"reserved");
             }
+            if (strcmp(StrToLower(roomData[j].category),"seaview") == 0) roomData[j].price = 1600;
+            if (strcmp(StrToLower(roomData[j].category),"lakeview") == 0) roomData[j].price = 1800;
+            if (strcmp(StrToLower(roomData[j].category),"gardenview") == 0) roomData[j].price = 2000;
             j++;
         }
         i++;
     }
-    i = 0;
+}
+
+void OverwriteRoom(Room roomData[])
+{
+
+    FILE *roomFile = fopen("rooms.txt", "w");
+
+    if (roomFile == NULL)
+    {
+        puts("Error");
+        getch();
+        return;
+    }
+
+    ReservationRoom(roomData);
+    int i = 0;
     while (roomData[i].terminator != -1)
     {
         fprintf(roomFile,
@@ -432,4 +442,26 @@ void TrackRoom()
 
     puts("Press any key to continue:");
     getch();
+}
+
+void RoomReservation(Reservation resData[])
+{
+    Room roomData[100];
+    LoadRooms(roomData);
+    int i = 0;
+    int j = 0;
+    while (resData[i].terminator != -1)
+    {
+        j = 0;
+        while (roomData[j].terminator != -1)
+        {
+            if (roomData[j].number == resData[i].room.number)
+            {
+                resData[i].room.price = roomData[j].price;
+                strcpy(resData[i].room.category, roomData[j].category);
+            }
+            j++;
+        }
+        i++;
+    }
 }

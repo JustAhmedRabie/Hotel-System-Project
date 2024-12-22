@@ -28,4 +28,6 @@ void SortRes(Reservation resData[]);
 void NameToUpper(char *str);
 void NormAndCapital(char *str);
 void TrackRoom();
+void RoomReservation(Reservation resData[]);
+void ReservationRoom(Room* roomData);
 #endif
