@@ -53,7 +53,7 @@ void MenuChoiceProcess(char choice)
         break;
     case '2':
         system("cls");
-        puts("Checking in...");
+        CheckIn();
         break;
     case '3':
         system("cls");
@@ -138,4 +138,89 @@ char* StrToLower(char* str)
     }
     *p = '\0';
     return result;
+}
+
+void CheckIn()
+{
+    system("cls");
+    Reservation reservData[100];
+    reservationLoad(reservData);
+
+    time_t date;
+
+    struct tm* timeinfo;
+    
+    date = time(NULL);
+    timeinfo = localtime(&date);
+
+    Reservation tempReservation;
+    tempReservation.date.days = timeinfo->tm_mday;
+    tempReservation.date.months = timeinfo->tm_mon + 1;
+    tempReservation.date.years = timeinfo->tm_year + 1900;
+    
+    long input;
+
+    do
+    {
+        system("cls");
+        int flag = 0;
+        puts("Enter the reservation ID or room number");
+        puts("Type 0 to go back to the main menu, -1 to exit");
+        scanf("%ld",&input);
+        if (input == 0)
+        {
+            MainMenu();
+            return;
+        }
+        else if (input == -1) exit(0);
+        
+        int i=0;
+        while (reservData[i].terminator != -1)
+        {
+            if (input == reservData[i].reservationId || input == reservData[i].room.number)
+            {
+                if (strcmp(StrToLower(reservData[i].reservationStatus), "confirmed") == 0)
+                {
+                    puts("This reservation is already checked in!");
+                    getch();
+                    break;
+                }
+
+                if (CmpRes(tempReservation, reservData[i]) == 1)
+                {
+                    puts("The reservation date is not due yet!");
+                    getch();
+                    break;
+                }
+                flag = 1;
+                if (Save(0))
+                {
+                    system("cls");
+                    strcpy(reservData[i].reservationStatus, "Confirmed");
+                    OverwriteRes(reservData);
+                    puts ("reservation confirmed!");
+                    puts ("That's your information:");
+                    printf("Name: %s\n", reservData[i].customerName);
+                    printf("NationalId: %s\n", reservData[i].customerNational_Id);
+                    printf("Email: %s\n", reservData[i].customerEmail);
+                    printf("mobileNumber: %s\n", reservData[i].mobileNumber);
+                    printf("numOfNights: %d\n", reservData[i].numOfNights);
+                    printf("Date: %d-%d-%d\n", reservData[i].date.days, reservData[i].date.months, reservData[i].date.years);
+                    printf("reservationStatus: %s\n", reservData[i].reservationStatus);
+                    printf("ReservationID: %d\n", reservData[i].reservationId);
+                    printf("Room: %d\n", reservData[i].room.number);
+                    puts("press any key to continue");
+                    getch();
+                }
+                break;
+            }
+            i++;
+        }
+        int isFound = !(reservData[i].terminator == -1);
+
+        if (!flag) continue;
+        if (!isFound) puts("The input is invalid!");
+        else break;
+    }
+    while (1);
 }

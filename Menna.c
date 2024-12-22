@@ -18,6 +18,10 @@ void LoadRooms(Room roomsData[])
 
     while (x != EOF)
     {
+        if (strcmp(StrToLower(roomsData[i].category),"seaview") == 0) roomsData[i].price = 1600;
+        if (strcmp(StrToLower(roomsData[i].category),"lakeview") == 0) roomsData[i].price = 1800;
+        if (strcmp(StrToLower(roomsData[i].category),"gardenview") == 0) roomsData[i].price = 2000;
+        
         fscanf(roomsfile, "%d %s %s %d", &roomsData[i].number, roomsData[i].status, roomsData[i].category, &roomsData[i].price);
         x = fgetc(roomsfile);
         i++;
