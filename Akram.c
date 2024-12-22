@@ -531,11 +531,10 @@ void V_Details_Res_ID() {
     Reservation res[MAX_RESERVATION_COUNT] ;
     reservationLoad(res); // Load reservations data
     int inputID = 0 ;
-    int index = 0 ;
     system("cls");
     printf("Reservation ID : \n");
-    index= scanf("%s",&inputID) ;
-    V_Details_Res_ID_get(res, inputID);
+    scanf("%d",&inputID) ;
+    int index = V_Details_Res_ID_get(res, inputID);
     printf("Querying The Reservations Information...\n");
     if (index != -1) {
         printf("===================================================================================================================================================================\n");
