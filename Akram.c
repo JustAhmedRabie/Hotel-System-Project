@@ -567,7 +567,8 @@ void V_Details_Res_ID() {
     }
 
     else {
-        printf("No Reservation with that ID! Might be Error in data or just a missing entry\n");
+        printf("No Reservation with that ID! Might be Error in data or just a missing entry\n") ;
+        printf("Or Might Your Entered input is Wrong .... Consider Checking again \n") ;
         printf("To Proceed , Press any button \n");
         getch() ;
     }
