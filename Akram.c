@@ -353,7 +353,7 @@ void QueryRoomNumber () {
 
         // if Room is Reserved .. get the guest associated
 
-        if (strcmp(roomsdata[index].status,"Reserved")== 0) {
+        if (strcmp(StrToLower(roomsdata[index].status),"reserved")== 0) {
            int room_r_data = QueryRoomNumber_guest_get(reservations, inputNumber, res_indices);
            // number of reserved times
             if (room_r_data > 0) {
