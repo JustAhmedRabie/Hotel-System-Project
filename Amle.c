@@ -262,6 +262,7 @@ void CheckOut() {
     }
 
     if (flag == 0) {
+        fflush(stdin);
         puts("Sorry Your input is Wrong or The reservations is Unconfirmed.");
         puts("For try again press 1."
              "For Exit press any character.");
@@ -285,6 +286,7 @@ void CheckOut() {
             bill = roomData[i].price;
             break;
         }
+        i++;
     }
 
     //check out done
