@@ -299,8 +299,21 @@ void QueryRoomStatus() { // handling status query menu
     } while (1) ;
 }
 
-/*BY NUMBER section*/
+/*BY NUMBER section*******************************************************************/
+int QueryRoomNumber_guest_get(Reservation *res, int roomnum, int* indices) {
+    int i = 0;
+    int count = 0;  // To count the number of reservations for the Room and its associated
 
+    // Check all entries for matching room id
+    while (res[i].terminator != -1) {
+        if (res[i].room.number == roomnum) {
+            indices[count++] = i;  // Store index in indices array
+        }
+        i++;
+    }
+
+    return count; // Return the number of matching reservations
+}
 int QueryRoomNumber_get(Room* roomsData, int inputNumber ) {
     int i = 0 ; // index for the while statement search
 
@@ -316,13 +329,19 @@ int QueryRoomNumber_get(Room* roomsData, int inputNumber ) {
 void QueryRoomNumber () {
     Room roomsdata[MAX_NAME_LEN] ;
     LoadRooms(roomsdata);
+    Reservation reservations[MAX_RESERVATION_COUNT] ;
+    reservationLoad(reservations) ;
     int inputNumber ;
+    int res_indices[MAX_RESERVATION_COUNT] ;
     system("cls");
     printf("Enter the Room Number : ");
     scanf("%i", &inputNumber); // base detection , not useful here
     printf("Querying The Room Information...\n");
     int index = QueryRoomNumber_get(roomsdata, inputNumber);
+    // now to print the results ...
+    //room number info
     if (index != -1) {
+        printf("-> Room Information\n");
         printf("+==========+======================+==========+===================+\n");
         printf("| %-8s | %-20s | %-8s | %-17s |\n", "Room ID", "Category", "Price", "Status");
         printf("+==========+======================+==========+===================+\n");
@@ -331,9 +350,55 @@ void QueryRoomNumber () {
                                                         ,roomsdata[index].price
                                                         ,roomsdata[index].status) ;
         printf("+==========+======================+==========+===================+\n");
+
+        // if Room is Reserved .. get the guest associated
+
+        if (strcmp(roomsdata[index].status,"Reserved")== 0) {
+           int room_r_data = QueryRoomNumber_guest_get(reservations, inputNumber, res_indices);
+           // number of reserved times
+            if (room_r_data > 0) {
+                printf("-> Guest-Associated-with-Room Information\n");
+                printf("===================================================================================================================================================================\n");
+                printf("%-20s%-15s%-15s%-30s%-15s%-25s%-25s%s\n",
+                       "Reservation ID",
+                       "Guest",
+                       "National ID",
+                       "Email",
+                       "PhoneNumber",
+                       "Number of Nights",
+                       "Date of Reservation",
+                       "Reservation Status");
+                printf("===================================================================================================================================================================\n");
+                // Loop through all reservations for this customer
+                for (int j = 0; j < room_r_data; j++) {
+                    int index_R_Data = res_indices[j];  // Get the index of each reservation
+                    printf("%-20d%-15s%-15s%-30s%-15s%-25d%02d-%02d-%04d%26s\n",
+                           reservations[index_R_Data].reservationId,
+                           reservations[index_R_Data].customerName,
+                           reservations[index_R_Data].customerNational_Id,
+                           reservations[index_R_Data].customerEmail,
+                           reservations[index_R_Data].mobileNumber,
+                           reservations[index_R_Data].numOfNights,
+                           reservations[index_R_Data].date.days,
+                           reservations[index_R_Data].date.months,
+                           reservations[index_R_Data].date.years,
+                           reservations[index_R_Data].reservationStatus) ;
+                }
+                // Barrier
+                printf("********************************************************************************************************************************************************************\n") ;
+            }
+            else {
+                printf("Error in Data !\n->Room Status is RESERVED but there is no such ID in reservations !!\n");
+            }
+        }
+        else {
+            printf("No Associated Reservations With this Room !! \n") ;
+        }
+        // in any case whilst found reservation or not , error in data .... will return to proceeding checkpoint
         puts("To Proceed , Press any button") ;
         getch();
     }
+    // if room is not found in the first place
     else {
         printf("Room not found \n");
         printf("-> Try Again? Press any button\n");
@@ -347,6 +412,8 @@ void QueryRoomNumber () {
         }
     }
 }
+
+
 /*Room Menu Seection*/
 int QueryRoom_ChoiceProcess(char choice) {
 
