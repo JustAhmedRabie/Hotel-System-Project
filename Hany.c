@@ -65,7 +65,7 @@ void MenuChoiceProcess(char choice)
         break;
     case '5':
         system("cls");
-        puts("Viewing customer details...");
+        ViewCustomerDetails();
         break;
     case '6':
         system("cls");
