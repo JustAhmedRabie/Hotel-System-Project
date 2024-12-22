@@ -48,5 +48,6 @@ int GetNonDuplicatesId(int nonDuplicates[]);
 void ChangeRoomStatus(int roomNumber,char *status);
 void WriteEditedDataRoom(Room NewRoomData[]);
 void AddReservation(Reservation ReservationInfo);
+void CheckOut();
 
 #endif
