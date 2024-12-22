@@ -124,15 +124,15 @@ int is_valid_nationalid(const char *nationalid)
     return 1;
 }
 
-int valid_room_nights(int numOfNights)
+int valid_room_nights(char* numOfNights)
 {
-    if(numOfNights>0 && numOfNights<=30)
+    if (atoi(numOfNights) > 0 && atoi(numOfNights) <= 30)
     {
         return 1;
-        //valid
+        // valid
     }
+    printf("Error!!,The number of nights is invalid.\n please enter number bet.1 and 30.\n");
     return 0;
-    printf("Error!!,The number of nights is invalid./n please enter number bet.1 and 30.\n");
 }
 
 
