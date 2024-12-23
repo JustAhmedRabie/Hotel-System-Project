@@ -8,6 +8,6 @@ int is_vaild_Date(Date date );
 int is_vaild_Email(const char* email);
 int is_valid_nationalid(const char* nationalid);
 int valid_room_nights(char* numOfNights);
-void display_reservations_for_date(Reservation reservations[]);
+void display_reservations_for_date();
 
 #endif

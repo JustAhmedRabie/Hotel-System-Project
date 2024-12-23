@@ -25,16 +25,17 @@ void MainMenu()
             printf("-the main menu : \n");
             printf("1. Reservation\n");
             printf("2. Check in \n");
-            printf("3. Cancel reservation \n");
-            printf("4. Check room availability \n");
-            printf("5. View customer details\n");
-            printf("6. Query\n");
-            printf("7. Reservation report \n");
-            printf("8. Exit \n");
-            printf("Please enter your choice (1 - 8) : ");
+            printf("3. Check out\n");
+            printf("4. Cancel reservation \n");
+            printf("5. Check room availability \n");
+            printf("6. View customer details\n");
+            printf("7. Query\n");
+            printf("8. Reservation report \n");
+            printf("9. Exit \n");
+            printf("Please enter your choice (1 - 9) : ");
         }
         choice = getch();
-        if (choice >= '1' && choice <= '8')
+        if (choice >= '1' && choice <= '9')
             break;
         i++;
     } while (1);
@@ -57,25 +58,29 @@ void MenuChoiceProcess(char choice)
         break;
     case '3':
         system("cls");
-        CancelReservation(0);
+        CheckOut();
         break;
     case '4':
         system("cls");
-        TrackRoom();
+        CancelReservation(0);
         break;
     case '5':
         system("cls");
-        ViewCustomerDetails();
+        TrackRoom();
         break;
     case '6':
         system("cls");
-        Query();
+        ViewCustomerDetails();
         break;
     case '7':
         system("cls");
-        puts("Reporting your reservation...");
+        Query();
         break;
     case '8':
+        system("cls");
+        display_reservations_for_date();
+        break;
+    case '9':
         system("cls");
         puts("Exiting...");
         exit(0);

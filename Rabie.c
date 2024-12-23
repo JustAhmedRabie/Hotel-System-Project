@@ -150,6 +150,7 @@ int Save(int error)
         puts("ERROR, please enter a valid input!");
     }
 
+    printf("\n");
     puts("Do you want to save the changes you did?");
     puts("type: Y/N");
     puts("type: E to exit, M to navigate to main menu");
@@ -177,7 +178,7 @@ int Save(int error)
     return x;
 }
 
-void DeleteReservationEntry(Reservation resData[100], int i)
+int DeleteReservationEntry(Reservation resData[100], int i)
 {
     while (resData[i].terminator != -1)
     {
@@ -190,7 +191,9 @@ void DeleteReservationEntry(Reservation resData[100], int i)
     if (confirmation)
     {
         Update(resData);
+        return 1;
     }
+    else return 0;
 }
 
 void Update(Reservation resData[])

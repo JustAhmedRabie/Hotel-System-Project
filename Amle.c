@@ -118,6 +118,7 @@ void GenerateReservationID(Reservation ReservationInfo)   //take the other data 
     ReservationInfo.reservationId = resId;
     strcpy(ReservationInfo.reservationStatus, "unconfirmed");
 
+    system("cls");
     puts("This is Your information");
     printf("Name: %s\n", ReservationInfo.customerName);
     printf("NationalId: %s\n", ReservationInfo.customerNational_Id);
@@ -128,11 +129,14 @@ void GenerateReservationID(Reservation ReservationInfo)   //take the other data 
     printf("reservationStatus: %s\n", ReservationInfo.reservationStatus);
     printf("ReservationID: %d\n", ReservationInfo.reservationId);
     printf("Room: %d\n", ReservationInfo.room.number);
-    AddReservation(ReservationInfo);
+    if (Save(0))
+    {
+        AddReservation(ReservationInfo);
+    }
+    else return;
 }
 
 void MakeReservation() {  //take data & add it to res file
-    puts("Reservation...");
     Reservation ReservationInfo;
 
     int valid = 0;
@@ -256,12 +260,15 @@ void CheckOut() {
     if (flag == 0) {
         fflush(stdin);
         puts("Sorry Your input is Wrong or The reservations is Unconfirmed.");
-        puts("Try again press 1.\n"
-             "Exit press any character.");
+        puts("To try again press 1.\n"
+             "For main menu type M");
+        puts("To exit type E");
         char choice = getch();
         if (choice == '1')
             CheckOut();
-        else
+        else if (tolower(choice) == 'm')
+            MainMenu();
+        else if (tolower(choice) == 'e')
             exit(0);
     }
 
@@ -282,10 +289,11 @@ void CheckOut() {
     }
 
     //check out done
-    puts("The Check Out is Done.");
-    printf("This is your Bill %d.\n",bill);
-    ChangeRoomStatus(roomNumber,"Available"); //edit room status
-    DeleteReservationEntry(reservationData,index);
+    if (DeleteReservationEntry(reservationData,index))
+    {
+        puts("The Check Out is Done.");
+        printf("This is your Bill %d.\n",bill);
+    }
 }
 
 

@@ -150,34 +150,32 @@ int valid_room_nights(char* numOfNights)
 }
 
 
-void display_reservations_for_date(Reservation reservations[])
+void display_reservations_for_date()
 {
+    Reservation reservations[100];
+    if (!reservationLoad(reservations))
+    {
+        puts("You don't have any reservations!");
+        getch();
+        return;
+    }
     int found=0;
 
     // temporary reservation
 
-   Reservation tempReservation;
-   tempReservation.date.days;
-   tempReservation.date.months;
-   tempReservation.date.years;
-   printf("Enter the date (DD MM YYYY):");
-   scanf(" %d %d %d",tempReservation.date.days,tempReservation.date.months,tempReservation.date.years);
-
-   // to check date valid or not
-   if(! is_vaild_Date(tempReservation.date))
-
-   {
-    return;
-   }
-
-   // HEADLINES
-   printf("\n %-15s %-20s %-15s %-30s %-12s\n","Reservation ID","Custumer Name","National ID","Mobile Number","Email","Rservation Date");
-   printf("------------------------------------------------------------------------------------------------------------------------------------\n");
+    Reservation tempReservation;
+    int valid = 0;
+    system("cls");
+    //take checkin date
+    do
+    {
+        puts("Please enter the Check In date.");
+        scanf("%d %d %d", &tempReservation.date.days, &tempReservation.date.months, &tempReservation.date.years);
+        valid = is_vaild_Date(tempReservation.date);
+    }
+    while (valid == 0);
 
 
-    
-    //to check every reservation in array
-    
     int i=0;
     // terminator =-1 indicat to end of array
     int count=0;
@@ -188,12 +186,15 @@ while (reservations[i].terminator!=-1)
         //c0mpare dates of reservations
         if(CmpRes(current,tempReservation)==0)
         {
-            printf("Reservation ID:%-15s\n",current.reservationId);
-            printf("Custumer Name:%-20s\n",current.customerName);
-            printf("National ID: %-20s \n",reservations[i].customerNational_Id);
-            printf("Mobile Number: %-15s \n",reservations[i].mobileNumber);
+            printf("Reservation %d: ", count+1);
+            printf("Reservation ID:%ld\n",current.reservationId);
+            printf("Room number:%d\n",current.room.number);
+            printf("Room category:%s\n",current.room.category);
+            printf("Customer Name:%s\n",current.customerName);
+            printf("National ID: %s \n",reservations[i].customerNational_Id);
+            printf("Mobile Number: %s \n",reservations[i].mobileNumber);
             printf("Email :%-30s \n",reservations[i].customerEmail);
-            printf("Reservation Data:%02d-%02d-%04d\n\n",current.date.days,current.date.months,current.date.years);
+            printf("\n");
             found=1;
             count++;
         }
@@ -201,13 +202,15 @@ while (reservations[i].terminator!=-1)
         //to check another reservation;
     
     }
-    if(found)
-    {
-        printf(" \n Total Reservations found:%d \n",count);
+  if (found)
+  {
+      printf("found %d reservations", count);
+  }
+  else if (!found)
+      {
+        printf("No reservation found for this date\n");
     }
-    else{
-        printf("\n No reservation found for this date");
-    }
+    getch();
     
 
 }
