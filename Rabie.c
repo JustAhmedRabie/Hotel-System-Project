@@ -32,7 +32,8 @@ void LogIn()
             exit(0);
 
         i++;
-    } while (1);
+    }
+    while (1);
 
     i = 0;
 
@@ -70,7 +71,8 @@ void LogIn()
                 printf("*");
                 i++;
             }
-        } while (1);
+        }
+        while (1);
 
         for (i = 0; i < 3; i++)
         {
@@ -81,7 +83,8 @@ void LogIn()
             }
         }
         i++; // Just to know if it's not the first time the user enters his information
-    } while (!isValid);
+    }
+    while (!isValid);
     i--;
 
     MainMenu();
@@ -112,14 +115,15 @@ int GenerateRand(int min, int max, int nonDuplicates[], int n)
                 break;
             }
         }
-    } while (!isUnique);
+    }
+    while (!isUnique);
 
     return newNumber;
 }
 
 void LoadUsers(user usersData[])
 {
-    FILE *userFile = fopen("users.txt", "r");
+    FILE* userFile = fopen("users.txt", "r");
     if (userFile == NULL)
     {
         printf("Error!");
@@ -132,7 +136,6 @@ void LoadUsers(user usersData[])
 
     while (x != EOF)
     {
-
         fscanf(userFile, "%s %s", usersData[i].username, usersData[i].password);
         x = fgetc(userFile);
         i++;
@@ -171,7 +174,7 @@ int Save(int error)
         return 0;
     }
     else if (tolower(x) == 'm') MainMenu();
-    else if (tolower(x) == 'e') exit(0); 
+    else if (tolower(x) == 'e') exit(0);
     else
         x = Save(1);
 
@@ -185,7 +188,8 @@ int DeleteReservationEntry(Reservation resData[100], int i)
         resData[i] = resData[i + 1];
         i++;
     }
-    resData[i].terminator = 10; // Assign the terminator value to anything but -1, because there will be two consecutive -1
+    resData[i].terminator = 10;
+    // Assign the terminator value to anything but -1, because there will be two consecutive -1
 
     int confirmation = Save(0);
     if (confirmation)
@@ -201,7 +205,8 @@ void Update(Reservation resData[])
     Room roomData[100];
     OverwriteRes(resData);
     LoadRooms(roomData);
-    for (int i = 0; roomData[i].terminator != -1; i++) {
+    for (int i = 0; roomData[i].terminator != -1; i++)
+    {
         roomData[i].number;
         roomData[i].status;
         roomData[i].category;
@@ -212,7 +217,6 @@ void Update(Reservation resData[])
 
 void CancelReservation(int error)
 {
-
     Reservation resData[100];
     reservationLoad(resData);
 
@@ -227,7 +231,7 @@ void CancelReservation(int error)
     int i = 0;
     scanf("%d", &input);
     if (input == 0) MainMenu();
-    else if (input == -1) exit(0); 
+    else if (input == -1) exit(0);
 
     while (resData[i].terminator != -1)
     {
@@ -243,7 +247,7 @@ void CancelReservation(int error)
         CancelReservation(1);
         return;
     }
-    if (strcmp("unconfirmed",StrToLower(resData[i].reservationStatus)))
+    if (strcmp("unconfirmed", StrToLower(resData[i].reservationStatus)))
     {
         puts("Error! Either the reservation is checked in or checked out!");
         getch();
@@ -255,7 +259,7 @@ void CancelReservation(int error)
 
 void OverwriteRes(Reservation resData[])
 {
-    FILE *reservationFile = fopen("reservations.txt", "w");
+    FILE* reservationFile = fopen("reservations.txt", "w");
 
     if (reservationFile == NULL)
     {
@@ -263,9 +267,9 @@ void OverwriteRes(Reservation resData[])
         getch();
         return;
     }
-    
+
     SortRes(resData);
-    
+
     int i = 0;
     while (resData[i].terminator != -1)
     {
@@ -304,7 +308,7 @@ void ReservationRoom(Room* roomData) //this function
     int j = 0;
     while (roomData[i].terminator != -1)
     {
-        strcpy(roomData[i].status, "available"); 
+        strcpy(roomData[i].status, "available");
         i++;
     }
 
@@ -316,11 +320,11 @@ void ReservationRoom(Room* roomData) //this function
         {
             if (roomData[j].number == resData[i].room.number)
             {
-                strcpy(roomData[j].status,"reserved");
+                strcpy(roomData[j].status, "reserved");
             }
-            if (strcmp(StrToLower(roomData[j].category),"seaview") == 0) roomData[j].price = 1600;
-            if (strcmp(StrToLower(roomData[j].category),"lakeview") == 0) roomData[j].price = 1800;
-            if (strcmp(StrToLower(roomData[j].category),"gardenview") == 0) roomData[j].price = 2000;
+            if (strcmp(StrToLower(roomData[j].category), "seaview") == 0) roomData[j].price = 1600;
+            if (strcmp(StrToLower(roomData[j].category), "lakeview") == 0) roomData[j].price = 1800;
+            if (strcmp(StrToLower(roomData[j].category), "gardenview") == 0) roomData[j].price = 2000;
             j++;
         }
         i++;
@@ -329,8 +333,7 @@ void ReservationRoom(Room* roomData) //this function
 
 void OverwriteRoom(Room roomData[])
 {
-
-    FILE *roomFile = fopen("rooms.txt", "w");
+    FILE* roomFile = fopen("rooms.txt", "w");
 
     if (roomFile == NULL)
     {
@@ -366,7 +369,8 @@ int CmpRes(Reservation res1, Reservation res2)
     if (res1.date.years > res2.date.years)
     {
         return -1;
-    }else if (res1.date.years < res2.date.years)
+    }
+    else if (res1.date.years < res2.date.years)
     {
         return 1;
     }
@@ -381,18 +385,18 @@ int CmpRes(Reservation res1, Reservation res2)
 void SortRes(Reservation resData[])
 {
     int i = 0;
-    
-    while (resData[i+1].terminator != -1)
+
+    while (resData[i + 1].terminator != -1)
     {
         int swap = 0;
         int j = 0;
-        while (resData[j+1].terminator != -1)
+        while (resData[j + 1].terminator != -1)
         {
-            if (CmpRes(resData[j],resData[j+1]) == 1)
+            if (CmpRes(resData[j], resData[j + 1]) == 1)
             {
                 Reservation resTemp = resData[j];
-                resData[j] = resData[j+1];
-                resData[j+1] = resTemp;
+                resData[j] = resData[j + 1];
+                resData[j + 1] = resTemp;
                 swap = 1;
             }
             j++;
@@ -402,7 +406,8 @@ void SortRes(Reservation resData[])
     }
 }
 
-void NameToUpper(char *str) {
+void NameToUpper(char* str)
+{
     int flag = 1;
 
     while (*str)
@@ -424,7 +429,7 @@ void NameToUpper(char *str) {
     }
 }
 
-void NormAndCapital(char *str)
+void NormAndCapital(char* str)
 {
     if (str == NULL) return;
     normalizeName(str);
@@ -442,10 +447,10 @@ void TrackRoom()
     printf("+==========+======================+==========+===================+\n");
     while (roomData[i].terminator != -1)
     {
-        printf("| %-8d | %-20s | %-8d | %-17s |\n",roomData[i].number
-                                                        ,roomData[i].category
-                                                        ,roomData[i].price
-                                                        ,roomData[i].status) ;
+        printf("| %-8d | %-20s | %-8d | %-17s |\n", roomData[i].number
+               , roomData[i].category
+               , roomData[i].price
+               , roomData[i].status);
         printf("+==========+======================+==========+===================+\n");
 
         i++;

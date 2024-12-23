@@ -18,7 +18,8 @@ void MainMenu()
         if (i)
             puts("ERROR, Invalid Input!\n");
 
-        { // Main Menu Prompts
+        {
+            // Main Menu Prompts
             printf("*******************************\n");
             printf("*      Heliopolise Hotel      *\n");
             printf("*******************************\n");
@@ -38,7 +39,8 @@ void MainMenu()
         if (choice >= '1' && choice <= '9')
             break;
         i++;
-    } while (1);
+    }
+    while (1);
 
     MenuChoiceProcess(choice);
     getch(); // TODO: remove later, it was just to prevent the console from termination
@@ -91,47 +93,48 @@ void MenuChoiceProcess(char choice)
 
     MainMenu();
 }
+
 int reservationLoad(Reservation reservData[100])
 {
-    FILE *reservationFile=fopen("reservations.txt","r");
-    
-    if (reservationFile==NULL)
+    FILE* reservationFile = fopen("reservations.txt", "r");
+
+    if (reservationFile == NULL)
     {
         fclose(reservationFile);
-        fopen("reservations.txt","w");
+        fopen("reservations.txt", "w");
         fclose(reservationFile);
         reservData[0].terminator = -1;
         return 0;
     }
     char x = fgetc(reservationFile);
 
-    int i=0;
-    if (x==EOF)
+    int i = 0;
+    if (x == EOF)
     {
         reservData[0].terminator = -1;
         fclose(reservationFile);
         return 0;
     }
 
-    fseek(reservationFile,0,SEEK_SET);
+    fseek(reservationFile, 0,SEEK_SET);
     x = 'a';
-    
-    while (x!=EOF)
+
+    while (x != EOF)
     {
         fscanf(reservationFile,
-        "%d,%d,%[^,],%[^,],%[^,],%d,%d-%d-%d,%[^,],%s", //The format for the reservations text file
-        &reservData[i].reservationId,
-        &reservData[i].room.number,
-        reservData[i].reservationStatus,
-        reservData[i].customerName,
-        reservData[i].customerNational_Id,
-        &reservData[i].numOfNights,
-        &reservData[i].date.days,
-        &reservData[i].date.months,
-        &reservData[i].date.years,
-        reservData[i].customerEmail,
-        reservData[i].mobileNumber);
-        
+               "%d,%d,%[^,],%[^,],%[^,],%d,%d-%d-%d,%[^,],%s", //The format for the reservations text file
+               &reservData[i].reservationId,
+               &reservData[i].room.number,
+               reservData[i].reservationStatus,
+               reservData[i].customerName,
+               reservData[i].customerNational_Id,
+               &reservData[i].numOfNights,
+               &reservData[i].date.days,
+               &reservData[i].date.months,
+               &reservData[i].date.years,
+               reservData[i].customerEmail,
+               reservData[i].mobileNumber);
+
         reservData[i].terminator = 10;
         x = fgetc(reservationFile);
         i++;
@@ -166,7 +169,7 @@ void CheckIn()
     time_t date;
 
     struct tm* timeinfo;
-    
+
     date = time(NULL);
     timeinfo = localtime(&date);
 
@@ -174,7 +177,7 @@ void CheckIn()
     tempReservation.date.days = timeinfo->tm_mday;
     tempReservation.date.months = timeinfo->tm_mon + 1;
     tempReservation.date.years = timeinfo->tm_year + 1900;
-    
+
     long input;
 
     do
@@ -183,15 +186,15 @@ void CheckIn()
         int flag = 0;
         puts("Enter the reservation ID or room number");
         puts("Type 0 to go back to the main menu, -1 to exit");
-        scanf("%ld",&input);
+        scanf("%ld", &input);
         if (input == 0)
         {
             MainMenu();
             return;
         }
         else if (input == -1) exit(0);
-        
-        int i=0;
+
+        int i = 0;
         while (reservData[i].terminator != -1)
         {
             if (input == reservData[i].reservationId || input == reservData[i].room.number)
@@ -215,14 +218,15 @@ void CheckIn()
                     system("cls");
                     strcpy(reservData[i].reservationStatus, "Confirmed");
                     OverwriteRes(reservData);
-                    puts ("reservation confirmed!");
-                    puts ("That's your information:");
+                    puts("reservation confirmed!");
+                    puts("That's your information:");
                     printf("Name: %s\n", reservData[i].customerName);
                     printf("NationalId: %s\n", reservData[i].customerNational_Id);
                     printf("Email: %s\n", reservData[i].customerEmail);
                     printf("mobileNumber: %s\n", reservData[i].mobileNumber);
                     printf("numOfNights: %d\n", reservData[i].numOfNights);
-                    printf("Date: %d-%d-%d\n", reservData[i].date.days, reservData[i].date.months, reservData[i].date.years);
+                    printf("Date: %d-%d-%d\n", reservData[i].date.days, reservData[i].date.months,
+                           reservData[i].date.years);
                     printf("reservationStatus: %s\n", reservData[i].reservationStatus);
                     printf("ReservationID: %d\n", reservData[i].reservationId);
                     printf("Room: %d\n", reservData[i].room.number);

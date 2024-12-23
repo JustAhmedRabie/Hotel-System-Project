@@ -3,9 +3,10 @@
 #include "Akram.h"
 #include "Amle.h"
 #include "Menna.h"
+
 void LoadRooms(Room roomsData[])
 {
-    FILE *roomsfile = fopen("rooms.txt", "r");
+    FILE* roomsfile = fopen("rooms.txt", "r");
 
     if (roomsfile == NULL)
     {
@@ -18,11 +19,11 @@ void LoadRooms(Room roomsData[])
 
     while (x != EOF)
     {
-        
-        fscanf(roomsfile, "%d %s %s %d", &roomsData[i].number, roomsData[i].status, roomsData[i].category, &roomsData[i].price);
-        if (strcmp(StrToLower(roomsData[i].category),"seaview") == 0) roomsData[i].price = 1600;
-        if (strcmp(StrToLower(roomsData[i].category),"lakeview") == 0) roomsData[i].price = 1800;
-        if (strcmp(StrToLower(roomsData[i].category),"gardenview") == 0) roomsData[i].price = 2000;
+        fscanf(roomsfile, "%d %s %s %d", &roomsData[i].number, roomsData[i].status, roomsData[i].category,
+               &roomsData[i].price);
+        if (strcmp(StrToLower(roomsData[i].category), "seaview") == 0) roomsData[i].price = 1600;
+        if (strcmp(StrToLower(roomsData[i].category), "lakeview") == 0) roomsData[i].price = 1800;
+        if (strcmp(StrToLower(roomsData[i].category), "gardenview") == 0) roomsData[i].price = 2000;
         x = fgetc(roomsfile);
         i++;
     }
@@ -31,7 +32,7 @@ void LoadRooms(Room roomsData[])
     fclose(roomsfile);
 }
 
-int is_vaild_name(const char *name)
+int is_vaild_name(const char* name)
 {
     if (name[0] == '\0' || name[0] == '\n')
     {
@@ -54,11 +55,10 @@ int is_vaild_name(const char *name)
     return 1;
 }
 
-int is_vaild_mobil(const char *mobil)
+int is_vaild_mobil(const char* mobil)
 {
     for (int i = 0; mobil[i] != '\0'; i++)
     {
-
         if (!isdigit(mobil[i]))
         {
             printf("Please enter digits only\n");
@@ -101,7 +101,7 @@ int is_vaild_Date(Date date)
     return 1;
 }
 
-int is_vaild_Email(const char *email)
+int is_vaild_Email(const char* email)
 {
     int at_found = 0, dot_found = 0;
     for (int i = 0; email[i] != '\0'; i++)
@@ -114,12 +114,11 @@ int is_vaild_Email(const char *email)
         {
             dot_found = 1;
         }
-
     }
     return dot_found && at_found;
 }
 
-int is_valid_nationalid(const char *nationalid)
+int is_valid_nationalid(const char* nationalid)
 {
     if (strlen(nationalid) != 14)
     {
@@ -159,7 +158,7 @@ void display_reservations_for_date()
         getch();
         return;
     }
-    int found=0;
+    int found = 0;
 
     // temporary reservation
 
@@ -176,41 +175,38 @@ void display_reservations_for_date()
     while (valid == 0);
 
 
-    int i=0;
+    int i = 0;
     // terminator =-1 indicat to end of array
-    int count=0;
-while (reservations[i].terminator!=-1)
+    int count = 0;
+    while (reservations[i].terminator != -1)
 
     {
-        Reservation current=reservations[i];
+        Reservation current = reservations[i];
         //c0mpare dates of reservations
-        if(CmpRes(current,tempReservation)==0)
+        if (CmpRes(current, tempReservation) == 0)
         {
-            printf("Reservation %d: ", count+1);
-            printf("Reservation ID:%ld\n",current.reservationId);
-            printf("Room number:%d\n",current.room.number);
-            printf("Room category:%s\n",current.room.category);
-            printf("Customer Name:%s\n",current.customerName);
-            printf("National ID: %s \n",reservations[i].customerNational_Id);
-            printf("Mobile Number: %s \n",reservations[i].mobileNumber);
-            printf("Email :%-30s \n",reservations[i].customerEmail);
+            printf("Reservation %d: ", count + 1);
+            printf("Reservation ID:%ld\n", current.reservationId);
+            printf("Room number:%d\n", current.room.number);
+            printf("Room category:%s\n", current.room.category);
+            printf("Customer Name:%s\n", current.customerName);
+            printf("National ID: %s \n", reservations[i].customerNational_Id);
+            printf("Mobile Number: %s \n", reservations[i].mobileNumber);
+            printf("Email :%-30s \n", reservations[i].customerEmail);
             printf("\n");
-            found=1;
+            found = 1;
             count++;
         }
-        i++; 
+        i++;
         //to check another reservation;
-    
     }
-  if (found)
-  {
-      printf("found %d reservations", count);
-  }
-  else if (!found)
-      {
+    if (found)
+    {
+        printf("found %d reservations", count);
+    }
+    else if (!found)
+    {
         printf("No reservation found for this date\n");
     }
     getch();
-    
-
 }
