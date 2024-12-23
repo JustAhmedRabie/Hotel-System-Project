@@ -258,10 +258,6 @@ void MakeReservation()
 void CheckOut()
 {
     system("cls");
-    puts("Check Out...");
-    puts("Please enter your room number or Reservation Id.");
-    int input;
-    scanf("%d", &input);
 
     Reservation reservationData[100];
 
@@ -271,6 +267,9 @@ void CheckOut()
         getch();
         return;
     }
+    puts("Please enter your room number or Reservation Id.");
+    int input;
+    scanf("%d", &input);
     int index = 0; //need to save to call cancelReservation function
     int flag = 0; //indicate that this process is available or not
 
@@ -291,18 +290,26 @@ void CheckOut()
     {
         fflush(stdin);
         puts("Sorry Your input is Wrong or The reservations is Unconfirmed.");
-        puts("To try again press 1.\n"
-            "For main menu type M");
-        puts("To exit type E");
+        puts("To try again press any key.\n"
+            "For main menu press M");
+        puts("To exit press E");
         char choice = getch();
-        if (choice == '1')
-            CheckOut();
-        else if (tolower(choice) == 'm')
+        
+        if (tolower(choice) == 'm')
+        {
             MainMenu();
+            return;
+        }
         else if (tolower(choice) == 'e')
             exit(0);
+        else
+        {
+            CheckOut();
+            return;
+        }
     }
 
+    int nights = reservationData[index].numOfNights;
     int roomNumber = reservationData[index].room.number; // get if Data true or confirmed
 
     //calc Bill
@@ -317,15 +324,18 @@ void CheckOut()
         if (roomData[i].number == roomNumber)
         {
             bill = roomData[i].price;
+            bill *= nights;
             break;
         }
         i++;
     }
-
     //check out done
     if (DeleteReservationEntry(reservationData, index))
     {
         puts("The Check Out is Done.");
-        printf("This is your Bill %d.\n", bill);
+        printf("Number of Nights: %d\n", nights);
+        printf("Price of the night: %d\n", roomData[i].price);
+        printf("This is your total Bill %d$.\n", bill);
+        getch();
     }
 }

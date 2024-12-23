@@ -173,12 +173,21 @@ int Save(int error)
         system("cls");
         return 0;
     }
-    else if (tolower(x) == 'm') MainMenu();
-    else if (tolower(x) == 'e') exit(0);
+    else if (tolower(x) == 'm')
+    {
+        MainMenu();
+        return 0;
+    }
+    else if (tolower(x) == 'e')
+    {
+        exit(0);
+        return 0;
+    }
     else
+    {
         x = Save(1);
-
-    return x;
+        return x;
+    }
 }
 
 int DeleteReservationEntry(Reservation resData[100], int i)
