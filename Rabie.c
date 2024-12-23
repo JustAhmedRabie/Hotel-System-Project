@@ -89,6 +89,7 @@ void LogIn()
 
 int GenerateRand(int min, int max, int nonDuplicates[], int n)
 {
+    if (n == 0) return (rand() % (max - min + 1) + min);
     if (n >= max - min + 1)
     {
         printf("Error: All possible numbers have been generated!\n");
@@ -197,6 +198,12 @@ void Update(Reservation resData[])
     Room roomData[100];
     OverwriteRes(resData);
     LoadRooms(roomData);
+    for (int i = 0; roomData[i].terminator != -1; i++) {
+        roomData[i].number;
+        roomData[i].status;
+        roomData[i].category;
+        roomData[i].price;
+    }
     OverwriteRoom(roomData);
 }
 
@@ -416,6 +423,7 @@ void NameToUpper(char *str) {
 
 void NormAndCapital(char *str)
 {
+    if (str == NULL) return;
     normalizeName(str);
     NameToUpper(str);
 }

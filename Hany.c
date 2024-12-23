@@ -86,19 +86,30 @@ void MenuChoiceProcess(char choice)
 
     MainMenu();
 }
-void reservationLoad(Reservation reservData[100])
+int reservationLoad(Reservation reservData[100])
 {
     FILE *reservationFile=fopen("reservations.txt","r");
     
     if (reservationFile==NULL)
     {
-        puts("Error");  //please ... make it more meaningfull :)
-        getch();
-        return;
+        fclose(reservationFile);
+        fopen("reservations.txt","w");
+        fclose(reservationFile);
+        reservData[0].terminator = -1;
+        return 0;
     }
-    
+    char x = fgetc(reservationFile);
+
     int i=0;
-    char x = 'a';
+    if (x==EOF)
+    {
+        reservData[0].terminator = -1;
+        fclose(reservationFile);
+        return 0;
+    }
+
+    fseek(reservationFile,0,SEEK_SET);
+    x = 'a';
     
     while (x!=EOF)
     {
@@ -116,7 +127,7 @@ void reservationLoad(Reservation reservData[100])
         reservData[i].customerEmail,
         reservData[i].mobileNumber);
         
-
+        reservData[i].terminator = 10;
         x = fgetc(reservationFile);
         i++;
     }
@@ -124,6 +135,7 @@ void reservationLoad(Reservation reservData[100])
 
     fclose(reservationFile);
     RoomReservation(reservData);
+    return 1;
 }
 
 char* StrToLower(char* str)

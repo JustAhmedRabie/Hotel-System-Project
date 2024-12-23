@@ -44,8 +44,11 @@ void GetAvailableRoom(const char *category, Room *room)
 int GetNonDuplicatesId(int nonDuplicates[])
 {
     Reservation buffer[100];
-    reservationLoad(buffer);
-    srand(0);
+    srand(time(NULL));
+    if (!reservationLoad(buffer))
+    {
+        return 0;
+    }
 
     int length = 0;
     while (buffer[length].terminator != -1)
@@ -87,15 +90,21 @@ void WriteEditedDataRoom(Room NewRoomData[100])
 
 void AddReservation(Reservation ReservationInfo) {  //
     Reservation buffer[100];
-    reservationLoad(buffer);
-
+    if (!reservationLoad(buffer))
+    {
+        buffer[0]= ReservationInfo;
+        buffer[1].terminator = -1;
+        Update(buffer);
+        return;
+    }
     int length = 0;
     while (buffer[length].terminator != -1)
         length++;
-    buffer[length].terminator = 0;
-
+    
     buffer[length] = ReservationInfo;
-    buffer[++length].terminator = -1;
+    buffer[length].terminator = 10;
+
+    buffer[length+1].terminator = -1;
 
     Update(buffer);
 }
@@ -131,7 +140,8 @@ void MakeReservation() {  //take data & add it to res file
     do {
         puts("Please enter your Name.");
         fflush(stdin);
-        gets(ReservationInfo.customerName);
+        fgets(ReservationInfo.customerName, sizeof(ReservationInfo.customerName), stdin);
+        NormAndCapital(ReservationInfo.customerName);
         valid = is_vaild_name(ReservationInfo.customerName);
     }while (valid == 0);
 
@@ -223,7 +233,13 @@ void CheckOut() {
     scanf("%d",&input);
 
     Reservation reservationData[100];
-    reservationLoad(reservationData);
+    
+    if (!reservationLoad(reservationData))
+    {
+        puts("You don't have any reservations yet");
+        getch();
+        return;
+    }
     int index = 0;  //need to save to call cancelReservation function
     int flag = 0;  //indicate that this process is available or not
 

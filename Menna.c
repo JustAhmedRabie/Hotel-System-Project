@@ -33,8 +33,18 @@ void LoadRooms(Room roomsData[])
 
 int is_vaild_name(const char *name)
 {
+    if (name[0] == '\0' || name[0] == '\n')
+    {
+        puts("Invalid name!");
+        return 0;
+    }
     for (int i = 0; name[i] != '\0'; i++)
     {
+        if (strlen(name) < 4)
+        {
+            puts("Invalid name!");
+            return 0;
+        }
         if (!isalpha(name[i]) && name[i] != ' ')
         {
             printf("Please enter letters only\n");
