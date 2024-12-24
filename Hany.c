@@ -216,9 +216,9 @@ void CheckIn()
                 if (Save(0))
                 {
                     system("cls");
-                    strcpy(reservData[i].reservationStatus, "Confirmed");
+                    strcpy(reservData[i].reservationStatus, "confirmed");
                     OverwriteRes(reservData);
-                    puts("reservation confirmed!");
+                    puts("reservation confirmed and checked in successfully!");
                     puts("That's your information:");
                     printf("Name: %s\n", reservData[i].customerName);
                     printf("NationalId: %s\n", reservData[i].customerNational_Id);
