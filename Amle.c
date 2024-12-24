@@ -147,6 +147,17 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
     else return;
 }
 
+void UserChoice() {
+    puts("For Main Menu press 1,"
+    " Exit press 2,"
+    " Continue press any char.");
+    char choice = getch();
+    if (choice == '1')
+        MainMenu();
+    else if (choice == '2')
+        exit(0);
+}
+
 void MakeReservation()
 {
     //take data & add it to res file
@@ -159,6 +170,7 @@ void MakeReservation()
         puts("Please enter your Name.");
         fflush(stdin);
         fgets(ReservationInfo.customerName, sizeof(ReservationInfo.customerName), stdin);
+        UserChoice();
         NormAndCapital(ReservationInfo.customerName);
         valid = is_vaild_name(ReservationInfo.customerName);
     }
@@ -171,6 +183,7 @@ void MakeReservation()
     {
         puts("Please enter your National Id.");
         scanf("%s", ReservationInfo.customerNational_Id);
+        UserChoice();
         valid = is_valid_nationalid(ReservationInfo.customerNational_Id);
     }
     while (valid == 0);
@@ -182,6 +195,7 @@ void MakeReservation()
     {
         puts("Please enter your Email.");
         scanf("%s", ReservationInfo.customerEmail);
+        UserChoice();
         valid = is_vaild_Email(ReservationInfo.customerEmail);
     }
     while (valid == 0);
@@ -193,6 +207,7 @@ void MakeReservation()
     {
         puts("Please enter your Mobile Number.");
         scanf("%s", ReservationInfo.mobileNumber);
+        UserChoice();
         valid = is_vaild_mobil(ReservationInfo.mobileNumber);
     }
     while (valid == 0);
@@ -204,6 +219,7 @@ void MakeReservation()
     {
         puts("Please enter the Check In date.");
         scanf("%d %d %d", &ReservationInfo.date.days, &ReservationInfo.date.months, &ReservationInfo.date.years);
+        UserChoice();
         valid = is_vaild_Date(ReservationInfo.date);
     }
     while (valid == 0);
@@ -215,6 +231,7 @@ void MakeReservation()
     {
         puts("Please enter the Number of Nights.");
         scanf("%s", buffer);
+        UserChoice();
         valid = valid_room_nights(buffer);
     }
     while (valid == 0);
