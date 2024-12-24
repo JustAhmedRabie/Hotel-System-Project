@@ -147,14 +147,10 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
     else return;
 }
 
-void UserChoice() {
-    puts("For Main Menu press 1,"
-    " Exit press 2,"
-    " Continue press any char.");
-    char choice = getch();
-    if (choice == '1')
+void UserChoice(int choice) {
+    if (choice == -1)
         MainMenu();
-    else if (choice == '2')
+    else if (choice == -2)
         exit(0);
 }
 
@@ -162,6 +158,8 @@ void MakeReservation()
 {
     //take data & add it to res file
     Reservation ReservationInfo;
+    puts("for Main menu -1\n"
+         "for Exit -2");
 
     int valid = 0;
     //take name
@@ -170,7 +168,7 @@ void MakeReservation()
         puts("Please enter your Name.");
         fflush(stdin);
         fgets(ReservationInfo.customerName, sizeof(ReservationInfo.customerName), stdin);
-        UserChoice();
+        UserChoice(atoi(ReservationInfo.customerName));
         NormAndCapital(ReservationInfo.customerName);
         valid = is_vaild_name(ReservationInfo.customerName);
     }
@@ -183,7 +181,7 @@ void MakeReservation()
     {
         puts("Please enter your National Id.");
         scanf("%s", ReservationInfo.customerNational_Id);
-        UserChoice();
+        UserChoice(atoi(ReservationInfo.customerNational_Id));
         valid = is_valid_nationalid(ReservationInfo.customerNational_Id);
     }
     while (valid == 0);
@@ -195,7 +193,7 @@ void MakeReservation()
     {
         puts("Please enter your Email.");
         scanf("%s", ReservationInfo.customerEmail);
-        UserChoice();
+        UserChoice(atoi(ReservationInfo.customerEmail));
         valid = is_vaild_Email(ReservationInfo.customerEmail);
     }
     while (valid == 0);
@@ -207,7 +205,7 @@ void MakeReservation()
     {
         puts("Please enter your Mobile Number.");
         scanf("%s", ReservationInfo.mobileNumber);
-        UserChoice();
+        UserChoice(atoi(ReservationInfo.mobileNumber));
         valid = is_vaild_mobil(ReservationInfo.mobileNumber);
     }
     while (valid == 0);
@@ -218,8 +216,11 @@ void MakeReservation()
     do
     {
         puts("Please enter the Check In date.");
-        scanf("%d %d %d", &ReservationInfo.date.days, &ReservationInfo.date.months, &ReservationInfo.date.years);
-        UserChoice();
+        scanf("%d", &ReservationInfo.date.days);
+        UserChoice(ReservationInfo.date.days);
+        scanf("%d", &ReservationInfo.date.months);
+        scanf("%d", &ReservationInfo.date.years);
+
         valid = is_vaild_Date(ReservationInfo.date);
     }
     while (valid == 0);
@@ -231,7 +232,7 @@ void MakeReservation()
     {
         puts("Please enter the Number of Nights.");
         scanf("%s", buffer);
-        UserChoice();
+        UserChoice(atoi(buffer));
         valid = valid_room_nights(buffer);
     }
     while (valid == 0);
