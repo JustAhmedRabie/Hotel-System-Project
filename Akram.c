@@ -103,14 +103,14 @@ void QueryCustomer()
     Reservation reserved[MAX_RESERVATION_COUNT];
     reservationLoad(reserved); // Load reservations data
 
-    system("cls");
-
     int indices[MAX_RESERVATION_COUNT]; // Array to store indices of matching reservations
     int numOfReservations = 0; // To store the number of reservations found
 
     // Loop to allow retrying the search if customer is not found
     while (numOfReservations == 0)
     {
+        fflush(stdin);
+        system("cls");
         char Name[MAX_NAME_LEN] = ""; // to reset the name
 
         // Prompt user for customer name
@@ -189,7 +189,7 @@ void QueryCustomer()
             printf("Customer not found \n");
             printf("-> Try Again? Press any button\n");
             printf("-> Quit to Query menu? Press 0\n");
-            printf("-> Your choice ?");
+            printf("-> Your choice ?\n");
 
             char option = getch();
             if (option == '0')
