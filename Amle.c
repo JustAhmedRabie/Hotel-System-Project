@@ -122,11 +122,16 @@ void AddReservation(Reservation ReservationInfo)
 
 void GenerateReservationID(Reservation ReservationInfo) //take the other data of user to collect all data
 {
+    int resId;
+   
+    if (ReservationInfo.reservationId == 0)
+    {
     int nonDuplicates[100];
     int length = GetNonDuplicatesId(nonDuplicates);
-    int resId = 100000 + GenerateRand(10000, 99000, nonDuplicates, length); //index + 1   index <-> len of nonDup
-
+    resId = 100000 + GenerateRand(10000, 99000, nonDuplicates, length); //index + 1   index <-> len of nonDup
     ReservationInfo.reservationId = resId;
+    }
+
     strcpy(ReservationInfo.reservationStatus, "unconfirmed");
 
     system("cls");
@@ -154,7 +159,7 @@ void UserChoice(int choice) {
         exit(0);
 }
 
-void MakeReservation()
+void MakeReservation(int reservID)
 {
     //take data & add it to res file
     Reservation ReservationInfo;
@@ -267,7 +272,8 @@ void MakeReservation()
     }
     while (ReservationInfo.room.number == 0);
     strcpy(ReservationInfo.room.status, "Reserved");
-
+    
+    ReservationInfo.reservationId = reservID;
     GenerateReservationID(ReservationInfo);
     printf("Reservation Done\n");
     getch();
