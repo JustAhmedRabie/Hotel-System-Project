@@ -16,14 +16,15 @@ void MainMenu()
     {
         system("cls");
         if (i)
-            puts("ERROR, Invalid Input!\n");
+            puts(RED "ERROR, Invalid Input!\n" RESET);
 
         {
             // Main Menu Prompts
-            printf("*******************************\n");
-            printf("*      Heliopolise Hotel      *\n");
-            printf("*******************************\n");
-            printf("-the main menu : \n");
+            printf(GREEN "*******************************\n" RESET);
+            printf(GREEN "*      Heliopolise Hotel      *\n" RESET);
+            printf(GREEN "*******************************\n" RESET);
+            printf("\n");
+            printf(CYAN " * Main menu * \n" RESET);
             printf("1. Reservation\n");
             printf("2. Check in \n");
             printf("3. Check out\n");
@@ -40,11 +41,9 @@ void MainMenu()
         if (choice >= '0' && choice <= '9')
             break;
         i++;
-    }
-    while (1);
+    } while (1);
 
     MenuChoiceProcess(choice);
-    getch(); // TODO: remove later, it was just to prevent the console from termination
 }
 
 void MenuChoiceProcess(char choice)
@@ -101,13 +100,12 @@ void MenuChoiceProcess(char choice)
 
 int reservationLoad(Reservation reservData[100])
 {
-    FILE* reservationFile = fopen("reservations.txt", "r");
+    FILE *reservationFile = fopen("reservations.txt", "r");
 
     if (reservationFile == NULL)
     {
-        fclose(reservationFile);
-        fopen("reservations.txt", "w");
-        fclose(reservationFile);
+        FILE *createdFile = fopen("reservations.txt", "w");
+        fclose(createdFile);
         reservData[0].terminator = -1;
         return 0;
     }
@@ -122,13 +120,13 @@ int reservationLoad(Reservation reservData[100])
         return 0;
     }
 
-    fseek(reservationFile, 0,SEEK_SET);
+    fseek(reservationFile, 0, SEEK_SET);
     x = 'a';
 
     while (x != EOF)
     {
         fscanf(reservationFile,
-               "%d,%d,%[^,],%[^,],%[^,],%d,%d-%d-%d,%[^,],%s", //The format for the reservations text file
+               "%d,%d,%[^,],%[^,],%[^,],%d,%d-%d-%d,%[^,],%s", // The format for the reservations text file
                &reservData[i].reservationId,
                &reservData[i].room.number,
                reservData[i].reservationStatus,
@@ -152,10 +150,10 @@ int reservationLoad(Reservation reservData[100])
     return 1;
 }
 
-char* StrToLower(char* str)
+char *StrToLower(char *str)
 {
-    char* p = malloc(strlen(str) + 1);
-    char* result = p;
+    char *p = malloc(strlen(str) + 1);
+    char *result = p;
     while (*str)
     {
         *p = tolower(*str);
@@ -172,14 +170,14 @@ void CheckIn()
     Reservation reservData[100];
     if (!reservationLoad(reservData))
     {
-        puts(RED"You don't have any reservations yet"RESET);
+        puts(RED "You don't have any reservations yet" RESET);
         getch();
         return;
     }
 
     time_t date;
 
-    struct tm* timeinfo;
+    struct tm *timeinfo;
 
     date = time(NULL);
     timeinfo = localtime(&date);
@@ -188,7 +186,7 @@ void CheckIn()
     tempReservation.date.days = timeinfo->tm_mday;
     tempReservation.date.months = timeinfo->tm_mon + 1;
     tempReservation.date.years = timeinfo->tm_year + 1900;
-    puts("Check-in: ");
+    puts(CYAN "Check-in: " RESET);
     long input;
 
     do
@@ -205,7 +203,8 @@ void CheckIn()
             MainMenu();
             return;
         }
-        else if (input == -2) exit(0);
+        else if (input == -2)
+            exit(0);
 
         int i = 0;
         while (reservData[i].terminator != -1)
@@ -214,14 +213,14 @@ void CheckIn()
             {
                 if (strcmp(StrToLower(reservData[i].reservationStatus), "confirmed") == 0)
                 {
-                    puts("This reservation is already checked in!");
+                    puts(YELLOW "This reservation is already checked in!" RESET);
                     getch();
                     break;
                 }
 
                 if (CmpRes(tempReservation, reservData[i]) == 1)
                 {
-                    puts("The reservation date is not due yet!");
+                    puts(RED "The reservation date is not due yet!" RESET);
                     getch();
                     break;
                 }
@@ -231,8 +230,8 @@ void CheckIn()
                     system("cls");
                     strcpy(reservData[i].reservationStatus, "confirmed");
                     OverwriteRes(reservData);
-                    puts("reservation confirmed and checked in successfully!");
-                    puts("That's your information:");
+                    puts(GREEN "reservation confirmed and checked in successfully!" RESET);
+                    puts(YELLOW "That's your information:" RESET);
                     printf("Name: %s\n", reservData[i].customerName);
                     printf("NationalId: %s\n", reservData[i].customerNational_Id);
                     printf("Email: %s\n", reservData[i].customerEmail);
@@ -252,9 +251,11 @@ void CheckIn()
         }
         int isFound = !(reservData[i].terminator == -1);
 
-        if (!isFound) puts("The input is invalid!");
-        if (!flag) continue;
-        else break;
-    }
-    while (1);
+        if (!isFound)
+            puts(RED "The input is invalid!" RESET);
+        if (!flag)
+            continue;
+        else
+            break;
+    } while (1);
 }
