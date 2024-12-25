@@ -170,7 +170,12 @@ void CheckIn()
 {
     system("cls");
     Reservation reservData[100];
-    reservationLoad(reservData);
+    if (!reservationLoad(reservData))
+    {
+        puts(RED"You don't have any reservations yet"RESET);
+        getch();
+        return;
+    }
 
     time_t date;
 

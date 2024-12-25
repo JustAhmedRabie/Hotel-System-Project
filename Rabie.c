@@ -19,7 +19,7 @@ void LogIn()
     {
         system("cls");
         if (i)
-            puts("ERROR, Invalid Input!\n");
+            puts(RED"ERROR, Invalid Input!\n"RESET);
 
         printf("1. Log In\n");
         printf("2. Exit \n");
@@ -41,7 +41,7 @@ void LogIn()
     {
         system("cls");
         if (i)
-            puts("ERROR, Invalid Input!\n");
+            puts(RED"ERROR, Invalid Input!\n"RESET);
         puts("Please enter your username:");
         gets(username);
         puts("Please enter your password:");
@@ -95,7 +95,7 @@ int GenerateRand(int min, int max, int nonDuplicates[], int n)
     if (n == 0) return (rand() % (max - min + 1) + min);
     if (n >= max - min + 1)
     {
-        printf("Error: All possible numbers have been generated!\n");
+        printf(RED"Error: All possible numbers have been generated!\n"RESET);
         return -1; // Return an error if all unique numbers have been generated
     }
     int newNumber;
@@ -126,7 +126,7 @@ void LoadUsers(user usersData[])
     FILE* userFile = fopen("users.txt", "r");
     if (userFile == NULL)
     {
-        printf("Error!");
+        printf(RED"Error! USERS FILE NOT FOUND"RESET);
         getche();
         return;
     }
@@ -150,24 +150,24 @@ int Save(int error)
     if (error)
     {
         system("cls");
-        puts("ERROR, please enter a valid input!");
+        puts(RED"ERROR, please enter a valid input!"RESET);
     }
 
-    puts("Do you want to save the changes you did?");
-    puts("type: Y/N");
-    puts("type: E to exit, M to navigate to main menu");
+    puts(YELLOW"Do you want to save the changes you did?"RESET);
+    puts(YELLOW"type: Y/N"RESET);
+    puts(YELLOW"type: E to exit, M to navigate to main menu"RESET);
 
     char x = getch();
     if (tolower(x) == 'y')
     {
-        puts("Your changes was saved successfully!, press any key to continue...");
+        puts(CYAN"Your changes was saved successfully!, press any key to continue..."RESET);
         getch();
         system("cls");
         return 1;
     }
     else if (tolower(x) == 'n')
     {
-        puts("Your changes wasn't saved, press any key to continue...");
+        puts(GREEN"Your changes wasn't saved, press any key to continue..."RESET);
         getch();
         system("cls");
         return 0;
@@ -189,7 +189,7 @@ int Save(int error)
     }
 }
 
-void DeleteReservationEntry(Reservation resData[100], int i)
+void DeleteReservationEntry(Reservation resData[], int i)
 {
     while (resData[i].terminator != -1)
     {
@@ -219,12 +219,17 @@ void Update(Reservation resData[])
 void CancelReservation(int error)
 {
     Reservation resData[100];
-    reservationLoad(resData);
+    if (!reservationLoad(resData))
+    {
+        puts(RED"You don't have any reservations yet"RESET);
+        getch();
+        return;
+    }
 
     system("cls");
     if (error)
     {
-        puts("ERROR, please enter a valid input!");
+        puts(RED"ERROR, please enter a valid input!"RESET);
     }
     puts("Please enter the reservation ID or the Room number you want to cancel:");
     puts("enter 0 to get to main menu, -1 to exit");
@@ -250,7 +255,7 @@ void CancelReservation(int error)
     }
     if (strcmp("unconfirmed", StrToLower(resData[i].reservationStatus)))
     {
-        puts("Error! Either the reservation is checked in or checked out!");
+        puts(RED"Error! Either the reservation is checked in or checked out!"RESET);
         getch();
         CancelReservation(0);
         return;
@@ -341,7 +346,7 @@ void OverwriteRoom(Room roomData[])
 
     if (roomFile == NULL)
     {
-        puts("Error");
+        puts(RED"Error! ROOMS FILE NOT FOUND"RESET);
         getch();
         return;
     }
@@ -388,6 +393,8 @@ int CmpRes(Reservation res1, Reservation res2)
 
 void SortRes(Reservation resData[])
 {
+    if (resData == NULL || resData[0].terminator == -1) return;
+    
     int i = 0;
 
     while (resData[i + 1].terminator != -1)
@@ -491,7 +498,12 @@ void EditReservation()
     Reservation reservData[100];
     Reservation reservBackup[100];
     reservationLoad(reservBackup);
-    reservationLoad(reservData);
+    if (!reservationLoad(reservData))
+    {
+        puts(RED"You don't have any reservations yet"RESET);
+        getch();
+        return;
+    }
     long input;
     system("cls");
     puts("Editing reservation");
@@ -544,7 +556,7 @@ void EditReservation()
         }
         int isFound = !(reservData[i].terminator == -1);
 
-        if (!isFound) puts("The input is invalid!");
+        if (!isFound) puts(RED"The input is invalid!"RESET);
         if (!flag) continue;
         else break;
     }
