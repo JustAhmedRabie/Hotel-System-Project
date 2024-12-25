@@ -198,7 +198,7 @@ void DeleteReservationEntry(Reservation resData[100], int i)
     }
     resData[i].terminator = 10;
     // Assign the terminator value to anything but -1, because there will be two consecutive -1
-        Update(resData);
+    Update(resData);
 }
 
 void Update(Reservation resData[])
@@ -494,10 +494,9 @@ void EditReservation()
     reservationLoad(reservData);
     long input;
     system("cls");
-        puts("Editing reservation");
+    puts("Editing reservation");
     do
     {
-        
         int flag = 0;
         puts("Enter the reservation ID or room number");
         puts("Type -1 to go back to the main menu, -2 to exit");
@@ -527,9 +526,9 @@ void EditReservation()
 
                 system("cls");
                 puts("Please enter you new data:");
-                    long ID = reservData[i].reservationId;
-                    DeleteReservationEntry(reservData, i);
-                    MakeReservation(ID);
+                long ID = reservData[i].reservationId;
+                DeleteReservationEntry(reservData, i);
+                MakeReservation(ID);
                 if (Save(0))
                 {
                     puts("Reservation edited successfully!");
@@ -538,7 +537,7 @@ void EditReservation()
                 {
                     Update(reservBackup);
                 }
-                
+
                 break;
             }
             i++;

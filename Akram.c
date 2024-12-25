@@ -397,7 +397,7 @@ void QueryRoomNumber()
     LoadRooms(roomsdata);
     Reservation reservations[MAX_RESERVATION_COUNT];
     reservationLoad(reservations);
-    int inputNumber=0;  // here i fixed a buffer bug :)
+    int inputNumber = 0; // here i fixed a buffer bug :)
     int res_indices[MAX_RESERVATION_COUNT];
     system("cls");
     fflush(stdin);

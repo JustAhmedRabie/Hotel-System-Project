@@ -124,13 +124,13 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
 {
     int resId;
     int flag = 1;
-   
+
     if (ReservationInfo.reservationId == 0)
     {
-    int nonDuplicates[100];
-    int length = GetNonDuplicatesId(nonDuplicates);
-    resId = 100000 + GenerateRand(10000, 99000, nonDuplicates, length); //index + 1   index <-> len of nonDup
-    ReservationInfo.reservationId = resId;
+        int nonDuplicates[100];
+        int length = GetNonDuplicatesId(nonDuplicates);
+        resId = 100000 + GenerateRand(10000, 99000, nonDuplicates, length); //index + 1   index <-> len of nonDup
+        ReservationInfo.reservationId = resId;
         flag = 0;
     }
 
@@ -148,7 +148,7 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
     printf("ReservationID: %d\n", ReservationInfo.reservationId);
     printf("Room: %d\n", ReservationInfo.room.number);
     printf("\n");
-    
+
     if (!flag)
     {
         if (Save(0))
@@ -163,7 +163,8 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
     }
 }
 
-void UserChoice(int choice) {
+void UserChoice(int choice)
+{
     if (choice == -1)
         MainMenu();
     else if (choice == -2)
@@ -175,7 +176,7 @@ void MakeReservation(int reservID)
     //take data & add it to res file
     Reservation ReservationInfo;
     puts("for Main menu -1\n"
-         "for Exit -2");
+        "for Exit -2");
 
     int valid = 0;
     //take name
@@ -284,7 +285,7 @@ void MakeReservation(int reservID)
     }
     while (ReservationInfo.room.number == 0);
     strcpy(ReservationInfo.room.status, "Reserved");
-    
+
     ReservationInfo.reservationId = reservID;
     GenerateReservationID(ReservationInfo);
 }
@@ -328,7 +329,7 @@ void CheckOut()
             "For main menu press M");
         puts("To exit press E");
         char choice = getch();
-        
+
         if (tolower(choice) == 'm')
         {
             MainMenu();
