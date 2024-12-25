@@ -20,7 +20,7 @@ int GenerateRand(int min, int max, int nonDuplicates[], int n);
 int Save(int error);
 void CancelReservation(int error);
 void OverwriteRes(Reservation resData[]);
-int DeleteReservationEntry(Reservation resData[100], int i);
+void DeleteReservationEntry(Reservation resData[100], int i);
 void OverwriteRoom(Room roomData[]);
 void Update(Reservation resData[]);
 int CmpRes(Reservation res1, Reservation res2);
@@ -30,4 +30,5 @@ void NormAndCapital(char *str);
 void TrackRoom();
 void RoomReservation(Reservation resData[]);
 void ReservationRoom(Room* roomData);
+void EditReservation();
 #endif

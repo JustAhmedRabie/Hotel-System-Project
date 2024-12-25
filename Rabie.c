@@ -153,7 +153,6 @@ int Save(int error)
         puts("ERROR, please enter a valid input!");
     }
 
-    printf("\n");
     puts("Do you want to save the changes you did?");
     puts("type: Y/N");
     puts("type: E to exit, M to navigate to main menu");
@@ -190,7 +189,7 @@ int Save(int error)
     }
 }
 
-int DeleteReservationEntry(Reservation resData[100], int i)
+void DeleteReservationEntry(Reservation resData[100], int i)
 {
     while (resData[i].terminator != -1)
     {
@@ -199,14 +198,7 @@ int DeleteReservationEntry(Reservation resData[100], int i)
     }
     resData[i].terminator = 10;
     // Assign the terminator value to anything but -1, because there will be two consecutive -1
-
-    int confirmation = Save(0);
-    if (confirmation)
-    {
         Update(resData);
-        return 1;
-    }
-    else return 0;
 }
 
 void Update(Reservation resData[])
@@ -263,7 +255,10 @@ void CancelReservation(int error)
         CancelReservation(0);
         return;
     }
-    DeleteReservationEntry(resData, i);
+    if (Save(0))
+    {
+        DeleteReservationEntry(resData, i);
+    }
 }
 
 void OverwriteRes(Reservation resData[])
@@ -489,4 +484,70 @@ void RoomReservation(Reservation resData[])
         }
         i++;
     }
+}
+
+void EditReservation()
+{
+    Reservation reservData[100];
+    Reservation reservBackup[100];
+    reservationLoad(reservBackup);
+    reservationLoad(reservData);
+    long input;
+    system("cls");
+        puts("Editing reservation");
+    do
+    {
+        
+        int flag = 0;
+        puts("Enter the reservation ID or room number");
+        puts("Type -1 to go back to the main menu, -2 to exit");
+        fflush(stdin);
+        scanf("%ld", &input);
+        fflush(stdin);
+        system("cls");
+        if (input == -1)
+        {
+            MainMenu();
+            return;
+        }
+        else if (input == -2) exit(0);
+
+        int i = 0;
+        while (reservData[i].terminator != -1)
+        {
+            if (input == reservData[i].reservationId || input == reservData[i].room.number)
+            {
+                if (strcmp(StrToLower(reservData[i].reservationStatus), "confirmed") == 0)
+                {
+                    puts("This reservation is already checked in!");
+                    getch();
+                    break;
+                }
+                flag = 1;
+
+                system("cls");
+                puts("Please enter you new data:");
+                    long ID = reservData[i].reservationId;
+                    DeleteReservationEntry(reservData, i);
+                    MakeReservation(ID);
+                if (Save(0))
+                {
+                    puts("Reservation edited successfully!");
+                }
+                else
+                {
+                    Update(reservBackup);
+                }
+                
+                break;
+            }
+            i++;
+        }
+        int isFound = !(reservData[i].terminator == -1);
+
+        if (!isFound) puts("The input is invalid!");
+        if (!flag) continue;
+        else break;
+    }
+    while (1);
 }

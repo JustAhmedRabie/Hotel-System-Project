@@ -32,8 +32,9 @@ void MainMenu()
             printf("6. View customer details\n");
             printf("7. Query\n");
             printf("8. Reservation report \n");
-            printf("9. Exit \n");
-            printf("Please enter your choice (1 - 9) : ");
+            printf("9. Edit Reservation \n");
+            printf("0. Exit\n");
+            printf("Please enter your choice (0 - 9) : ");
         }
         choice = getch();
         if (choice >= '1' && choice <= '9')
@@ -52,7 +53,7 @@ void MenuChoiceProcess(char choice)
     {
     case '1':
         system("cls");
-        MakeReservation();
+        MakeReservation(0);
         break;
     case '2':
         system("cls");
@@ -83,6 +84,10 @@ void MenuChoiceProcess(char choice)
         display_reservations_for_date();
         break;
     case '9':
+        system("cls");
+        EditReservation();
+        break;
+    case '0':
         system("cls");
         puts("Exiting...");
         exit(0);
@@ -177,22 +182,24 @@ void CheckIn()
     tempReservation.date.days = timeinfo->tm_mday;
     tempReservation.date.months = timeinfo->tm_mon + 1;
     tempReservation.date.years = timeinfo->tm_year + 1900;
-
+    puts("Check-in: ");
     long input;
 
     do
     {
-        system("cls");
         int flag = 0;
         puts("Enter the reservation ID or room number");
-        puts("Type 0 to go back to the main menu, -1 to exit");
+        puts("Type -1 to go back to the main menu, -2 to exit");
+        fflush(stdin);
         scanf("%ld", &input);
-        if (input == 0)
+        fflush(stdin);
+        system("cls");
+        if (input == -1)
         {
             MainMenu();
             return;
         }
-        else if (input == -1) exit(0);
+        else if (input == -2) exit(0);
 
         int i = 0;
         while (reservData[i].terminator != -1)
@@ -239,8 +246,8 @@ void CheckIn()
         }
         int isFound = !(reservData[i].terminator == -1);
 
-        if (!flag) continue;
         if (!isFound) puts("The input is invalid!");
+        if (!flag) continue;
         else break;
     }
     while (1);

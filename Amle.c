@@ -123,6 +123,7 @@ void AddReservation(Reservation ReservationInfo)
 void GenerateReservationID(Reservation ReservationInfo) //take the other data of user to collect all data
 {
     int resId;
+    int flag = 1;
    
     if (ReservationInfo.reservationId == 0)
     {
@@ -130,6 +131,7 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
     int length = GetNonDuplicatesId(nonDuplicates);
     resId = 100000 + GenerateRand(10000, 99000, nonDuplicates, length); //index + 1   index <-> len of nonDup
     ReservationInfo.reservationId = resId;
+        flag = 0;
     }
 
     strcpy(ReservationInfo.reservationStatus, "unconfirmed");
@@ -145,11 +147,20 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
     printf("reservationStatus: %s\n", ReservationInfo.reservationStatus);
     printf("ReservationID: %d\n", ReservationInfo.reservationId);
     printf("Room: %d\n", ReservationInfo.room.number);
-    if (Save(0))
+    printf("\n");
+    
+    if (!flag)
+    {
+        if (Save(0))
+        {
+            AddReservation(ReservationInfo);
+        }
+        else return;
+    }
+    else
     {
         AddReservation(ReservationInfo);
     }
-    else return;
 }
 
 void UserChoice(int choice) {
@@ -173,6 +184,7 @@ void MakeReservation(int reservID)
         puts("Please enter your Name.");
         fflush(stdin);
         fgets(ReservationInfo.customerName, sizeof(ReservationInfo.customerName), stdin);
+        fflush(stdin);
         UserChoice(atoi(ReservationInfo.customerName));
         NormAndCapital(ReservationInfo.customerName);
         valid = is_vaild_name(ReservationInfo.customerName);
@@ -275,8 +287,6 @@ void MakeReservation(int reservID)
     
     ReservationInfo.reservationId = reservID;
     GenerateReservationID(ReservationInfo);
-    printf("Reservation Done\n");
-    getch();
 }
 
 void CheckOut()
@@ -354,8 +364,9 @@ void CheckOut()
         i++;
     }
     //check out done
-    if (DeleteReservationEntry(reservationData, index))
+    if (Save(0))
     {
+        DeleteReservationEntry(reservationData, index);
         puts("The Check Out is Done.");
         printf("Number of Nights: %d\n", nights);
         printf("Price of the night: %d\n", roomData[i].price);
