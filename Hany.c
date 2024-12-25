@@ -37,7 +37,7 @@ void MainMenu()
             printf("Please enter your choice (0 - 9) : ");
         }
         choice = getch();
-        if (choice >= '1' && choice <= '9')
+        if (choice >= '0' && choice <= '9')
             break;
         i++;
     }
