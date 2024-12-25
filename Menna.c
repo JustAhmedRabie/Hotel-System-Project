@@ -104,6 +104,7 @@ int is_vaild_Date(Date date)
 int is_vaild_Email(const char* email)
 {
     int at_found = 0, dot_found = 0;
+    int length = 0;
     for (int i = 0; email[i] != '\0'; i++)
     {
         if (email[i] == '@')
@@ -114,8 +115,12 @@ int is_vaild_Email(const char* email)
         {
             dot_found = 1;
         }
+        if (strlen(email) > 5)
+        {
+            length = 1;
+        }
     }
-    return dot_found && at_found;
+    return dot_found && at_found && length;
 }
 
 int is_valid_nationalid(const char* nationalid)
