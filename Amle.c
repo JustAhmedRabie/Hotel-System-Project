@@ -143,7 +143,7 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
     printf("Email: %s\n", ReservationInfo.customerEmail);
     printf("mobileNumber: %s\n", ReservationInfo.mobileNumber);
     printf("numOfNights: %d\n", ReservationInfo.numOfNights);
-    printf("Date: %d %d %d\n", ReservationInfo.date.days, ReservationInfo.date.months, ReservationInfo.date.years);
+    printf("Date: %d-%d-%d\n", ReservationInfo.date.days, ReservationInfo.date.months, ReservationInfo.date.years);
     printf("reservationStatus: %s\n", ReservationInfo.reservationStatus);
     printf("ReservationID: %d\n", ReservationInfo.reservationId);
     printf("Room: %d\n", ReservationInfo.room.number);
