@@ -116,8 +116,9 @@ int reservationLoad(Reservation reservData[100])
     int i = 0;
     if (x == EOF)
     {
+        FILE *createdFile = fopen("reservations.txt", "w");
+        fclose(createdFile);
         reservData[0].terminator = -1;
-        fclose(reservationFile);
         return 0;
     }
 
