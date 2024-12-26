@@ -4,6 +4,8 @@
 #include "Rabie.h"
 #include "Akram.h"
 
+#define SKIP_SEQ_PREFIX_1 0
+#define SKIP_SEQ_PREFIX_2 224
 
 char UserRoomChoice()
 {
@@ -132,21 +134,29 @@ int ExitChoice(char input[], int size)
     int i = 0;
     while (i < size + 1)
     {
-        input[i] = getch();
-        if (input[i] == 8)
+        int c = getch();
+        if (c == SKIP_SEQ_PREFIX_1 || c == SKIP_SEQ_PREFIX_2) {
+            getch();     //to take actual code
+            continue;    //to skip i++
+        }
+        if (c == 8)
         {
             printf("\b \b");
             i -= 1;
             continue;
         }
-        if (input[i] == '\n' || input[i] == '\r')
+
+        if (c == '\n' || c == '\r')
         {
             input[i] = '\0';
             printf("\n");
             return 1;
         }
-        if (input[i] == 27)
+
+        if (c == 27) {
             return -1;
+        }
+        input[i] = c;
         printf("%c", input[i]);
         i++;
     }
