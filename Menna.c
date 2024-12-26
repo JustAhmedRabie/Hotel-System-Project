@@ -10,7 +10,7 @@ void LoadRooms(Room roomsData[])
 
     if (roomsfile == NULL)
     {
-        printf("Error!");
+        printf(RED"Error! Rooms file not found!\n"RESET);
         getche();
         return;
     }
@@ -21,6 +21,9 @@ void LoadRooms(Room roomsData[])
     {
         fscanf(roomsfile, "%d %s %s %d", &roomsData[i].number, roomsData[i].status, roomsData[i].category,
                &roomsData[i].price);
+
+        roomsData[i].terminator = 10;
+
         if (strcmp(StrToLower(roomsData[i].category), "seaview") == 0) roomsData[i].price = 1600;
         if (strcmp(StrToLower(roomsData[i].category), "lakeview") == 0) roomsData[i].price = 1800;
         if (strcmp(StrToLower(roomsData[i].category), "gardenview") == 0) roomsData[i].price = 2000;
@@ -36,7 +39,6 @@ int is_vaild_name(const char* name)
 {
     if (name[0] == '\0' || name[0] == '\n')
     {
-        puts("Invalid name!");
         puts(RED "Invalid name!"RESET);
         return 0;
     }
@@ -44,15 +46,13 @@ int is_vaild_name(const char* name)
     {
         if (strlen(name) < 4)
         {
-            puts("Invalid name!");
             puts(RED "Invalid name!"RESET);
 
             return 0;
         }
         if (!isalpha(name[i]) && name[i] != ' ')
         {
-            printf("Please enter letters only\n"); 
-            printf(CYAN"Please enter letters only\n"RESET);
+            printf(RED"Please enter letters only\n"RESET);
             return 0;
         }
     }
@@ -65,7 +65,6 @@ int is_vaild_mobil(const char* mobil)
     {
         if (!isdigit(mobil[i]))
         {
-            printf("Please enter digits only\n"); 
             printf(CYAN"Please enter digits only\n"RESET);
 
             return 0;
@@ -79,7 +78,6 @@ int is_vaild_Date(Date date)
 {
     if (date.years != 2024 && date.years != 2025)
     {
-        printf("ERROR, Date is invalid!!\n");
         puts(RED"ERROR,Date is invalid !\n"RESET);
 
         return 0;
@@ -88,7 +86,6 @@ int is_vaild_Date(Date date)
 
     if (date.months < 1 || date.months > 12)
     {
-        printf("ERROR, Date is invalid!!\n");
         puts(RED"ERROR,Date is invalid !\n"RESET);
 
         return 0;
@@ -105,7 +102,6 @@ int is_vaild_Date(Date date)
 
     if (date.days < 1 || date.days > days_in_month[date.months - 1])
     {
-        printf("ERROR, Date is invalid!!\n");
         puts(RED"ERROR,Date is invalid !\n"RESET);
 
         return 0;
@@ -114,12 +110,10 @@ int is_vaild_Date(Date date)
 }
 
 
-
 int is_valid_nationalid(const char* nationalid)
 {
     if (strlen(nationalid) != 14)
     {
-        printf("ERROR! national ID must be 14 digits!!\n");
         puts(RED"ERROR! national ID must be 14 digits!\n"RESET);
 
         return 0;
@@ -129,42 +123,49 @@ int is_valid_nationalid(const char* nationalid)
         if (nationalid[i] < '0' || nationalid[i] > '9')
 
         {
-            printf("ID must contain only digits!!\n");
-            puts(RED"ID must cintain onlt digits!\n"RESET);
+            puts(RED"ID must contain only digits!\n"RESET);
             return 0;
-        
         }
     }
     return 1;
 }
 
-    int isValidEmail(const char *email) {
+int isValidEmail(const char* email)
+{
+    // check if the length of the email is less than 8
 
-        // check if the length of the email is less than 8
-
-        if(strlen(email)<8)
-        {
-            printf("ERROR! Email length must be at least 8 characters!\n");
-            puts(RED"ERROR! Email length must be at least 8 characters!\n"RESET);
-        }
-    const char *at = strchr(email, '@');
-    const char *dot = strchr(email, '.');
+    if (strlen(email) < 8)
+    {
+        puts(RED"ERROR! Email length must be at least 8 characters!\n"RESET);
+        return 0;
+    }
+    const char* at = strchr(email, '@');
+    const char* dot = strchr(email, '.');
 
     // Check if there is exactly one '@' and it's not the first character
     if (at == NULL || at == email)
+    {
+        puts(RED"ERROR! Email is Invalid!!\n"RESET);
         return 0;
+    }
 
     // Check if there is a '.' after the '@'
-    if (dot == NULL || dot < at + 2   || dot == email + strlen(email) - 1)
+    if (dot == NULL || dot < at + 2 || dot == email + strlen(email) - 1)
+    {
+        puts(RED"ERROR! Email is Invalid!!\n"RESET);
         return 0;
+    }
 
     // Ensure there's no more than one '@'
     if (strchr(at + 1, '@') != NULL)
+    {
+        puts(RED"ERROR! Email is Invalid!!\n"RESET);
         return 0;
+    }
 
     return 1;
 }
-    
+
 
 int valid_room_nights(char* numOfNights)
 {
@@ -173,7 +174,6 @@ int valid_room_nights(char* numOfNights)
         return 1;
         // valid
     }
-    printf("Error!!,The number of nights is invalid.\n please enter number bet.1 and 30.\n");
     puts(RED"Error!,The number of nights is invalid.\n please enter number bet.1 and 30.\n"RESET);
     return 0;
 }
@@ -181,10 +181,11 @@ int valid_room_nights(char* numOfNights)
 
 void display_reservations_for_date()
 {
+    system("cls");
+    puts(CYAN"Reservation report:"RESET);
     Reservation reservations[100];
     if (!reservationLoad(reservations))
     {
-        puts("You don't have any reservations!");
         puts(RED"You don't have any reservations!"RESET);
 
         getch();
@@ -196,15 +197,14 @@ void display_reservations_for_date()
 
     Reservation tempReservation;
     int valid = 0;
-    system("cls");
     //take checkin date
     do
-    
-    {
-        puts("Please enter the Check In date.");
-        puts(CYAN"Please enter the Check In date."RESET);
 
+    {
+        puts(CYAN"Please enter the Check In date."RESET);
+        fflush(stdin);
         scanf("%d %d %d", &tempReservation.date.days, &tempReservation.date.months, &tempReservation.date.years);
+        fflush(stdin);
         valid = is_vaild_Date(tempReservation.date);
     }
     while (valid == 0);
@@ -237,13 +237,11 @@ void display_reservations_for_date()
     }
     if (found)
     {
-        printf("found %d reservations", count);
+        printf(GREEN"found %d reservations\n"RESET, count);
     }
     else if (!found)
     {
-        printf("No reservation found for this date\n");
         puts(RED"No reservation found for this date\n"RESET);
     }
     getch();
 }
-

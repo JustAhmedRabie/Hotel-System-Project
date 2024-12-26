@@ -31,7 +31,7 @@ typedef struct
     int reservationId;
     Room room;
     char reservationStatus[20];
-    char customerName[20];
+    char customerName[30];
     char customerNational_Id[15];
     int numOfNights;
     Date date;
@@ -45,8 +45,6 @@ char UserRoomChoice();
 void GetAvailableRoom(const char *category, Room *room);
 void GenerateReservationID(Reservation ReservationInfo);
 int GetNonDuplicatesId(int nonDuplicates[]);
-void ChangeRoomStatus(int roomNumber,char *newStatus);
-void WriteEditedDataRoom(Room NewRoomData[]);
 void AddReservation(Reservation ReservationInfo);
 void CheckOut();
 int ExitChoice(char input[],int size);

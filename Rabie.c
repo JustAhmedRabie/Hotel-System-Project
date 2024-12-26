@@ -218,6 +218,9 @@ void Update(Reservation resData[])
 
 void CancelReservation(int error)
 {
+
+    system("cls");
+    puts(CYAN"Cancel Reservation:"RESET);
     Reservation resData[100];
     if (!reservationLoad(resData))
     {
@@ -226,18 +229,19 @@ void CancelReservation(int error)
         return;
     }
 
-    system("cls");
     if (error)
     {
         puts(RED"ERROR, please enter a valid input!"RESET);
     }
     puts("Please enter the reservation ID or the Room number you want to cancel:");
-    puts("enter 0 to get to main menu, -1 to exit");
+    puts("enter -1 to get to main menu, -2 to exit");
     int input;
     int i = 0;
+    fflush(stdin);
     scanf("%d", &input);
-    if (input == 0) MainMenu();
-    else if (input == -1) exit(0);
+    fflush(stdin);
+    if (input == -1) MainMenu();
+    else if (input == -2) exit(0);
 
     while (resData[i].terminator != -1)
     {
@@ -449,6 +453,8 @@ void NormAndCapital(char* str)
 
 void TrackRoom()
 {
+    puts(CYAN"Room tracking:"RESET);
+
     Room roomData[100];
     LoadRooms(roomData);
 
@@ -498,6 +504,8 @@ void EditReservation()
     Reservation reservData[100];
     Reservation reservBackup[100];
     reservationLoad(reservBackup);
+    system("cls");
+    puts("Editing reservation");
     if (!reservationLoad(reservData))
     {
         puts(RED"You don't have any reservations yet"RESET);
@@ -505,8 +513,6 @@ void EditReservation()
         return;
     }
     long input;
-    system("cls");
-    puts("Editing reservation");
     do
     {
         int flag = 0;

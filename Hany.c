@@ -52,6 +52,7 @@ void MenuChoiceProcess(char choice)
     {
     case '1':
         system("cls");
+        puts(CYAN"Reservation:"RESET);
         MakeReservation(0);
         break;
     case '2':

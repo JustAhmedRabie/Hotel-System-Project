@@ -61,42 +61,6 @@ int GetNonDuplicatesId(int nonDuplicates[])
     return length;
 }
 
-void ChangeRoomStatus(int roomNumber, char* newStatus)
-{
-    Room buffer[100];
-    LoadRooms(buffer);
-    int i = 0;
-    while (buffer[i].terminator != -1)
-    {
-        if (buffer[i].number == roomNumber)
-        {
-            strcpy(buffer[i].status, newStatus);
-            break;
-        }
-        i++;
-    }
-    WriteEditedDataRoom(buffer);
-}
-
-void WriteEditedDataRoom(Room NewRoomData[100])
-{
-    int i;
-    FILE* file = fopen("rooms.text", "w");
-    if (file == NULL)
-    {
-        printf("Cant open the file.");
-        return;
-    }
-    for (i = 0; i < 100; i++)
-    {
-        //TODO: loop until fixed size
-        fprintf(file, "%d %s %s %d\n", NewRoomData[i].number, NewRoomData[i].status, NewRoomData[i].category,
-                NewRoomData[i].price);
-    }
-    NewRoomData[i].terminator = -1;
-    fclose(file);
-}
-
 void AddReservation(Reservation ReservationInfo)
 {
     //
@@ -163,13 +127,14 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
     }
 }
 
-int ExitChoice(char input[],int size)
+int ExitChoice(char input[], int size)
 {
     int i = 0;
     while (i < size + 1)
     {
         input[i] = getch();
-        if(input[i] == 8) {
+        if (input[i] == 8)
+        {
             printf("\b \b");
             i -= 1;
             continue;
@@ -200,10 +165,12 @@ void MakeReservation(int reservID)
     {
         puts("Please enter your Name.");
         fflush(stdin);
-        ret = ExitChoice(ReservationInfo.customerName,19);
-        if (ret == -1) {
+        ret = ExitChoice(ReservationInfo.customerName, 29);
+        if (ret == -1)
+        {
             system("cls");
             MainMenu();
+            return;
         }
         fflush(stdin);
         NormAndCapital(ReservationInfo.customerName);
@@ -217,10 +184,12 @@ void MakeReservation(int reservID)
     do
     {
         puts("Please enter your National Id.");
-        ret = ExitChoice(ReservationInfo.customerNational_Id,14);
-        if (ret == -1) {
+        ret = ExitChoice(ReservationInfo.customerNational_Id, 14);
+        if (ret == -1)
+        {
             system("cls");
             MainMenu();
+            return;
         }
         valid = is_valid_nationalid(ReservationInfo.customerNational_Id);
     }
@@ -232,12 +201,14 @@ void MakeReservation(int reservID)
     do
     {
         puts("Please enter your Email.");
-        ret = ExitChoice(ReservationInfo.customerEmail,29);
-        if (ret == -1) {
+        ret = ExitChoice(ReservationInfo.customerEmail, 29);
+        if (ret == -1)
+        {
             system("cls");
             MainMenu();
+            return;
         }
-        valid = is_vaild_Email(ReservationInfo.customerEmail);
+        valid = isValidEmail(ReservationInfo.customerEmail);
     }
     while (valid == 0);
 
@@ -247,10 +218,12 @@ void MakeReservation(int reservID)
     do
     {
         puts("Please enter your Mobile Number.");
-        ret = ExitChoice(ReservationInfo.mobileNumber,11);
-        if (ret == -1) {
+        ret = ExitChoice(ReservationInfo.mobileNumber, 11);
+        if (ret == -1)
+        {
             system("cls");
             MainMenu();
+            return;
         }
         valid = is_vaild_mobil(ReservationInfo.mobileNumber);
     }
@@ -263,15 +236,17 @@ void MakeReservation(int reservID)
     {
         char date_string[11];
         puts("Please enter the Check In date.");
-        ret = ExitChoice(date_string,10);
-        if (ret == -1) {
+        ret = ExitChoice(date_string, 10);
+        if (ret == -1)
+        {
             system("cls");
             MainMenu();
+            return;
         }
         sscanf(date_string, "%d %d %d",
-            &ReservationInfo.date.days,
-            &ReservationInfo.date.months,
-            &ReservationInfo.date.years);
+               &ReservationInfo.date.days,
+               &ReservationInfo.date.months,
+               &ReservationInfo.date.years);
         valid = is_vaild_Date(ReservationInfo.date);
     }
     while (valid == 0);
@@ -282,10 +257,12 @@ void MakeReservation(int reservID)
     do
     {
         puts("Please enter the Number of Nights.");
-        ret = ExitChoice(n_nights,2);
-        if (ret == -1) {
+        ret = ExitChoice(n_nights, 2);
+        if (ret == -1)
+        {
             system("cls");
             MainMenu();
+            return;
         }
         valid = valid_room_nights(n_nights);
     }
@@ -296,10 +273,11 @@ void MakeReservation(int reservID)
     int first_time_flag = 1;
     do
     {
+        system("cls");
         if (first_time_flag == 0)
             puts(RED "Sorry this Category not available" RESET);
-        system("cls");
-        puts("Room category..");
+
+        puts(CYAN"Room category.."RESET);
         char choice_Category = UserRoomChoice();
         switch (choice_Category)
         {
@@ -331,6 +309,7 @@ void MakeReservation(int reservID)
 void CheckOut()
 {
     system("cls");
+    puts(CYAN"Check-Out:"RESET);
 
     Reservation reservationData[100];
 
@@ -342,7 +321,10 @@ void CheckOut()
     }
     puts("Please enter your room number or Reservation Id.");
     int input;
+
+    fflush(stdin);
     scanf("%d", &input);
+    fflush(stdin);
     int index = 0; //need to save to call cancelReservation function
     int flag = 0; //indicate that this process is available or not
 
@@ -413,4 +395,3 @@ void CheckOut()
         getch();
     }
 }
-
