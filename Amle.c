@@ -141,8 +141,11 @@ int ExitChoice(char input[], int size)
         }
         if (c == 8)
         {
-            printf("\b \b");
-            i -= 1;
+            if (i>0)
+            {
+                printf("\b \b");
+                i -= 1;
+            }
             continue;
         }
 
