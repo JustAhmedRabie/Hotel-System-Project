@@ -135,13 +135,14 @@ int ExitChoice(char input[], int size)
     while (i < size + 1)
     {
         int c = getch();
-        if (c == SKIP_SEQ_PREFIX_1 || c == SKIP_SEQ_PREFIX_2) {
-            getch();     //to take actual code
-            continue;    //to skip i++
+        if (c == SKIP_SEQ_PREFIX_1 || c == SKIP_SEQ_PREFIX_2)
+        {
+            getch(); //to take actual code
+            continue; //to skip i++
         }
         if (c == 8)
         {
-            if (i>0)
+            if (i > 0)
             {
                 printf("\b \b");
                 i -= 1;
@@ -156,7 +157,8 @@ int ExitChoice(char input[], int size)
             return 1;
         }
 
-        if (c == 27) {
+        if (c == 27)
+        {
             return -1;
         }
         input[i] = c;
