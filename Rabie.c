@@ -505,7 +505,7 @@ void EditReservation()
     Reservation reservBackup[100];
     reservationLoad(reservBackup);
     system("cls");
-    puts("Editing reservation");
+    puts(CYAN"Editing reservation"RESET);
     if (!reservationLoad(reservData))
     {
         puts(RED"You don't have any reservations yet"RESET);
@@ -536,20 +536,20 @@ void EditReservation()
             {
                 if (strcmp(StrToLower(reservData[i].reservationStatus), "confirmed") == 0)
                 {
-                    puts("This reservation is already checked in!");
+                    puts(RED"This reservation is already checked in!"RESET);
                     getch();
                     break;
                 }
                 flag = 1;
 
                 system("cls");
-                puts("Please enter you new data:");
+                puts(CYAN"Please enter you new data:"RESET);
                 long ID = reservData[i].reservationId;
                 DeleteReservationEntry(reservData, i);
                 MakeReservation(ID);
                 if (Save(0))
                 {
-                    puts("Reservation edited successfully!");
+                    puts(GREEN"Reservation edited successfully!"RESET);
                 }
                 else
                 {

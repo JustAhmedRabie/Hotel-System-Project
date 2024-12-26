@@ -214,7 +214,7 @@ void CheckIn()
             {
                 if (strcmp(StrToLower(reservData[i].reservationStatus), "confirmed") == 0)
                 {
-                    puts(YELLOW "This reservation is already checked in!" RESET);
+                    puts(RED "This reservation is already checked in!" RESET);
                     getch();
                     break;
                 }
