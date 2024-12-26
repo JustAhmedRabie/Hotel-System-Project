@@ -37,6 +37,7 @@ int is_vaild_name(const char* name)
     if (name[0] == '\0' || name[0] == '\n')
     {
         puts("Invalid name!");
+        puts(RED "Invalid name!"RESET);
         return 0;
     }
     for (int i = 0; name[i] != '\0'; i++)
@@ -44,11 +45,14 @@ int is_vaild_name(const char* name)
         if (strlen(name) < 4)
         {
             puts("Invalid name!");
+            puts(RED "Invalid name!"RESET);
+
             return 0;
         }
         if (!isalpha(name[i]) && name[i] != ' ')
         {
-            printf("Please enter letters only\n");
+            printf("Please enter letters only\n"); 
+            printf(CYAN"Please enter letters only\n"RESET);
             return 0;
         }
     }
@@ -61,7 +65,9 @@ int is_vaild_mobil(const char* mobil)
     {
         if (!isdigit(mobil[i]))
         {
-            printf("Please enter digits only\n");
+            printf("Please enter digits only\n"); 
+            printf(CYAN"Please enter digits only\n"RESET);
+
             return 0;
         }
     }
@@ -74,6 +80,8 @@ int is_vaild_Date(Date date)
     if (date.years != 2024 && date.years != 2025)
     {
         printf("ERROR, Date is invalid!!\n");
+        puts(RED"ERROR,Date is invalid !\n"RESET);
+
         return 0;
     }
     // check year of reservation
@@ -81,6 +89,8 @@ int is_vaild_Date(Date date)
     if (date.months < 1 || date.months > 12)
     {
         printf("ERROR, Date is invalid!!\n");
+        puts(RED"ERROR,Date is invalid !\n"RESET);
+
         return 0;
     }
     // check month
@@ -96,6 +106,8 @@ int is_vaild_Date(Date date)
     if (date.days < 1 || date.days > days_in_month[date.months - 1])
     {
         printf("ERROR, Date is invalid!!\n");
+        puts(RED"ERROR,Date is invalid !\n"RESET);
+
         return 0;
     }
     return 1;
@@ -128,6 +140,8 @@ int is_valid_nationalid(const char* nationalid)
     if (strlen(nationalid) != 14)
     {
         printf("ERROR! national ID must be 14 digits!!\n");
+        puts(RED"ERROR! national ID must be 14 digits!\n"RESET);
+
         return 0;
     }
     for (int i = 0; i < 14; i++)
@@ -136,6 +150,7 @@ int is_valid_nationalid(const char* nationalid)
 
         {
             printf("ID must contain only digits!!\n");
+            puts(RED"ID must cintain onlt digits!\n"RESET);
             return 0;
         }
     }
@@ -150,6 +165,7 @@ int valid_room_nights(char* numOfNights)
         // valid
     }
     printf("Error!!,The number of nights is invalid.\n please enter number bet.1 and 30.\n");
+    puts(RED"Error!,The number of nights is invalid.\n please enter number bet.1 and 30.\n"RESET);
     return 0;
 }
 
@@ -160,6 +176,8 @@ void display_reservations_for_date()
     if (!reservationLoad(reservations))
     {
         puts("You don't have any reservations!");
+        puts(RED"You don't have any reservations!"RESET);
+
         getch();
         return;
     }
@@ -173,7 +191,10 @@ void display_reservations_for_date()
     //take checkin date
     do
     {
+    {
         puts("Please enter the Check In date.");
+        puts(CYAN"Please enter the Check In date."RESET);
+
         scanf("%d %d %d", &tempReservation.date.days, &tempReservation.date.months, &tempReservation.date.years);
         valid = is_vaild_Date(tempReservation.date);
     }
@@ -212,6 +233,7 @@ void display_reservations_for_date()
     else if (!found)
     {
         printf("No reservation found for this date\n");
+        puts(RED"No reservation found for this date\n"RESET);
     }
     getch();
 }
