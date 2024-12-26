@@ -49,6 +49,5 @@ void ChangeRoomStatus(int roomNumber,char *newStatus);
 void WriteEditedDataRoom(Room NewRoomData[]);
 void AddReservation(Reservation ReservationInfo);
 void CheckOut();
-void UserChoice(int choice);
-
+int ExitChoice(char input[],int size);
 #endif
