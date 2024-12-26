@@ -406,7 +406,7 @@ void CheckOut()
         puts(GREEN "The Check Out is Done." RESET);
         printf("Number of Nights: %d\n", nights);
         printf("Price of the night: %d\n", roomData[i].price);
-        printf("This is your total Bill: %d$.\n", bill);
+        printf("This is your total Bill: " "\x1b[30m" "\x1b[107m" "%d$" "\x1b[40m" RESET ".\n", bill);
         getch();
     }
 }
