@@ -113,27 +113,7 @@ int is_vaild_Date(Date date)
     return 1;
 }
 
-int is_vaild_Email(const char* email)
-{
-    int at_found = 0, dot_found = 0;
-    int length = 0;
-    for (int i = 0; email[i] != '\0'; i++)
-    {
-        if (email[i] == '@')
-        {
-            at_found = 1;
-        }
-        if (email[i] == '.' && at_found)
-        {
-            dot_found = 1;
-        }
-        if (strlen(email) > 5)
-        {
-            length = 1;
-        }
-    }
-    return dot_found && at_found && length;
-}
+
 
 int is_valid_nationalid(const char* nationalid)
 {
@@ -152,10 +132,39 @@ int is_valid_nationalid(const char* nationalid)
             printf("ID must contain only digits!!\n");
             puts(RED"ID must cintain onlt digits!\n"RESET);
             return 0;
+        
         }
     }
     return 1;
 }
+
+    int isValidEmail(const char *email) {
+
+        // check if the length of the email is less than 8
+
+        if(strlen(email)<8)
+        {
+            printf("ERROR! Email length must be at least 8 characters!\n");
+            puts(RED"ERROR! Email length must be at least 8 characters!\n"RESET);
+        }
+    const char *at = strchr(email, '@');
+    const char *dot = strchr(email, '.');
+
+    // Check if there is exactly one '@' and it's not the first character
+    if (at == NULL || at == email)
+        return 0;
+
+    // Check if there is a '.' after the '@'
+    if (dot == NULL || dot < at + 2   || dot == email + strlen(email) - 1)
+        return 0;
+
+    // Ensure there's no more than one '@'
+    if (strchr(at + 1, '@') != NULL)
+        return 0;
+
+    return 1;
+}
+    
 
 int valid_room_nights(char* numOfNights)
 {
@@ -190,7 +199,7 @@ void display_reservations_for_date()
     system("cls");
     //take checkin date
     do
-    {
+    
     {
         puts("Please enter the Check In date.");
         puts(CYAN"Please enter the Check In date."RESET);
@@ -237,3 +246,4 @@ void display_reservations_for_date()
     }
     getch();
 }
+
