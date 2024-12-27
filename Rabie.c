@@ -8,7 +8,7 @@ void LogIn()
 {
     char password[30];
     char username[20];
-    user users[3];
+    user users[10];
 
     LoadUsers(users);
 
@@ -74,7 +74,7 @@ void LogIn()
         }
         while (1);
 
-        for (i = 0; i < 3; i++)
+        for (i = 0; users[i].terminator != -1; i++)
         {
             if (!strcmp(users[i].username, username) && !strcmp(users[i].password, password))
             {
@@ -464,10 +464,21 @@ void TrackRoom()
     printf("+==========+======================+==========+===================+\n");
     while (roomData[i].terminator != -1)
     {
-        printf("| %-8d | %-20s | %-8d | %-17s |\n", roomData[i].number
+        if (strcmp(StrToLower(roomData[i].status), "reserved") == 0)
+        {
+            printf("| %-8d | %-20s | %-8d |" RED " %-17s " RESET "|\n", roomData[i].number
                , roomData[i].category
                , roomData[i].price
                , roomData[i].status);
+        }
+        else if (strcmp(StrToLower(roomData[i].status), "available") == 0)
+        {
+            printf("| %-8d | %-20s | %-8d |" GREEN " %-17s " RESET "|\n", roomData[i].number
+               , roomData[i].category
+               , roomData[i].price
+               , roomData[i].status);
+        }
+        
         printf("+==========+======================+==========+===================+\n");
 
         i++;
@@ -567,4 +578,23 @@ void EditReservation()
         else break;
     }
     while (1);
+}
+
+void StandBy(char* str)
+{
+    if (str == NULL) return;
+
+    
+    system("cls");
+    printf(GREEN);
+    printf("%s", str);
+
+    for (int i = 0; i<=8; i++)
+    {
+        printf(".");
+        Sleep(400);
+    }
+    printf("\n");
+    printf(RESET);
+    system("cls");
 }

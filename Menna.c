@@ -65,12 +65,16 @@ int is_vaild_mobil(const char* mobil)
     {
         if (!isdigit(mobil[i]))
         {
-            printf(CYAN"Please enter digits only\n"RESET);
+            printf(RED"Please enter digits only\n"RESET);
 
             return 0;
         }
     }
-    if (strlen(mobil) != 11) return 0;
+    if (strlen(mobil) != 11)
+    {
+        printf(RED"Please enter digits only\n"RESET);
+        return 0;
+    }
     return 1;
 }
 

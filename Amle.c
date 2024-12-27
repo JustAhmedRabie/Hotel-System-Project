@@ -21,6 +21,7 @@ char UserRoomChoice()
         roomCategoryChoice = getch();
         if (roomCategoryChoice >= '1' && roomCategoryChoice <= '5')
             break;
+        system("cls");
         printf(RED "invalid input, Please choose number from 1 to 5\n" RESET);
     }
     return roomCategoryChoice;
@@ -103,6 +104,7 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
     strcpy(ReservationInfo.reservationStatus, "unconfirmed");
 
     system("cls");
+    StandBy("Processing your reservation");
     puts("This is Your information");
     printf("Name: %s\n", ReservationInfo.customerName);
     printf("NationalId: %s\n", ReservationInfo.customerNational_Id);
@@ -175,6 +177,7 @@ void MakeReservation(int reservID)
     Reservation ReservationInfo;
     int valid = 0;
     int ret;
+    puts("press ESC for main menu");
     //take name
     do
     {

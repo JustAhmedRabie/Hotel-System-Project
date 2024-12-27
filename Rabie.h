@@ -5,6 +5,7 @@
 #include <string.h>
 #include <ctype.h>
 #include <conio.h>
+#include<windows.h>
 #include "Amle.h"
 
 #define RED     "\x1b[31m"
@@ -37,4 +38,5 @@ void TrackRoom();
 void RoomReservation(Reservation resData[]);
 void ReservationRoom(Room* roomData);
 void EditReservation();
+void StandBy(char* str);
 #endif
