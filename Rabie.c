@@ -633,7 +633,7 @@ void CheckDayLimit(int* limit)
 int Days()
 {
     system("cls");
-    puts(CYAN"Choose a date:"RESET);
+    puts(CYAN"Choose check-in date:"RESET);
     printf("\033[7;33m%d\033[0m/%s/%d", fday, month[fmon - 1], fyear);
     int ch;
 
@@ -669,7 +669,7 @@ int Days()
                     system("cls");
                     i++;
                     fday = i;
-                    puts(CYAN"Choose a date:"RESET);
+                    puts(CYAN"Choose check-in date:"RESET);
                     printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
                 }
                 else
@@ -677,7 +677,7 @@ int Days()
                     i = 1;
                     fday = i;
                     system("cls");
-                    puts(CYAN"Choose a date:"RESET);
+                    puts(CYAN"Choose check-in date:"RESET);
                     printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
                 }
             }
@@ -688,7 +688,7 @@ int Days()
                     i = limit;
                     fday = i;
                     system("cls");
-                    puts(CYAN"Choose a date:"RESET);
+                    puts(CYAN"Choose check-in date:"RESET);
                     printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
                 }
                 else if (i < 2)
@@ -701,7 +701,7 @@ int Days()
                     system("cls");
                     i--;
                     fday = i;
-                    puts(CYAN"Choose a date:"RESET);
+                    puts(CYAN"Choose check-in date:"RESET);
                     printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
                 }
             }
@@ -726,7 +726,7 @@ int Months()
 
 
     system("cls");
-    puts(CYAN"Choose a date:"RESET);
+    puts(CYAN"Choose check-in date:"RESET);
     printf("%d/\033[7;33m%s\033[0m/%d", fday, month[fmon - 1], fyear);
     while (1)
     {
@@ -755,7 +755,7 @@ int Months()
                 mon++;
                 fmon = mon;
                 AdjustLimit();
-                puts(CYAN"Choose a date:"RESET);
+                puts(CYAN"Choose check-in date:"RESET);
                 printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
             }
             else if (ch == 328 && mon == 12)
@@ -764,7 +764,7 @@ int Months()
                 mon = 1;
                 fmon = mon;
                 AdjustLimit();
-                puts(CYAN"Choose a date:"RESET);
+                puts(CYAN"Choose check-in date:"RESET);
                 printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
             }
 
@@ -774,7 +774,7 @@ int Months()
                 mon--;
                 fmon = mon;
                 AdjustLimit();
-                puts(CYAN"Choose a date:"RESET);
+                puts(CYAN"Choose check-in date:"RESET);
                 printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
             }
             else if (ch == 336 && mon == 1)
@@ -783,7 +783,7 @@ int Months()
                 mon = 12;
                 fmon = mon;
                 AdjustLimit();
-                puts(CYAN"Choose a date:"RESET);
+                puts(CYAN"Choose check-in date:"RESET);
                 printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
             }
             else if ((ch == 336 || ch == 328) && (mon > 12 || mon < 0))
@@ -798,7 +798,7 @@ int Months()
 int Years()
 {
     system("cls");
-    puts(CYAN"Choose a date:"RESET);
+    puts(CYAN"Choose check-in date:"RESET);
     printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], fyear);
     int ch;
 
@@ -826,19 +826,35 @@ int Years()
         {
             if (ch == 328)
             {
-                system("cls");
-                i++;
-                fyear = i;
-                AdjustLimit();
-                puts(CYAN"Choose a date:"RESET);
-                printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
+                if (i >= 2030)
+                {
+                    system("cls");
+                    i = 2030;
+                    fyear = i;
+                    AdjustLimit();
+                    puts(CYAN"Choose check-in date:"RESET);
+                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
+                }
+                else
+                {
+                    system("cls");
+                    i++;
+                    fyear = i;
+                    AdjustLimit();
+                    puts(CYAN"Choose check-in date:"RESET);
+                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
+                }
             }
             if (ch == 336)
             {
-                if (i < 0)
+                if (i <= 2022)
                 {
-                    i = 2024;
+                    system("cls");
+                    i = 2022;
+                    fyear = i;
                     AdjustLimit();
+                    puts(CYAN"Choose check-in date:"RESET);
+                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
                 }
                 else
                 {
@@ -846,7 +862,7 @@ int Years()
                     i--;
                     fyear = i;
                     AdjustLimit();
-                    puts(CYAN"Choose a date:"RESET);
+                    puts(CYAN"Choose check-in date:"RESET);
                     printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
                 }
             }
