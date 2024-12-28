@@ -246,11 +246,11 @@ void QueryRoomStatus_A()
                    roomsData[index].price);
         }
         printf(
-            GREEN"********************************************************************************************************************\n"RESET);
+            GREEN"************************************************\n"RESET);
         puts(YELLOW"To Proceed ,  Press any button"RESET);
         getch(); // a place holder to keep the screen open, will be removed
         printf(
-            GREEN"********************************************************************************************************************\n"RESET);
+            GREEN"************************************************\n"RESET);
     }
     else
     {
@@ -287,11 +287,11 @@ void QueryRoomStatus_R()
                    roomsData[index].price);
         }
         printf(
-            GREEN"********************************************************************************************************************\n"RESET);
+            GREEN"***********************************************\n"RESET);
         puts(YELLOW"To Proceed ,  Press any button"RESET);
         getch(); // a place holder to keep the screen open, will be removed
         printf(
-            GREEN"********************************************************************************************************************\n"RESET);
+            GREEN"***********************************************\n"RESET);
     }
     else
     {
