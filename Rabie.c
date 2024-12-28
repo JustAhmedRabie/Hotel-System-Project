@@ -4,6 +4,17 @@
 #include "Rabie.h"
 #include "Menna.h"
 
+int fday = 1;
+int fyear = 2024;
+int fmon = 1;
+int limit;
+
+
+const char* month[] = {
+    "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
+    "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"
+};
+
 void LogIn()
 {
     char password[30];
@@ -218,7 +229,6 @@ void Update(Reservation resData[])
 
 void CancelReservation(int error)
 {
-
     system("cls");
     puts(CYAN"Cancel Reservation:"RESET);
     Reservation resData[100];
@@ -395,7 +405,7 @@ int CmpRes(Reservation res1, Reservation res2)
 void SortRes(Reservation resData[])
 {
     if (resData == NULL || resData[0].terminator == -1) return;
-    
+
     int i = 0;
 
     while (resData[i + 1].terminator != -1)
@@ -464,18 +474,18 @@ void TrackRoom()
         if (strcmp(StrToLower(roomData[i].status), "reserved") == 0)
         {
             printf("| %-8d | %-20s | %-8d |" RED " %-17s " RESET "|\n", roomData[i].number
-               , roomData[i].category
-               , roomData[i].price
-               , roomData[i].status);
+                   , roomData[i].category
+                   , roomData[i].price
+                   , roomData[i].status);
         }
         else if (strcmp(StrToLower(roomData[i].status), "available") == 0)
         {
             printf("| %-8d | %-20s | %-8d |" GREEN " %-17s " RESET "|\n", roomData[i].number
-               , roomData[i].category
-               , roomData[i].price
-               , roomData[i].status);
+                   , roomData[i].category
+                   , roomData[i].price
+                   , roomData[i].status);
         }
-        
+
         printf("+==========+======================+==========+===================+\n");
 
         i++;
@@ -581,17 +591,298 @@ void StandBy(char* str)
 {
     if (str == NULL) return;
 
-    
+
     system("cls");
     printf(GREEN);
     printf("%s", str);
 
-    for (int i = 0; i<=8; i++)
+    for (int i = 0; i <= 8; i++)
     {
         printf(".");
         Sleep(400);
     }
     printf("\n");
     printf(RESET);
+    system("cls");
+}
+
+void CheckDayLimit(int* limit)
+{
+    if (fmon == 1 || fmon == 3 || fmon == 5 || fmon == 7 || fmon == 8 || fmon == 10 || fmon == 12)
+    {
+        *limit = 31;
+    }
+    else
+    {
+        *limit = 30;
+        if (fmon == 2)
+        {
+            *limit = 28;
+            if (fyear % 4 == 0)
+            {
+                *limit = 29;
+            }
+        }
+    }
+}
+
+int Days()
+{
+    system("cls");
+    puts(CYAN"Choose a date:"RESET);
+    printf("\033[7;33m%d\033[0m/%s/%d", fday, month[fmon - 1], fyear);
+    int ch;
+
+    int i = fday;
+    while (1)
+    {
+        ch = GetCode();
+        if (ch == 13 || ch == 27)
+        {
+            return 0;
+        }
+
+        if (ch == 333)
+        {
+            fday = i;
+            Months();
+            return 0;
+        }
+        else if (ch == 331)
+        {
+            fday = i;
+            Years();
+            return 0;
+        }
+        else
+        {
+            CheckDayLimit(&limit);
+
+            if (ch == 328)
+            {
+                if (i < limit)
+                {
+                    system("cls");
+                    i++;
+                    fday = i;
+                    puts(CYAN"Choose a date:"RESET);
+                    printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
+                }
+                else
+                {
+                    i = 1;
+                    fday = i;
+                    system("cls");
+                    puts(CYAN"Choose a date:"RESET);
+                    printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
+                }
+            }
+            if (ch == 336)
+            {
+                if (i <= 1)
+                {
+                    i = limit;
+                    fday = i;
+                    system("cls");
+                    puts(CYAN"Choose a date:"RESET);
+                    printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
+                }
+                else if (i < 2)
+                {
+                    i = 1;
+                    fday = i;
+                }
+                else
+                {
+                    system("cls");
+                    i--;
+                    fday = i;
+                    puts(CYAN"Choose a date:"RESET);
+                    printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
+                }
+            }
+        }
+    }
+    return i;
+}
+
+void AdjustLimit(void)
+{
+    CheckDayLimit(&limit);
+
+    if (limit < fday)
+        fday = limit;
+}
+
+int Months()
+{
+    int ch;
+
+    int mon = fmon;
+
+
+    system("cls");
+    puts(CYAN"Choose a date:"RESET);
+    printf("%d/\033[7;33m%s\033[0m/%d", fday, month[fmon - 1], fyear);
+    while (1)
+    {
+        ch = GetCode();
+        if (ch == 13 || ch == 27)
+        {
+            return 0;
+        }
+        if (ch == 331)
+        {
+            fmon = mon;
+            Days();
+            return 0;
+        }
+        else if (ch == 333)
+        {
+            fmon = mon;
+            Years();
+            return 0;
+        }
+        else
+        {
+            if (ch == 328 && mon < 12)
+            {
+                system("cls");
+                mon++;
+                fmon = mon;
+                AdjustLimit();
+                puts(CYAN"Choose a date:"RESET);
+                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
+            }
+            else if (ch == 328 && mon == 12)
+            {
+                system("cls");
+                mon = 1;
+                fmon = mon;
+                AdjustLimit();
+                puts(CYAN"Choose a date:"RESET);
+                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
+            }
+
+            if (ch == 336 && mon > 1)
+            {
+                system("cls");
+                mon--;
+                fmon = mon;
+                AdjustLimit();
+                puts(CYAN"Choose a date:"RESET);
+                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
+            }
+            else if (ch == 336 && mon == 1)
+            {
+                system("cls");
+                mon = 12;
+                fmon = mon;
+                AdjustLimit();
+                puts(CYAN"Choose a date:"RESET);
+                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
+            }
+            else if ((ch == 336 || ch == 328) && (mon > 12 || mon < 0))
+            {
+                mon = 1;
+                fmon = mon;
+            }
+        }
+    }
+}
+
+int Years()
+{
+    system("cls");
+    puts(CYAN"Choose a date:"RESET);
+    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], fyear);
+    int ch;
+
+    int i = fyear;
+    while (1)
+    {
+        ch = GetCode();
+        if (ch == 13 || ch == 27)
+        {
+            return 0;
+        }
+        if (ch == 331)
+        {
+            fyear = i;
+            Months();
+            return 0;
+        }
+        else if (ch == 333)
+        {
+            fyear = i;
+            Days();
+            return 0;
+        }
+        else
+        {
+            if (ch == 328)
+            {
+                system("cls");
+                i++;
+                fyear = i;
+                AdjustLimit();
+                puts(CYAN"Choose a date:"RESET);
+                printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
+            }
+            if (ch == 336)
+            {
+                if (i < 0)
+                {
+                    i = 2024;
+                    AdjustLimit();
+                }
+                else
+                {
+                    system("cls");
+                    i--;
+                    fyear = i;
+                    AdjustLimit();
+                    puts(CYAN"Choose a date:"RESET);
+                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
+                }
+            }
+        }
+    }
+}
+
+int GetCode(void)
+{
+    int ch = getch();
+
+    if (ch == 27)
+    {
+        fday = 1;
+        fmon = 1;
+        fyear = 2024;
+        system("cls");
+        MainMenu();
+        return 0;
+    }
+
+    if (ch == 0 || ch == 224)
+        ch = 256 + getch();
+
+
+    return ch;
+}
+
+int GetDate(int* day, int* month, int* year)
+{
+    Days();
+
+    // Assign values to the pointers
+    *day = fday;
+    *month = fmon;
+    *year = fyear;
+
+    fday = 1;
+    fmon = 1;
+    fyear = 2024;
+
     system("cls");
 }

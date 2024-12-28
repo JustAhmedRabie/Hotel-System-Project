@@ -250,25 +250,10 @@ void MakeReservation(int reservID)
     valid = 0;
     system("cls");
     //take checkin date
-    do
-    {
-        char date_string[11];
-        puts("Please enter the Check In date.");
-        ret = ExitChoice(date_string, 10);
-        if (ret == -1)
-        {
-            system("cls");
-            MainMenu();
-            return;
-        }
-        sscanf(date_string, "%d %d %d",
-               &ReservationInfo.date.days,
-               &ReservationInfo.date.months,
-               &ReservationInfo.date.years);
-        valid = is_vaild_Date(ReservationInfo.date);
-    }
-    while (valid == 0);
 
+    if (GetDate(&ReservationInfo.date.days, &ReservationInfo.date.months, &ReservationInfo.date.years) == -1)
+        return;
+    
     valid = 0;
     system("cls");
     char n_nights[3];

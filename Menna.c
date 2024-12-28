@@ -199,16 +199,10 @@ void display_reservations_for_date()
     Reservation tempReservation;
     int valid = 0;
     //take checkin date
-    do
 
-    {
-        puts(CYAN"Please enter the Check In date."RESET);
-        fflush(stdin);
-        scanf("%d %d %d", &tempReservation.date.days, &tempReservation.date.months, &tempReservation.date.years);
-        fflush(stdin);
-        valid = is_vaild_Date(tempReservation.date);
-    }
-    while (valid == 0);
+
+    if (GetDate(&tempReservation.date.days, &tempReservation.date.months, &tempReservation.date.years) == -1)
+        return;
 
 
     int i = 0;
