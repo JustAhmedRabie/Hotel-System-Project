@@ -151,7 +151,7 @@ int isValidEmail(const char* email)
     }
 
     // Check if there is a '.' after the '@'
-    if (dot == NULL || dot < at + 2 || dot == email + strlen(email) - 1)
+    if (dot == NULL || (dot < at + 2) && (dot <= email+2) || dot == email + strlen(email) - 1)
     {
         puts(RED"ERROR! Email is Invalid!!\n"RESET);
         return 0;
