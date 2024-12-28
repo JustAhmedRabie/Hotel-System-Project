@@ -394,9 +394,13 @@ int CmpRes(Reservation res1, Reservation res2)
     {
         return 1;
     }
+    
     if (res1.date.months > res2.date.months) return -1;
+    
     else if (res1.date.months < res2.date.months) return 1;
+    
     if (res1.date.days > res2.date.days) return -1;
+    
     else if (res1.date.days < res2.date.days) return 1;
 
     return 0;
