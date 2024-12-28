@@ -215,7 +215,7 @@ void display_reservations_for_date()
         //c0mpare dates of reservations
         if (CmpRes(current, tempReservation) == 0)
         {
-            printf("Reservation %d: ", count + 1);
+            printf("Reservation %d:\n", count + 1);
             printf("Reservation ID:%ld\n", current.reservationId);
             printf("Room number:%d\n", current.room.number);
             printf("Room category:%s\n", current.room.category);
