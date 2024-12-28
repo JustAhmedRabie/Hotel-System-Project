@@ -23,10 +23,7 @@ void LoadRooms(Room roomsData[])
                &roomsData[i].price);
 
         roomsData[i].terminator = 10;
-
-        if (strcmp(StrToLower(roomsData[i].category), "seaview") == 0) roomsData[i].price = 1600;
-        if (strcmp(StrToLower(roomsData[i].category), "lakeview") == 0) roomsData[i].price = 1800;
-        if (strcmp(StrToLower(roomsData[i].category), "gardenview") == 0) roomsData[i].price = 2000;
+        
         x = fgetc(roomsfile);
         i++;
     }

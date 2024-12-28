@@ -321,7 +321,7 @@ void ReservationRoom(Room* roomData) //this function
     int j = 0;
     while (roomData[i].terminator != -1)
     {
-        strcpy(roomData[i].status, "available");
+        strcpy(roomData[i].status, "Available");
         i++;
     }
 
@@ -333,11 +333,8 @@ void ReservationRoom(Room* roomData) //this function
         {
             if (roomData[j].number == resData[i].room.number)
             {
-                strcpy(roomData[j].status, "reserved");
+                strcpy(roomData[j].status, "Reserved");
             }
-            if (strcmp(StrToLower(roomData[j].category), "seaview") == 0) roomData[j].price = 1600;
-            if (strcmp(StrToLower(roomData[j].category), "lakeview") == 0) roomData[j].price = 1800;
-            if (strcmp(StrToLower(roomData[j].category), "gardenview") == 0) roomData[j].price = 2000;
             j++;
         }
         i++;
