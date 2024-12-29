@@ -15,3 +15,5 @@ after you check in and confirm your reservation, you can check out any time, you
 
 there's also a query feature... where you can query on any reservation or room in the system.
 also there is a menu for reservation report, you provide it with a date and it shows all the reservations checked in on that date.
+
+Project contributers: Akrm Saad, Mohamed Hany, Amle Gomaa, Menna Shiref
