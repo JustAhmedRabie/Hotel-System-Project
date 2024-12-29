@@ -1,10 +1,10 @@
-Hotel reservation management system project:
+# Programming 1 final project - Hotel Management System
 
-Programming 1's final project.
 Completely written in C.
 
 the project is meant to be for hotel staff.
 
+## Instructions
 it always saves any changes in the text files: rooms.txt, reservations.txt, users.txt.
 
 when doing a new reservation, it's status is unconfirmed, to confirm the reservation you must check-in first, but you can't check-in if the reservation date is not due yet,
@@ -16,4 +16,13 @@ after you check in and confirm your reservation, you can check out any time, you
 there's also a query feature... where you can query on any reservation or room in the system.
 also there is a menu for reservation report, you provide it with a date and it shows all the reservations checked in on that date.
 
-Project contributers: Akrm Saad, Mohamed Hany, Amle Gomaa, Menna Shiref
+## Contributors
+[Ahmed Rabie](https://github.com/JustAhmedRabie)
+
+[Akrm Saad](https://github.com/kengit1)
+
+[Mohamed Hany](https://github.com/mohany606)
+
+[Amle Gomaa](https://github.com/AmleGomaa)
+
+[Menna Shiref](https://github.com/mennashiref)
