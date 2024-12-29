@@ -251,9 +251,34 @@ void MakeReservation(int reservID)
     system("cls");
     //take checkin date
 
-    if (GetDate(&ReservationInfo.date.days, &ReservationInfo.date.months, &ReservationInfo.date.years) == -1)
-        return;
-    
+    do
+    {
+        if (GetDate(&ReservationInfo.date.days, &ReservationInfo.date.months, &ReservationInfo.date.years) == -1)
+            return;
+
+        time_t date;
+
+        struct tm* timeinfo;
+
+        date = time(NULL);
+        timeinfo = localtime(&date);
+
+        Reservation tempReservation;
+        tempReservation.date.days = timeinfo->tm_mday;
+        tempReservation.date.months = timeinfo->tm_mon + 1;
+        tempReservation.date.years = timeinfo->tm_year + 1900;
+
+        if (CmpRes(tempReservation, ReservationInfo) == -1)
+        {
+            fflush(stdin);
+            system("cls");
+            puts(RED"Invalid Date!"RESET);
+            getch();
+        }
+        else valid = 1;
+    }
+    while (valid == 0);
+
     valid = 0;
     system("cls");
     char n_nights[3];

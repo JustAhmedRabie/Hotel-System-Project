@@ -168,6 +168,7 @@ int Save(int error)
     puts(YELLOW"type: Y/N"RESET);
     puts(YELLOW"type: E to exit, M to navigate to main menu"RESET);
 
+    fflush(stdin);
     char x = getch();
     if (tolower(x) == 'y')
     {
@@ -847,10 +848,21 @@ int Years()
             }
             if (ch == 336)
             {
-                if (i <= 2022)
+
+                time_t date;
+
+                struct tm *timeinfo;
+
+                date = time(NULL);
+                timeinfo = localtime(&date);
+                
+                int curYear = timeinfo->tm_year + 1900;
+                
+                
+                if (i <= curYear)
                 {
                     system("cls");
-                    i = 2022;
+                    i = curYear;
                     fyear = i;
                     AdjustLimit();
                     puts(CYAN"Choose check-in date:"RESET);
