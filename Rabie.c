@@ -900,9 +900,17 @@ int GetCode(void)
 
     if (ch == 27)
     {
-        fday = 1;
-        fmon = 1;
-        fyear = 2024;
+        time_t date;
+
+        struct tm *timeinfo;
+
+        date = time(NULL);
+        timeinfo = localtime(&date);
+
+        fday = timeinfo->tm_mday;
+        fmon = timeinfo->tm_mon + 1;
+        fyear = timeinfo->tm_year + 1900;
+        printf("\033[?25h\033[0 q"); //re-enables the caret
         system("cls");
         MainMenu();
         return 0;
@@ -917,16 +925,28 @@ int GetCode(void)
 
 int GetDate(int* day, int* month, int* year)
 {
+    time_t date;
+
+    struct tm *timeinfo;
+
+    date = time(NULL);
+    timeinfo = localtime(&date);
+
+    fday = timeinfo->tm_mday;
+    fmon = timeinfo->tm_mon + 1;
+    fyear = timeinfo->tm_year + 1900;
+
+    printf("\033[?25l"); //disables the caret
     Days();
 
-    // Assign values to the pointers
     *day = fday;
     *month = fmon;
     *year = fyear;
 
-    fday = 1;
-    fmon = 1;
-    fyear = 2024;
+    fday = timeinfo->tm_mday;
+    fmon = timeinfo->tm_mon + 1;
+    fyear = timeinfo->tm_year + 1900;
 
+    printf("\033[?25h\033[0 q"); //re-enables the caret
     system("cls");
 }

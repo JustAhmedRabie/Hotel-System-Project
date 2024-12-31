@@ -60,9 +60,9 @@ int is_vaild_mobil(const char* mobil)
 {
     for (int i = 0; mobil[i] != '\0'; i++)
     {
-        if (!isdigit(mobil[i]) && mobil[i] != '+')
+        if (!isdigit(mobil[i]) && mobil[0] != '+')
         {
-            printf(RED"Please enter digits only\n"RESET);
+            printf(RED"Invalid phone number!\n"RESET);
 
             return 0;
         }
@@ -72,7 +72,7 @@ int is_vaild_mobil(const char* mobil)
     {
         if (mobil[0] == '+')
         {
-            if (strlen(mobil+1) > 12)
+            if (strlen(mobil+1) > 12 || strlen(mobil+1) < 11)
             {
                 printf(RED"Invalid phone number!\n"RESET);
                 return 0;
@@ -121,11 +121,12 @@ int isValidEmail(const char* email)
     int i = 0;
     while (email[i] != '\0')
     {
-        if (!isalnum(email[i]) && email[i] != '.' && email[i] != '@' && !isspace(email[i]))
+        if (!isalnum(email[i]) && email[i] != '.' && email[i] != '@' && email[i] != '_')
         {
             puts(RED"ERROR! Email is Invalid!!\n"RESET);
             return 0;
         }
+        i++;
     }
 
     // Check if there is exactly one '@' and it's not the first character
