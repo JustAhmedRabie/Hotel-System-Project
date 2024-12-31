@@ -60,56 +60,30 @@ int is_vaild_mobil(const char* mobil)
 {
     for (int i = 0; mobil[i] != '\0'; i++)
     {
-        if (!isdigit(mobil[i]))
+        if (!isdigit(mobil[i]) && mobil[i] != '+')
         {
             printf(RED"Please enter digits only\n"RESET);
 
             return 0;
         }
     }
+
     if (strlen(mobil) != 11)
     {
-        printf(RED"Please enter digits only\n"RESET);
+        if (mobil[0] == '+')
+        {
+            if (strlen(mobil+1) > 12)
+            {
+                printf(RED"Invalid phone number!\n"RESET);
+                return 0;
+            }
+            return 1;
+        }
+        printf(RED"Please enter 11 digits only\n"RESET);
         return 0;
     }
     return 1;
 }
-
-int is_vaild_Date(Date date)
-{
-    if (date.years != 2024 && date.years != 2025)
-    {
-        puts(RED"ERROR,Date is invalid !\n"RESET);
-
-        return 0;
-    }
-    // check year of reservation
-
-    if (date.months < 1 || date.months > 12)
-    {
-        puts(RED"ERROR,Date is invalid !\n"RESET);
-
-        return 0;
-    }
-    // check month
-
-    // check no of days dpend on which month
-    int days_in_month[] = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-
-    if (date.years % 4 == 0)
-    {
-        days_in_month[1] = 29;
-    }
-
-    if (date.days < 1 || date.days > days_in_month[date.months - 1])
-    {
-        puts(RED"ERROR,Date is invalid !\n"RESET);
-
-        return 0;
-    }
-    return 1;
-}
-
 
 int is_valid_nationalid(const char* nationalid)
 {
@@ -140,8 +114,19 @@ int isValidEmail(const char* email)
         puts(RED"ERROR! Email length must be at least 8 characters!\n"RESET);
         return 0;
     }
-    const char* at = strchr(email, '@');
-    const char* dot = strchr(email, '.');
+    char* at = strchr(email, '@');
+    char* dot = strchr(email, '.');
+    char* special = NULL;
+
+    int i = 0;
+    while (email[i] != '\0')
+    {
+        if (!isalnum(email[i]) && email[i] != '.' && email[i] != '@' && !isspace(email[i]))
+        {
+            puts(RED"ERROR! Email is Invalid!!\n"RESET);
+            return 0;
+        }
+    }
 
     // Check if there is exactly one '@' and it's not the first character
     if (at == NULL || at == email)

@@ -26,7 +26,7 @@
 #include <ctype.h>
 #include <string.h>
 
-#define MAX_NAME_LEN 20 //just a threshold , TODO we will determine it later !!
+#define MAX_NAME_LEN 40 //just a threshold , TODO we will determine it later !!
 #define MAX_RESERVATION_COUNT 100
 
 

@@ -231,17 +231,17 @@ void CheckIn()
                     system("cls");
                     strcpy(reservData[i].reservationStatus, "confirmed");
                     OverwriteRes(reservData);
-                    puts(GREEN "reservation confirmed and checked in successfully!" RESET);
+                    puts(GREEN "Reservation confirmed and checked in successfully!" RESET);
                     puts(YELLOW "That's your information:" RESET);
                     printf("Name: %s\n", reservData[i].customerName);
-                    printf("NationalId: %s\n", reservData[i].customerNational_Id);
+                    printf("National ID: %s\n", reservData[i].customerNational_Id);
                     printf("Email: %s\n", reservData[i].customerEmail);
-                    printf("mobileNumber: %s\n", reservData[i].mobileNumber);
-                    printf("numOfNights: %d\n", reservData[i].numOfNights);
+                    printf("Mobile Number: %s\n", reservData[i].mobileNumber);
+                    printf("Num Of Nights: %d\n", reservData[i].numOfNights);
                     printf("Date: %d-%d-%d\n", reservData[i].date.days, reservData[i].date.months,
                            reservData[i].date.years);
-                    printf("reservationStatus: %s\n", reservData[i].reservationStatus);
-                    printf("ReservationID: %d\n", reservData[i].reservationId);
+                    printf("Reservation Status: %s\n", reservData[i].reservationStatus);
+                    printf("Reservation ID: %d\n", reservData[i].reservationId);
                     printf("Room: %d\n", reservData[i].room.number);
                     puts("press any key to continue");
                     getch();

@@ -603,11 +603,13 @@ void StandBy(char* str)
 
     for (int i = 0; i <= 8; i++)
     {
+        fflush(stdin);
         printf(".");
         Sleep(400);
     }
     printf("\n");
     printf(RESET);
+    fflush(stdin);
     system("cls");
 }
 
@@ -827,10 +829,20 @@ int Years()
         {
             if (ch == 328)
             {
-                if (i >= 2030)
+                time_t date;
+
+                struct tm* timeinfo;
+
+                date = time(NULL);
+                timeinfo = localtime(&date);
+
+                int curYear = timeinfo->tm_year + 1900;
+                int yearLim = curYear + 5;
+                
+                if (i >= yearLim)
                 {
                     system("cls");
-                    i = 2030;
+                    i = yearLim;
                     fyear = i;
                     AdjustLimit();
                     puts(CYAN"Choose check-in date:"RESET);
@@ -859,10 +871,10 @@ int Years()
                 int curYear = timeinfo->tm_year + 1900;
                 
                 
-                if (i <= curYear)
+                if (i <= curYear-1)
                 {
                     system("cls");
-                    i = curYear;
+                    i = curYear-1;
                     fyear = i;
                     AdjustLimit();
                     puts(CYAN"Choose check-in date:"RESET);

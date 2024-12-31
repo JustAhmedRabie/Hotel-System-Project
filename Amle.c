@@ -107,13 +107,13 @@ void GenerateReservationID(Reservation ReservationInfo) //take the other data of
     StandBy("Processing your reservation");
     puts("This is Your information");
     printf("Name: %s\n", ReservationInfo.customerName);
-    printf("NationalId: %s\n", ReservationInfo.customerNational_Id);
+    printf("National ID: %s\n", ReservationInfo.customerNational_Id);
     printf("Email: %s\n", ReservationInfo.customerEmail);
-    printf("mobileNumber: %s\n", ReservationInfo.mobileNumber);
-    printf("numOfNights: %d\n", ReservationInfo.numOfNights);
+    printf("Mobile Number: %s\n", ReservationInfo.mobileNumber);
+    printf("Num Of Nights: %d\n", ReservationInfo.numOfNights);
     printf("Date: %d-%d-%d\n", ReservationInfo.date.days, ReservationInfo.date.months, ReservationInfo.date.years);
-    printf("reservationStatus: %s\n", ReservationInfo.reservationStatus);
-    printf("ReservationID: %d\n", ReservationInfo.reservationId);
+    printf("Reservation Status: %s\n", ReservationInfo.reservationStatus);
+    printf("Reservation ID: %d\n", ReservationInfo.reservationId);
     printf("Room: %d\n", ReservationInfo.room.number);
     printf("\n");
 
