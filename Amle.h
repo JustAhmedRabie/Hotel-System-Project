@@ -40,7 +40,7 @@ typedef struct
     int terminator;
 } Reservation;
 
-void MakeReservation(int reservID);
+int MakeReservation(int reservID);
 char UserRoomChoice();
 void GetAvailableRoom(const char *category, Room *room);
 void GenerateReservationID(Reservation ReservationInfo);

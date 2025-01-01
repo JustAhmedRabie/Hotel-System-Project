@@ -569,7 +569,13 @@ void EditReservation()
                 puts(CYAN"Please enter you new data:"RESET);
                 long ID = reservData[i].reservationId;
                 DeleteReservationEntry(reservData, i);
-                MakeReservation(ID);
+                int complete = MakeReservation(ID);
+
+                if (complete == -1)
+                {
+                    Update(reservBackup);
+                    return;
+                }
                 if (Save(0))
                 {
                     puts(GREEN"Reservation edited successfully!"RESET);

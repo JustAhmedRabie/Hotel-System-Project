@@ -171,7 +171,7 @@ int ExitChoice(char input[], int size)
     return 0;
 }
 
-void MakeReservation(int reservID)
+int MakeReservation(int reservID)
 {
     //take data & add it to res file
     Reservation ReservationInfo;
@@ -187,8 +187,7 @@ void MakeReservation(int reservID)
         if (ret == -1)
         {
             system("cls");
-            MainMenu();
-            return;
+            return -1;
         }
         fflush(stdin);
         NormAndCapital(ReservationInfo.customerName);
@@ -206,8 +205,7 @@ void MakeReservation(int reservID)
         if (ret == -1)
         {
             system("cls");
-            MainMenu();
-            return;
+            return -1;
         }
         valid = is_valid_nationalid(ReservationInfo.customerNational_Id);
     }
@@ -223,8 +221,7 @@ void MakeReservation(int reservID)
         if (ret == -1)
         {
             system("cls");
-            MainMenu();
-            return;
+            return -1;
         }
         valid = isValidEmail(ReservationInfo.customerEmail);
     }
@@ -240,8 +237,7 @@ void MakeReservation(int reservID)
         if (ret == -1)
         {
             system("cls");
-            MainMenu();
-            return;
+            return -1;
         }
         valid = is_vaild_mobil(ReservationInfo.mobileNumber);
     }
@@ -254,7 +250,7 @@ void MakeReservation(int reservID)
     do
     {
         if (GetDate(&ReservationInfo.date.days, &ReservationInfo.date.months, &ReservationInfo.date.years) == -1)
-            return;
+            return -1;
 
         time_t date;
 
@@ -289,8 +285,7 @@ void MakeReservation(int reservID)
         if (ret == -1)
         {
             system("cls");
-            MainMenu();
-            return;
+            return -1;
         }
         valid = valid_room_nights(n_nights);
     }
@@ -319,8 +314,7 @@ void MakeReservation(int reservID)
             GetAvailableRoom("GardenView", &ReservationInfo.room);
             break;
         case '4':
-            MainMenu();
-            return;
+            return -1;
         case '5':
             exit(0);
         }
@@ -332,6 +326,7 @@ void MakeReservation(int reservID)
     strcpy(ReservationInfo.room.status, "Reserved");
     ReservationInfo.reservationId = reservID;
     GenerateReservationID(ReservationInfo);
+    return 1;
 }
 
 void CheckOut()
