@@ -187,7 +187,7 @@ void display_reservations_for_date()
     //take checkin date
 
 
-    if (GetDate(&tempReservation.date.days, &tempReservation.date.months, &tempReservation.date.years) == -1)
+    if (GetDate(&tempReservation.date.days, &tempReservation.date.months, &tempReservation.date.years, 0) == -1)
         return;
 
 
@@ -205,6 +205,7 @@ void display_reservations_for_date()
             printf("Reservation ID:%ld\n", current.reservationId);
             printf("Room number:%d\n", current.room.number);
             printf("Room category:%s\n", current.room.category);
+            printf("Reservation status:%s\n", current.reservationStatus);
             printf("Customer Name:%s\n", current.customerName);
             printf("National ID: %s \n", reservations[i].customerNational_Id);
             printf("Mobile Number: %s \n", reservations[i].mobileNumber);
@@ -218,7 +219,14 @@ void display_reservations_for_date()
     }
     if (found)
     {
-        printf(GREEN"found %d reservations\n"RESET, count);
+        if (count > 1)
+        {
+            printf(GREEN"Found %d reservations\n"RESET, count);
+        }
+        else if (count == 1)
+        {
+            printf(GREEN"Found %d reservation\n"RESET, count);
+        }
     }
     else if (!found)
     {

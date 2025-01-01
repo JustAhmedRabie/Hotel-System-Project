@@ -39,7 +39,7 @@ void RoomReservation(Reservation resData[]);
 void ReservationRoom(Room* roomData);
 void EditReservation();
 void StandBy(char* str);
-int GetDate(int* day, int* month, int* year);
+int GetDate(int* day, int* month, int* year, int limit);
 int GetCode(void);
 int Years();
 int Months();

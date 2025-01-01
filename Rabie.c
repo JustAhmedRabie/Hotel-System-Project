@@ -9,6 +9,8 @@ int fyear = 2024;
 int fmon = 1;
 int limit;
 
+Reservation today;
+Reservation selection;
 
 const char* month[] = {
     "JAN", "FEB", "MAR", "APR", "MAY", "JUN",
@@ -179,7 +181,7 @@ int Save(int error)
     }
     else if (tolower(x) == 'n')
     {
-        puts(GREEN"Your changes wasn't saved, press any key to continue..."RESET);
+        puts(YELLOW"Your changes wasn't saved, press any key to continue..."RESET);
         getch();
         system("cls");
         return 0;
@@ -579,6 +581,7 @@ void EditReservation()
                 if (Save(0))
                 {
                     puts(GREEN"Reservation edited successfully!"RESET);
+                    getch();
                 }
                 else
                 {
@@ -603,6 +606,7 @@ void StandBy(char* str)
     if (str == NULL) return;
 
 
+    printf("\033[?25l"); //disables the caret
     system("cls");
     printf(GREEN);
     printf("%s", str);
@@ -616,6 +620,7 @@ void StandBy(char* str)
     printf("\n");
     printf(RESET);
     fflush(stdin);
+    printf("\033[?25h\033[0 q"); //re-enables the caret
     system("cls");
 }
 
@@ -678,40 +683,53 @@ int Days()
                     system("cls");
                     i++;
                     fday = i;
+                    AdjustLimit();
+                    i = fday;
                     puts(CYAN"Choose check-in date:"RESET);
-                    printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
+                    printf("\033[7;33m%d\033[0m/%s/%d", fday, month[fmon - 1], fyear);
                 }
                 else
                 {
                     i = 1;
                     fday = i;
+                    if (fmon >= 12)
+                    {
+                        fyear++;
+                    }
+                    fmon++;
+                    AdjustLimit();
+                    i = fday;
                     system("cls");
                     puts(CYAN"Choose check-in date:"RESET);
-                    printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
+                    printf("\033[7;33m%d\033[0m/%s/%d", fday, month[fmon - 1], fyear);
                 }
             }
             if (ch == 336)
             {
                 if (i <= 1)
                 {
-                    i = limit;
+                    i--;
                     fday = i;
+                    if (fmon <= 1)
+                    {
+                        fyear--;
+                    }
+                    fmon--;
+                    AdjustLimit();
+                    i = fday;
                     system("cls");
                     puts(CYAN"Choose check-in date:"RESET);
-                    printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
-                }
-                else if (i < 2)
-                {
-                    i = 1;
-                    fday = i;
+                    printf("\033[7;33m%d\033[0m/%s/%d", fday, month[fmon - 1], fyear);
                 }
                 else
                 {
                     system("cls");
                     i--;
                     fday = i;
+                    AdjustLimit();
+                    i = fday;
                     puts(CYAN"Choose check-in date:"RESET);
-                    printf("\033[7;33m%d\033[0m/%s/%d", i, month[fmon - 1], fyear);
+                    printf("\033[7;33m%d\033[0m/%s/%d", fday, month[fmon - 1], fyear);
                 }
             }
         }
@@ -721,10 +739,58 @@ int Days()
 
 void AdjustLimit(void)
 {
-    CheckDayLimit(&limit);
+    Reservation upperBound = today;
+    upperBound.date.years += 5;
 
+    selection.date.days = fday;
+    selection.date.months = fmon;
+    selection.date.years = fyear;
+    if (fmon == 1 && fday < 1) fday = 31;
+    if (fmon == 0 && fday < 1){ fday = 31; fmon = 12;}
+    if (fday < 1 && CmpRes(selection, today) == 1) fday = 1;
+    
+    selection.date.days = fday;
+    selection.date.months = fmon;
+    selection.date.years = fyear;
+    if (CmpRes(selection, today) == 1)
+    {
+        fday = today.date.days;
+        fmon = today.date.months;
+        fyear = today.date.years;
+    }
+    if (CmpRes(selection, upperBound) == -1)
+    {
+        fday = upperBound.date.days;
+        fmon = upperBound.date.months;
+        fyear = upperBound.date.years;
+    }
+    
+    if (fmon < 1) fmon = 12;
+    if (fmon > 12) fmon = 1;
+    if (fyear < today.date.years) fyear = today.date.years;
+    if (fyear > today.date.years + 5) fyear = today.date.years+5;
+    CheckDayLimit(&limit);
+    if (fday < 1) fday = limit;
+    
     if (limit < fday)
         fday = limit;
+
+    selection.date.days = fday;
+    selection.date.months = fmon;
+    selection.date.years = fyear;
+
+    if (CmpRes(selection, today) == 1)
+    {
+        fday = today.date.days;
+        fmon = today.date.months;
+        fyear = today.date.years;
+    }
+    if (CmpRes(selection, upperBound) == -1)
+    {
+        fday = upperBound.date.days;
+        fmon = upperBound.date.months;
+        fyear = upperBound.date.years;
+    }
 }
 
 int Months()
@@ -764,17 +830,20 @@ int Months()
                 mon++;
                 fmon = mon;
                 AdjustLimit();
+                mon = fmon;
                 puts(CYAN"Choose check-in date:"RESET);
-                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
+                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[fmon - 1], fyear);
             }
             else if (ch == 328 && mon == 12)
             {
                 system("cls");
                 mon = 1;
                 fmon = mon;
+                fyear++;
                 AdjustLimit();
+                mon = fmon;
                 puts(CYAN"Choose check-in date:"RESET);
-                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
+                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[fmon - 1], fyear);
             }
 
             if (ch == 336 && mon > 1)
@@ -783,17 +852,20 @@ int Months()
                 mon--;
                 fmon = mon;
                 AdjustLimit();
+                mon = fmon;
                 puts(CYAN"Choose check-in date:"RESET);
-                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
+                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[fmon - 1], fyear);
             }
             else if (ch == 336 && mon == 1)
             {
                 system("cls");
                 mon = 12;
                 fmon = mon;
+                fyear--;
                 AdjustLimit();
+                mon = fmon;
                 puts(CYAN"Choose check-in date:"RESET);
-                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[mon - 1], fyear);
+                printf("%d/\033[7;33m%s\033[0m/%d", fday, month[fmon - 1], fyear);
             }
             else if ((ch == 336 || ch == 328) && (mon > 12 || mon < 0))
             {
@@ -851,8 +923,9 @@ int Years()
                     i = yearLim;
                     fyear = i;
                     AdjustLimit();
+                    i = fyear;
                     puts(CYAN"Choose check-in date:"RESET);
-                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
+                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], fyear);
                 }
                 else
                 {
@@ -860,31 +933,24 @@ int Years()
                     i++;
                     fyear = i;
                     AdjustLimit();
+                    i = fyear;
                     puts(CYAN"Choose check-in date:"RESET);
-                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
+                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], fyear);
                 }
             }
             if (ch == 336)
             {
-
-                time_t date;
-
-                struct tm *timeinfo;
-
-                date = time(NULL);
-                timeinfo = localtime(&date);
+                int curYear = today.date.years;
                 
-                int curYear = timeinfo->tm_year + 1900;
-                
-                
-                if (i <= curYear-1)
+                if (i <= curYear)
                 {
                     system("cls");
-                    i = curYear-1;
+                    i = curYear;
                     fyear = i;
                     AdjustLimit();
+                    i = fyear;
                     puts(CYAN"Choose check-in date:"RESET);
-                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
+                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], fyear);
                 }
                 else
                 {
@@ -892,8 +958,9 @@ int Years()
                     i--;
                     fyear = i;
                     AdjustLimit();
+                    i = fyear;
                     puts(CYAN"Choose check-in date:"RESET);
-                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], i);
+                    printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], fyear);
                 }
             }
         }
@@ -929,7 +996,7 @@ int GetCode(void)
     return ch;
 }
 
-int GetDate(int* day, int* month, int* year)
+int GetDate(int* day, int* month, int* year, int limit)
 {
     time_t date;
 
@@ -941,6 +1008,19 @@ int GetDate(int* day, int* month, int* year)
     fday = timeinfo->tm_mday;
     fmon = timeinfo->tm_mon + 1;
     fyear = timeinfo->tm_year + 1900;
+
+    if (limit)
+    {
+        today.date.days = fday;
+        today.date.months = fmon;
+        today.date.years = fyear;
+    }
+    else
+    {
+        today.date.days = 1;
+        today.date.months = 1;
+        today.date.years = fyear-2;
+    }
 
     printf("\033[?25l"); //disables the caret
     Days();

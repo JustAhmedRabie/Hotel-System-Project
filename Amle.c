@@ -249,7 +249,7 @@ int MakeReservation(int reservID)
 
     do
     {
-        if (GetDate(&ReservationInfo.date.days, &ReservationInfo.date.months, &ReservationInfo.date.years) == -1)
+        if (GetDate(&ReservationInfo.date.days, &ReservationInfo.date.months, &ReservationInfo.date.years, 1) == -1)
             return -1;
 
         time_t date;
