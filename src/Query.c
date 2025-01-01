@@ -1,81 +1,11 @@
-﻿#include "Rabie.h"
-#include "Hany.h"
-#include "Akram.h"
-#include "Amle.h"
-#include "Menna.h"
-#include <stdio.h>
-#include <stdlib.h>
-/*void LoadRoams( room *rooms) {
-    int i=0 ;
-    FILE *rooms_file = fopen("Rooms.txt", "r"); //getting the Rooms.txt
-    if (rooms_file == NULL) {
-        printf("Error opening file...might be lost!!");
-        return ; } // handling if the file not found
-    // Read rooms data
-    while (fscanf(rooms_file, "%d %s %s %d", &rooms[i].roomNumber, rooms[i].status, rooms[i].category, &rooms[i].price) != EOF) {
-        i++;
-        if (i == 100) break; // stop after 100 rooms TODO: will replace with text files later and will be determine the threshold
-    } // checking in every line , if
-
-    fclose(rooms_file);
-}*/ // an old loadrooms function , keep it in case of redundancy TODO: might delete it !
-
-
-// Function to convert the name to lowercase and remove extra spaces
-#include <stdio.h>
-#include <ctype.h>
-#include <string.h>
+﻿#include "Query.h"
 
 #define MAX_NAME_LEN 40 //just a threshold , TODO we will determine it later !!
 #define MAX_RESERVATION_COUNT 100
 
 
 // Function to convert the name to lowercase and remove extra spaces
-void normalizeName(char* str)
-{
-    //ok
-    char* src = str; // Pointer to traverse the input string
-    char* dest = str; // Pointer to write the processed string
-    int inSpace = 0; // To ensure that repeated spaces are not included
 
-    // Skip leading spaces
-    while (isspace(*src))
-    {
-        src++;
-    }
-    /* just handling the first and last excessive spaces , the inside spaces is the the
-       user responsibility , only the excessive will be handled !!
-     */
-    // Traverse through the string
-    while (*src)
-    {
-        if (isspace(*src))
-        {
-            // If it's a space and we're not already in a space sequence
-            if (dest > str && !inSpace)
-            {
-                *dest++ = ' '; // Add a single space
-                inSpace = 1; // Mark that we're in a space sequence , to skip the rest spaces !!
-            }
-        }
-        else
-        {
-            // If it's a regular character, convert to lowercase
-            *dest++ = tolower(*src);
-            inSpace = 0; // Reset space marker
-        }
-        src++;
-    }
-
-    // Null-terminate the modified string
-    *dest = '\0';
-
-    // Remove trailing spaces
-    while (dest > str && isspace(*(dest - 1)))
-    {
-        *(--dest) = '\0';
-    }
-}
 
 // Function to query customer name from reservation list
 int QueryCustomerbyName(Reservation* reserved, char* name, int* indices)
@@ -101,7 +31,7 @@ int QueryCustomerbyName(Reservation* reserved, char* name, int* indices)
 void QueryCustomer()
 {
     Reservation reserved[MAX_RESERVATION_COUNT];
-    reservationLoad(reserved); // Load reservations data
+    LoadReservations(reserved); // Load reservations data
 
     int indices[MAX_RESERVATION_COUNT]; // Array to store indices of matching reservations
     int numOfReservations = 0; // To store the number of reservations found
@@ -396,7 +326,7 @@ void QueryRoomNumber()
     Room roomsdata[MAX_NAME_LEN];
     LoadRooms(roomsdata);
     Reservation reservations[MAX_RESERVATION_COUNT];
-    reservationLoad(reservations);
+    LoadReservations(reservations);
     int inputNumber = 0; // here i fixed a buffer bug :)
     int res_indices[MAX_RESERVATION_COUNT];
     system("cls");
@@ -628,7 +558,7 @@ void V_Details_Res_ID()
     fflush(stdin);
     // handling the menu of reservation id retails
     Reservation res[MAX_RESERVATION_COUNT];
-    reservationLoad(res); // Load reservations data
+    LoadReservations(res); // Load reservations data
     int inputID = 0;
     system("cls");
     printf("Enter Reservation ID : \n");
@@ -730,4 +660,41 @@ void ViewCustomerDetails()
         i++; // originally 0 , if there is wrong in inputs , will display error message !!
     }
     while (1) ;
+}
+
+void TrackRoom()
+{
+    puts(CYAN"Room tracking:"RESET);
+
+    Room roomData[100];
+    LoadRooms(roomData);
+
+    int i = 0;
+    printf("+==========+======================+==========+===================+\n");
+    printf("| %-8s | %-20s | %-8s | %-17s |\n", "Room ID", "Category", "Price", "Status");
+    printf("+==========+======================+==========+===================+\n");
+    while (roomData[i].terminator != -1)
+    {
+        if (strcmp(StrToLower(roomData[i].status), "reserved") == 0)
+        {
+            printf("| %-8d | %-20s | %-8d |" RED " %-17s " RESET "|\n", roomData[i].number
+                   , roomData[i].category
+                   , roomData[i].price
+                   , roomData[i].status);
+        }
+        else if (strcmp(StrToLower(roomData[i].status), "available") == 0)
+        {
+            printf("| %-8d | %-20s | %-8d |" GREEN " %-17s " RESET "|\n", roomData[i].number
+                   , roomData[i].category
+                   , roomData[i].price
+                   , roomData[i].status);
+        }
+
+        printf("+==========+======================+==========+===================+\n");
+
+        i++;
+    }
+
+    puts("Press any key to continue:");
+    getch();
 }

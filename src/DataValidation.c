@@ -1,38 +1,6 @@
-﻿#include "Rabie.h"
-#include "Hany.h"
-#include "Akram.h"
-#include "Amle.h"
-#include "Menna.h"
+﻿#include "DataValidation.h"
 
-void LoadRooms(Room roomsData[])
-{
-    FILE* roomsfile = fopen("rooms.txt", "r");
-
-    if (roomsfile == NULL)
-    {
-        printf(RED"Error! Rooms file not found!\n"RESET);
-        getche();
-        return;
-    }
-    int i = 0;
-    char x = 'a';
-
-    while (x != EOF)
-    {
-        fscanf(roomsfile, "%d %s %s %d", &roomsData[i].number, roomsData[i].status, roomsData[i].category,
-               &roomsData[i].price);
-
-        roomsData[i].terminator = 10;
-        
-        x = fgetc(roomsfile);
-        i++;
-    }
-    roomsData[i].terminator = -1;
-
-    fclose(roomsfile);
-}
-
-int is_vaild_name(const char* name)
+int IsValidName(const char* name)
 {
     if (name[0] == '\0' || name[0] == '\n')
     {
@@ -56,7 +24,7 @@ int is_vaild_name(const char* name)
     return 1;
 }
 
-int is_vaild_mobil(const char* mobil)
+int IsValidMobile(const char* mobil)
 {
     for (int i = 0; mobil[i] != '\0'; i++)
     {
@@ -85,7 +53,7 @@ int is_vaild_mobil(const char* mobil)
     return 1;
 }
 
-int is_valid_nationalid(const char* nationalid)
+int IsValidNationalId(const char* nationalid)
 {
     if (strlen(nationalid) != 14)
     {
@@ -153,8 +121,7 @@ int isValidEmail(const char* email)
     return 1;
 }
 
-
-int valid_room_nights(char* numOfNights)
+int IsValidNights(char* numOfNights)
 {
     if (atoi(numOfNights) > 0 && atoi(numOfNights) <= 30)
     {
@@ -163,74 +130,4 @@ int valid_room_nights(char* numOfNights)
     }
     puts(RED"Error!,The number of nights is invalid.\n please enter number bet.1 and 30.\n"RESET);
     return 0;
-}
-
-
-void display_reservations_for_date()
-{
-    system("cls");
-    puts(CYAN"Reservation report:"RESET);
-    Reservation reservations[100];
-    if (!reservationLoad(reservations))
-    {
-        puts(RED"You don't have any reservations!"RESET);
-
-        getch();
-        return;
-    }
-    int found = 0;
-
-    // temporary reservation
-
-    Reservation tempReservation;
-    int valid = 0;
-    //take checkin date
-
-
-    if (GetDate(&tempReservation.date.days, &tempReservation.date.months, &tempReservation.date.years, 0) == -1)
-        return;
-
-
-    int i = 0;
-    // terminator =-1 indicat to end of array
-    int count = 0;
-    while (reservations[i].terminator != -1)
-
-    {
-        Reservation current = reservations[i];
-        //c0mpare dates of reservations
-        if (CmpRes(current, tempReservation) == 0)
-        {
-            printf("Reservation %d:\n", count + 1);
-            printf("Reservation ID:%ld\n", current.reservationId);
-            printf("Room number:%d\n", current.room.number);
-            printf("Room category:%s\n", current.room.category);
-            printf("Reservation status:%s\n", current.reservationStatus);
-            printf("Customer Name:%s\n", current.customerName);
-            printf("National ID: %s \n", reservations[i].customerNational_Id);
-            printf("Mobile Number: %s \n", reservations[i].mobileNumber);
-            printf("Email :%-30s \n", reservations[i].customerEmail);
-            printf("\n");
-            found = 1;
-            count++;
-        }
-        i++;
-        //to check another reservation;
-    }
-    if (found)
-    {
-        if (count > 1)
-        {
-            printf(GREEN"Found %d reservations\n"RESET, count);
-        }
-        else if (count == 1)
-        {
-            printf(GREEN"Found %d reservation\n"RESET, count);
-        }
-    }
-    else if (!found)
-    {
-        puts(RED"No reservation found for this date\n"RESET);
-    }
-    getch();
 }

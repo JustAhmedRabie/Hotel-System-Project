@@ -1,6 +1,5 @@
-﻿#ifndef AMLE_H
-#define AMLE_H
-#include <time.h>
+﻿#ifndef STRUCTUERS_H
+#define STRUCTUERS_H
 
 typedef struct
 {
@@ -40,12 +39,4 @@ typedef struct
     int terminator;
 } Reservation;
 
-int MakeReservation(int reservID);
-char UserRoomChoice();
-void GetAvailableRoom(const char *category, Room *room);
-void GenerateReservationID(Reservation ReservationInfo);
-int GetNonDuplicatesId(int nonDuplicates[]);
-void AddReservation(Reservation ReservationInfo);
-void CheckOut();
-int ExitChoice(char input[],int size);
 #endif
