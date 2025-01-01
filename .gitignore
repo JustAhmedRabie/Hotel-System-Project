@@ -3,7 +3,10 @@ cmake-build-debug/
 cmake-build-release/
 .vscode/
 output/
+*.exe
 build/
 *.layout
 *.depend
+bin/
 obj/
+*.txt
