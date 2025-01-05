@@ -40,7 +40,7 @@ int IsValidMobile(const char* mobil)
     {
         if (mobil[0] == '+')
         {
-            if (strlen(mobil+1) > 12 || strlen(mobil+1) < 11)
+            if (strlen(mobil+1) > 13 || strlen(mobil+1) < 11)
             {
                 printf(RED"Invalid phone number!\n"RESET);
                 return 0;
