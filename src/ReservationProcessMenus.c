@@ -316,7 +316,7 @@ int MakeReservation(int reservID)
     do
     {
         puts("Please enter your Mobile Number.");
-        ret = ExitChoice(ReservationInfo.mobileNumber, 13);
+        ret = ExitChoice(ReservationInfo.mobileNumber, 14);
         if (ret == -1)
         {
             system("cls");
