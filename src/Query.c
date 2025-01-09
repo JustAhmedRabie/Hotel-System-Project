@@ -61,58 +61,37 @@ void QueryCustomer()
 
         if (numOfReservations > 0)
         {
-            printf(CYAN"-> Personal Information :\n"RESET);
-            // Display personal information here
-            printf(GREEN
-                "===================================================================================================================\n");
-            printf("%-20s%-15s%-30s%s\n", "Name", "Id", "Email", "Phone Number");
             printf(
-                "===================================================================================================================\n"RESET);
-            printf("%-20s%-15s%-30s%s\n", reserved[indices[0]].customerName,
-                   reserved[indices[0]].customerNational_Id,
-                   reserved[indices[0]].customerEmail,
-                   reserved[indices[0]].mobileNumber);
+           RESET"+==========+=========================+===============+=========================+=================+==========+============+============+\n");
+            printf("|%-10s|%-25s|%-15s|%-25s|%-17s|%-10s|%-12s|%-12s|\n",
+                           " Res. ID",
+                           "          Name",
+                           "  National ID",
+                           "          Email",
+                           "   PhoneNumber",
+                           " # Nights",
+                           " Res. date",
+                           "Res. Status");
+            printf(
+                "+==========+=========================+===============+=========================+=================+==========+============+============+\n"RESET);
+            printf("|%-10d|%-25s|%-15s|%-25s|%-15s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
+                   reserved[0].reservationId,
+                   reserved[0].customerName,
+                   reserved[0].customerNational_Id,
+                   reserved[0].customerEmail,
+                   reserved[0].mobileNumber,
+                   reserved[0].numOfNights,
+                   reserved[0].date.days,
+                   reserved[0].date.months,
+                   reserved[0].date.years,
+                   reserved[0].reservationStatus);
             // Barrier
             printf(
-                GREEN"********************************************************************************************************************\n"RESET);
-            puts(YELLOW"To Proceed To Reservation : Press any button");
-            getch(); // a place holder to keep the screen open, will be removed
-            printf(
-                GREEN"********************************************************************************************************************\n"RESET);
-            printf(CYAN"-> Reservation Information :\n"RESET);
-            // Display reservation information here
-            // Print table header with proper spacing
-            printf(
-                GREEN"===================================================================================================================\n");
-            printf("%-20s%-15s%-25s%-25s%s\n",
-                   "Reservation ID",
-                   "Room",
-                   "Number of Nights",
-                   "Date of Reservation",
-                   "Reservation Status");
-            printf(
-                "===================================================================================================================\n"RESET);
-
-            // Loop through all reservations for this customer
-            for (int j = 0; j < numOfReservations; j++)
-            {
-                int index = indices[j]; // Get the index of each reservation
-                printf("%-20d%-15d%-25d%02d-%02d-%04d%26s\n",
-                       reserved[index].reservationId,
-                       reserved[index].room.number,
-                       reserved[index].numOfNights,
-                       reserved[index].date.days,
-                       reserved[index].date.months,
-                       reserved[index].date.years,
-                       reserved[index].reservationStatus);
-            }
-            // Barrier
-            printf(
-                GREEN"********************************************************************************************************************\n"RESET);
+                RESET"+==========+=========================+===============+=========================+=================+==========+============+============+\n"RESET);
             puts(YELLOW"To Proceed ,  Press any button"RESET);
             getch(); // a place holder to keep the screen open, will be removed
             printf(
-                GREEN"********************************************************************************************************************\n"RESET);
+                RESET"********************************************************************************************************************\n"RESET);
         }
         else
         {
@@ -164,23 +143,23 @@ void QueryRoomStatus_A()
         // and the index of each available !!
         printf(CYAN"-> Available Rooms:\n"RESET);
         // Just the format
-        printf(GREEN"+==========+======================+===========\n");
-        printf("| %-8s | %-20s | %-8s |\n", "Room ID", "Category", "Price");
-        printf("+==========+======================+===========\n"RESET);
+        printf(RESET"+==========+=================+==========+\n");
+        printf("| %-8s | %-15s | %-8s |\n", "Room ID", "Category", "Price");
         for (int i = 0; i < num_Ava; i++)
         {
             //Loop to print
             int index = indices_A[i];
-            printf("| %-8d | %-20s | %-8d |\n", roomsData[index].number,
+            printf("+==========+=================+==========+\n"RESET);
+            printf("| %-8d | %-15s | %-8d |\n", roomsData[index].number,
                    roomsData[index].category,
                    roomsData[index].price);
         }
         printf(
-            GREEN"************************************************\n"RESET);
+            RESET"+==========+=================+==========+\n"RESET);
         puts(YELLOW"To Proceed ,  Press any button"RESET);
         getch(); // a place holder to keep the screen open, will be removed
         printf(
-            GREEN"************************************************\n"RESET);
+            RESET"************************************************\n"RESET);
     }
     else
     {
@@ -205,23 +184,23 @@ void QueryRoomStatus_R()
         // and the index of each available !!
         printf(CYAN"-> Reserved Rooms:\n"RESET);
         // Just the format
-        printf(GREEN"+==========+======================+===========\n");
-        printf("| %-8s | %-20s | %-8s |\n", "Room ID", "Category", "Price");
-        printf("+==========+======================+===========\n"RESET);
+        printf(RESET"+==========+=================+==========+\n");
+        printf("| %-8s | %-15s | %-8s |\n", "Room ID", "Category", "Price");
         for (int i = 0; i < num_Res; i++)
         {
             //Loop to print
             int index = indices_R[i];
-            printf("| %-8d | %-20s | %-8d |\n", roomsData[index].number,
+            printf("+==========+=================+==========+\n"RESET);
+            printf("| %-8d | %-15s | %-8d |\n", roomsData[index].number,
                    roomsData[index].category,
                    roomsData[index].price);
         }
         printf(
-            GREEN"***********************************************\n"RESET);
+            RESET"+==========+=================+==========+\n"RESET);
         puts(YELLOW"To Proceed ,  Press any button"RESET);
         getch(); // a place holder to keep the screen open, will be removed
         printf(
-            GREEN"***********************************************\n"RESET);
+            RESET"***********************************************\n"RESET);
     }
     else
     {
@@ -261,12 +240,12 @@ void QueryRoomStatus()
 
         {
             // Query Rooms Status Menu Prompts
-            printf(GREEN"*******************************\n"RESET);
+            printf(RESET"*******************************\n"RESET);
             printf(CYAN"Which Category you want to work on  ? ?\n"RESET);
             printf("1. Available\n");
             printf("2. Reserved\n");
             printf("3. Exit Room Status Query\n");
-            printf(GREEN"*******************************\n"RESET);
+            printf(RESET"*******************************\n"RESET);
             printf(YELLOW"Please enter your choice (1 - 3) : "RESET);
         }
         char choice = getch();
@@ -340,14 +319,14 @@ void QueryRoomNumber()
     if (index != -1)
     {
         printf(CYAN"-> Room Information\n"RESET);
-        printf(GREEN"+==========+======================+==========+===================+\n");
+        printf(RESET"+==========+=================+==========+===================+\n");
         printf("| %-8s | %-20s | %-8s | %-17s |\n", "Room ID", "Category", "Price", "Status");
-        printf("+==========+======================+==========+===================+\n"RESET);
+        printf("+==========+=================+==========+===================+\n"RESET);
         printf("| %-8d | %-20s | %-8d | %-17s |\n", roomsdata[index].number
                , roomsdata[index].category
                , roomsdata[index].price
                , roomsdata[index].status);
-        printf(GREEN"+==========+======================+==========+===================+\n"RESET);
+        printf(RESET"+==========+=================+==========+===================+\n"RESET);
 
         // if Room is Reserved .. get the guest associated
 
@@ -359,23 +338,23 @@ void QueryRoomNumber()
             {
                 printf(CYAN"-> Guest-Associated-with-Room Information\n"RESET);
                 printf(
-                    GREEN"===================================================================================================================================================================\n");
-                printf("%-20s%-15s%-15s%-30s%-15s%-25s%-25s%s\n",
-                       "Reservation ID",
-                       "Guest",
-                       "National ID",
-                       "Email",
-                       "PhoneNumber",
-                       "Number of Nights",
-                       "Date of Reservation",
-                       "Reservation Status");
+                    RESET"+==========+=========================+===============+=========================+=================+==========+============+============+\n");
+                printf("|%-10s|%-25s|%-15s|%-25s|%-17s|%-10s|%-12s|%-12s|\n",
+                       " Res. ID",
+                       "          Name",
+                       "  National ID",
+                       "          Email",
+                       "   PhoneNumber",
+                       " # Nights",
+                       " Res. date",
+                       "Res. Status");
                 printf(
-                    "===================================================================================================================================================================\n"RESET);
+                    "+==========+=========================+===============+=========================+=================+==========+============+============+\n");
                 // Loop through all reservations for this customer
                 for (int j = 0; j < room_r_data; j++)
                 {
                     int index_R_Data = res_indices[j]; // Get the index of each reservation
-                    printf("%-20d%-15s%-15s%-30s%-15s%-25d%02d-%02d-%04d%26s\n",
+                    printf("|%-10d|%-25s|%-15s|%-25s|%-15s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
                            reservations[index_R_Data].reservationId,
                            reservations[index_R_Data].customerName,
                            reservations[index_R_Data].customerNational_Id,
@@ -389,7 +368,7 @@ void QueryRoomNumber()
                 }
                 // Barrier
                 printf(
-                    GREEN"********************************************************************************************************************************************************************\n"RESET);
+                    "+==========+=========================+===============+=========================+=================+==========+============+============+\n"RESET);
             }
             else
             {
@@ -453,12 +432,12 @@ void QueryRoom()
 
         {
             // Query Rooms Menu Prompts
-            printf(GREEN"*******************************\n"RESET);
+            printf(RESET"*******************************\n"RESET);
             printf(CYAN"By what you want to use to query on Rooms ?\n"RESET);
             printf("1. Using Number\n");
             printf("2. Using Status\n");
             printf("3. Exit Room Query\n");
-            printf(GREEN"*******************************\n"RESET);
+            printf(RESET"*******************************\n"RESET);
             printf(YELLOW"Please enter your choice (1 - 3) : "RESET);
         }
         char choice = getch();
@@ -510,12 +489,12 @@ void Query()
 
         {
             // Query Menu Prompts
-            printf(GREEN"*******************************\n"RESET);
+            printf(RESET"*******************************\n"RESET);
             printf(CYAN"What do you want to query about ?\n"RESET);
             printf("1. Customer\n");
             printf("2. Room \n");
             printf("3. Exit\n");
-            printf(GREEN"*******************************\n"RESET);
+            printf(RESET"*******************************\n"RESET);
             printf(YELLOW"Please enter your choice (1 - 3) : "RESET);
         }
         char choice = getch();
@@ -568,19 +547,19 @@ void V_Details_Res_ID()
     if (index != -1)
     {
         printf(
-            GREEN"===================================================================================================================================================================\n");
-        printf("%-20s%-15s%-15s%-30s%-15s%-25s%-25s%s\n",
-               "Reservation ID",
-               "Guest",
-               "National ID",
-               "Email",
-               "PhoneNumber",
-               "Number of Nights",
-               "Date of Reservation",
-               "Reservation Status");
+            RESET"+==========+=========================+===============+=========================+=================+==========+============+============+\n");
+        printf("|%-10s|%-25s|%-15s|%-25s|%-17s|%-10s|%-12s|%-12s|\n",
+                       " Res. ID",
+                       "          Name",
+                       "  National ID",
+                       "          Email",
+                       "   PhoneNumber",
+                       " # Nights",
+                       " Res. date",
+                       "Res. Status");
         printf(
-            "===================================================================================================================================================================\n"RESET);
-        printf("%-20d%-15s%-15s%-30s%-15s%-25d%02d-%02d-%04d%26s\n",
+            "+==========+=========================+===============+=========================+=================+==========+============+============+\n"RESET);
+        printf("|%-10d|%-25s|%-15s|%-25s|%-15s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
                res[index].reservationId,
                res[index].customerName,
                res[index].customerNational_Id,
@@ -593,7 +572,7 @@ void V_Details_Res_ID()
                res[index].reservationStatus);
         // Barrier
         printf(
-            GREEN"********************************************************************************************************************************************************************\n"RESET);
+            RESET"+==========+=========================+===============+=========================+=================+==========+============+============+\n"RESET);
         printf(YELLOW"To Proceed , Press any button \n"RESET);
         getch();
     }
@@ -670,27 +649,27 @@ void TrackRoom()
     LoadRooms(roomData);
 
     int i = 0;
-    printf("+==========+======================+==========+===================+\n");
-    printf("| %-8s | %-20s | %-8s | %-17s |\n", "Room ID", "Category", "Price", "Status");
-    printf("+==========+======================+==========+===================+\n");
+    printf("+==========+=================+==========+===================+\n");
+    printf("| %-8s | %-15s | %-8s | %-17s |\n", "Room ID", "Category", "Price", "Status");
+    printf("+==========+=================+==========+===================+\n");
     while (roomData[i].terminator != -1)
     {
         if (strcmp(StrToLower(roomData[i].status), "reserved") == 0)
         {
-            printf("| %-8d | %-20s | %-8d |" RED " %-17s " RESET "|\n", roomData[i].number
+            printf("| %-8d | %-15s | %-8d |" RED " %-17s " RESET "|\n", roomData[i].number
                    , roomData[i].category
                    , roomData[i].price
                    , roomData[i].status);
         }
         else if (strcmp(StrToLower(roomData[i].status), "available") == 0)
         {
-            printf("| %-8d | %-20s | %-8d |" GREEN " %-17s " RESET "|\n", roomData[i].number
+            printf("| %-8d | %-15s | %-8d |" RESET " %-17s " RESET "|\n", roomData[i].number
                    , roomData[i].category
                    , roomData[i].price
                    , roomData[i].status);
         }
 
-        printf("+==========+======================+==========+===================+\n");
+        printf("+==========+=================+==========+===================+\n");
 
         i++;
     }

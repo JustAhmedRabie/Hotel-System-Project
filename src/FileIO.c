@@ -219,7 +219,7 @@ int LoadReservations(Reservation reservData[])
                reservData[i].customerEmail,
                reservData[i].mobileNumber);
 
-        reservData[i].terminator = 10;
+        reservData[i].terminator = 1;
         x = fgetc(reservationFile);
         i++;
     }
