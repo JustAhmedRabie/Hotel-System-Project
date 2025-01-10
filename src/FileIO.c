@@ -248,7 +248,7 @@ void LoadRooms(Room roomsData[])
         fscanf(roomsfile, "%d %s %s %d", &roomsData[i].number, roomsData[i].status, roomsData[i].category,
                &roomsData[i].price);
 
-        roomsData[i].terminator = 10;
+        roomsData[i].terminator = 1;
         
         x = fgetc(roomsfile);
         i++;

@@ -128,6 +128,6 @@ int IsValidNights(char* numOfNights)
         return 1;
         // valid
     }
-    puts(RED"Error!,The number of nights is invalid.\n please enter number bet.1 and 30.\n"RESET);
+    puts(RED"Error!, The number of nights is invalid.\nplease enter number bet.1 and 30.\n"RESET);
     return 0;
 }

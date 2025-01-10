@@ -161,7 +161,6 @@ void GetAvailableRoom(const char* category, Room* room)
     {
         if (strcmp(category, roomData[i].category) == 0 && strcmp("available", StrToLower(roomData[i].status)) == 0)
         {
-            //printf("DEBUG - Found available room\n");
             *room = roomData[i];
             return;
         }
@@ -203,7 +202,7 @@ void AddReservation(Reservation ReservationInfo)
         length++;
 
     buffer[length] = ReservationInfo;
-    buffer[length].terminator = 10;
+    buffer[length].terminator = 1;
 
     buffer[length + 1].terminator = -1;
 

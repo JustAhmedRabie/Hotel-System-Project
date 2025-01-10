@@ -74,7 +74,7 @@ void QueryCustomer()
                            "Res. Status");
             printf(
                 "+==========+=========================+===============+=========================+=================+==========+============+============+\n"RESET);
-            printf("|%-10d|%-25s|%-15s|%-25s|%-15s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
+            printf("|%-10d|%-25s|%-15s|%-25s|%-14s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
                    reserved[0].reservationId,
                    reserved[0].customerName,
                    reserved[0].customerNational_Id,
@@ -320,9 +320,9 @@ void QueryRoomNumber()
     {
         printf(CYAN"-> Room Information\n"RESET);
         printf(RESET"+==========+=================+==========+===================+\n");
-        printf("| %-8s | %-20s | %-8s | %-17s |\n", "Room ID", "Category", "Price", "Status");
+        printf("| %-8s | %-15s | %-8s | %-17s |\n", "Room ID", "Category", "Price", "Status");
         printf("+==========+=================+==========+===================+\n"RESET);
-        printf("| %-8d | %-20s | %-8d | %-17s |\n", roomsdata[index].number
+        printf("| %-8d | %-15s | %-8d | %-17s |\n", roomsdata[index].number
                , roomsdata[index].category
                , roomsdata[index].price
                , roomsdata[index].status);
@@ -354,7 +354,7 @@ void QueryRoomNumber()
                 for (int j = 0; j < room_r_data; j++)
                 {
                     int index_R_Data = res_indices[j]; // Get the index of each reservation
-                    printf("|%-10d|%-25s|%-15s|%-25s|%-15s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
+                    printf("|%-10d|%-25s|%-15s|%-25s|%-14s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
                            reservations[index_R_Data].reservationId,
                            reservations[index_R_Data].customerName,
                            reservations[index_R_Data].customerNational_Id,
@@ -559,7 +559,7 @@ void V_Details_Res_ID()
                        "Res. Status");
         printf(
             "+==========+=========================+===============+=========================+=================+==========+============+============+\n"RESET);
-        printf("|%-10d|%-25s|%-15s|%-25s|%-15s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
+        printf("|%-10d|%-25s|%-15s|%-25s|%-14s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
                res[index].reservationId,
                res[index].customerName,
                res[index].customerNational_Id,
