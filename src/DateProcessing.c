@@ -36,7 +36,7 @@ void CheckDayLimit(int* limit)
 
 int Days()
 {
-    system("cls");
+    printf("\033[H\033[J");
     puts(CYAN"Choose check-in date:"RESET);
     printf("\033[7;33m%d\033[0m/%s/%d", fday, month[fmon - 1], fyear);
     int ch;
@@ -70,7 +70,7 @@ int Days()
             {
                 if (i < limit)
                 {
-                    system("cls");
+                    printf("\033[H\033[J");
                     i++;
                     fday = i;
                     AdjustLimit();
@@ -89,7 +89,7 @@ int Days()
                     fmon++;
                     AdjustLimit();
                     i = fday;
-                    system("cls");
+                    printf("\033[H\033[J");
                     puts(CYAN"Choose check-in date:"RESET);
                     printf("\033[7;33m%d\033[0m/%s/%d", fday, month[fmon - 1], fyear);
                 }
@@ -107,13 +107,13 @@ int Days()
                     fmon--;
                     AdjustLimit();
                     i = fday;
-                    system("cls");
+                    printf("\033[H\033[J");
                     puts(CYAN"Choose check-in date:"RESET);
                     printf("\033[7;33m%d\033[0m/%s/%d", fday, month[fmon - 1], fyear);
                 }
                 else
                 {
-                    system("cls");
+                    printf("\033[H\033[J");
                     i--;
                     fday = i;
                     AdjustLimit();
@@ -190,7 +190,7 @@ int Months()
     int mon = fmon;
 
 
-    system("cls");
+    printf("\033[H\033[J");
     puts(CYAN"Choose check-in date:"RESET);
     printf("%d/\033[7;33m%s\033[0m/%d", fday, month[fmon - 1], fyear);
     while (1)
@@ -216,7 +216,7 @@ int Months()
         {
             if (ch == 328 && mon < 12)
             {
-                system("cls");
+                printf("\033[H\033[J");
                 mon++;
                 fmon = mon;
                 AdjustLimit();
@@ -226,7 +226,7 @@ int Months()
             }
             else if (ch == 328 && mon == 12)
             {
-                system("cls");
+                printf("\033[H\033[J");
                 mon = 1;
                 fmon = mon;
                 fyear++;
@@ -238,7 +238,7 @@ int Months()
 
             if (ch == 336 && mon > 1)
             {
-                system("cls");
+                printf("\033[H\033[J");
                 mon--;
                 fmon = mon;
                 AdjustLimit();
@@ -248,7 +248,7 @@ int Months()
             }
             else if (ch == 336 && mon == 1)
             {
-                system("cls");
+                printf("\033[H\033[J");
                 mon = 12;
                 fmon = mon;
                 fyear--;
@@ -268,7 +268,7 @@ int Months()
 
 int Years()
 {
-    system("cls");
+    printf("\033[H\033[J");
     puts(CYAN"Choose check-in date:"RESET);
     printf("%d/%s/\033[7;33m%d\033[0m", fday, month[fmon - 1], fyear);
     int ch;
@@ -309,7 +309,7 @@ int Years()
                 
                 if (i >= yearLim)
                 {
-                    system("cls");
+                    printf("\033[H\033[J");
                     i = yearLim;
                     fyear = i;
                     AdjustLimit();
@@ -319,7 +319,7 @@ int Years()
                 }
                 else
                 {
-                    system("cls");
+                    printf("\033[H\033[J");
                     i++;
                     fyear = i;
                     AdjustLimit();
@@ -334,7 +334,7 @@ int Years()
                 
                 if (i <= curYear)
                 {
-                    system("cls");
+                    printf("\033[H\033[J");
                     i = curYear;
                     fyear = i;
                     AdjustLimit();
@@ -344,7 +344,7 @@ int Years()
                 }
                 else
                 {
-                    system("cls");
+                    printf("\033[H\033[J");
                     i--;
                     fyear = i;
                     AdjustLimit();
@@ -374,7 +374,7 @@ int GetCode(void)
         fmon = timeinfo->tm_mon + 1;
         fyear = timeinfo->tm_year + 1900;
         printf("\033[?25h\033[0 q"); //re-enables the caret
-        system("cls");
+        printf("\033[H\033[J");
         MainMenu();
         return 0;
     }
@@ -424,5 +424,5 @@ int GetDate(int* day, int* month, int* year, int limit)
     fyear = timeinfo->tm_year + 1900;
 
     printf("\033[?25h\033[0 q"); //re-enables the caret
-    system("cls");
+    printf("\033[H\033[J");
 }

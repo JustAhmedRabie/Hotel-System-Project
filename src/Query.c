@@ -74,20 +74,22 @@ void QueryCustomer()
                            "Res. Status");
             printf(
                 "+==========+=========================+===============+=================================+=================+==========+============+============+\n"RESET);
-            printf("|%-10d|%-25s|%-15s|%-33s|%-14s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
-                   reserved[0].reservationId,
-                   reserved[0].customerName,
-                   reserved[0].customerNational_Id,
-                   reserved[0].customerEmail,
-                   reserved[0].mobileNumber,
-                   reserved[0].numOfNights,
-                   reserved[0].date.days,
-                   reserved[0].date.months,
-                   reserved[0].date.years,
-                   reserved[0].reservationStatus);
-            // Barrier
-            printf(
-                RESET"+==========+=========================+===============+=================================+=================+==========+============+============+\n"RESET);
+            for (int i = 0; i < numOfReservations; i++)
+            {
+                printf("|%-10d|%-25s|%-15s|%-33s|%-14s   |    %-6d| %02d-%02d-%04d |%-12s|\n",
+                       reserved[indices[i]].reservationId,
+                       reserved[indices[i]].customerName,
+                       reserved[indices[i]].customerNational_Id,
+                       reserved[indices[i]].customerEmail,
+                       reserved[indices[i]].mobileNumber,
+                       reserved[indices[i]].numOfNights,
+                       reserved[indices[i]].date.days,
+                       reserved[indices[i]].date.months,
+                       reserved[indices[i]].date.years,
+                       reserved[indices[i]].reservationStatus);
+                printf(
+                    RESET"+==========+=========================+===============+=================================+=================+==========+============+============+\n"RESET);
+            }
             puts(YELLOW"To Proceed ,  Press any button"RESET);
             getch(); // a place holder to keep the screen open, will be removed
             printf(
