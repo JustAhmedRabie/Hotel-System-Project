@@ -299,7 +299,7 @@ int MakeReservation(int reservID)
     do
     {
         puts("Please enter your Email.");
-        ret = ExitChoice(ReservationInfo.customerEmail, 29);
+        ret = ExitChoice(ReservationInfo.customerEmail, 34);
         if (ret == -1)
         {
             system("cls");

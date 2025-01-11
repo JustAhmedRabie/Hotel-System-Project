@@ -9,4 +9,3 @@ build/
 *.depend
 bin/
 obj/
-*.txt

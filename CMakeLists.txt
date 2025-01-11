@@ -22,3 +22,5 @@ add_executable(HotelSystem src/main.c
         src/AdditionalMenus.h
         src/Includes.h
         src/Structures.h)
+
+target_link_libraries(HotelSystem PRIVATE regex)

@@ -1,4 +1,5 @@
 ﻿#include "DataValidation.h"
+#include <regex.h>
 
 int IsValidName(const char* name)
 {
@@ -75,50 +76,25 @@ int IsValidNationalId(const char* nationalid)
 
 int isValidEmail(const char* email)
 {
-    // check if the length of the email is less than 8
+    const char* regex_pattern =
+        "^[a-zA-Z0-9][._]?[a-zA-Z0-9]+([-.][a-zA-Z0-9]+(_?[a-zA-Z0-9]+)*)*@[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\\.[a-zA-Z]{2,4}$";
 
-    if (strlen(email) < 8)
-    {
-        puts(RED"ERROR! Email length must be at least 8 characters!\n"RESET);
-        return 0;
-    }
-    char* at = strchr(email, '@');
-    char* dot = strchr(email, '.');
-    char* special = NULL;
-
-    int i = 0;
-    while (email[i] != '\0')
-    {
-        if (!isalnum(email[i]) && email[i] != '.' && email[i] != '@' && email[i] != '_')
-        {
-            puts(RED"ERROR! Email is Invalid!!\n"RESET);
-            return 0;
-        }
-        i++;
-    }
-
-    // Check if there is exactly one '@' and it's not the first character
-    if (at == NULL || at == email)
+    regex_t regex;
+    int ret = regcomp(&regex, regex_pattern, REG_EXTENDED);
+    if (ret)
     {
         puts(RED"ERROR! Email is Invalid!!\n"RESET);
         return 0;
     }
+    
+    ret = regexec(&regex, email, 0, NULL, 0);
+    
+    regfree(&regex);
 
-    // Check if there is a '.' after the '@'
-    if (dot == NULL || (dot < at + 2) && (dot <= email+2) || dot == email + strlen(email) - 1)
-    {
+    if (ret)
         puts(RED"ERROR! Email is Invalid!!\n"RESET);
-        return 0;
-    }
-
-    // Ensure there's no more than one '@'
-    if (strchr(at + 1, '@') != NULL)
-    {
-        puts(RED"ERROR! Email is Invalid!!\n"RESET);
-        return 0;
-    }
-
-    return 1;
+    
+    return ret == 0;
 }
 
 int IsValidNights(char* numOfNights)

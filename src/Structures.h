@@ -34,7 +34,7 @@ typedef struct
     char customerNational_Id[15];
     int numOfNights;
     Date date;
-    char customerEmail[30];
+    char customerEmail[35];
     char mobileNumber[15];
     int terminator;
 } Reservation;
