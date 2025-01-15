@@ -77,7 +77,7 @@ int IsValidNationalId(const char* nationalid)
 int isValidEmail(const char* email)
 {
     const char* regex_pattern =
-        "^[a-zA-Z0-9][._]?[a-zA-Z0-9]+([-.][a-zA-Z0-9]+(_?[a-zA-Z0-9]+)*)*@[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\\.[a-zA-Z]{2,4}$";
+        "^[a-zA-Z0-9][._]?[a-zA-Z0-9]+([-._][a-zA-Z0-9]+(_?[a-zA-Z0-9]+)*)*@[a-zA-Z0-9]+([-.][a-zA-Z0-9]+)*\\.[a-zA-Z]{2,4}$";
 
     regex_t regex;
     int ret = regcomp(&regex, regex_pattern, REG_EXTENDED);
